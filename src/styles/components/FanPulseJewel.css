@@ -1,0 +1,416 @@
+/* ==========================================================
+   FAN PULSE JEWEL
+========================================================== */
+
+.fan-pulse-jewel {
+  position:
+    absolute;
+
+  right:
+    18px;
+
+  bottom:
+    49px;
+
+  z-index:
+    12;
+
+  width:
+    105px;
+
+  height:
+    100px;
+
+  pointer-events:
+    none;
+
+  overflow:
+    visible;
+}
+
+
+/* ==========================================================
+   CLICKABLE JEWEL
+========================================================== */
+
+.fan-pulse-jewel__button {
+  position:
+    absolute;
+
+  right:
+    0;
+
+  bottom:
+    0;
+
+  z-index:
+    4;
+
+  display:
+    block;
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  padding:
+    0;
+
+  border:
+    0;
+
+  outline:
+    0;
+
+  background:
+    transparent;
+
+  cursor:
+    pointer;
+
+  pointer-events:
+    auto;
+
+  transform-origin:
+    center bottom;
+
+  transition:
+    transform
+    0.2s
+    ease;
+}
+
+
+.fan-pulse-jewel__button:hover {
+  transform:
+    translateY(-3px)
+    rotate(-2deg);
+}
+
+
+.fan-pulse-jewel__button:active {
+  transform:
+    translateY(1px)
+    scale(0.94);
+}
+
+
+.fan-pulse-jewel__button:focus-visible {
+  outline:
+    2px solid
+    var(--couple-pink);
+
+  outline-offset:
+    3px;
+
+  border-radius:
+    50%;
+}
+
+
+/* ==========================================================
+   IMAGE
+========================================================== */
+
+.fan-pulse-jewel__button img {
+  display:
+    block;
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  object-fit:
+    contain;
+
+  user-select:
+    none;
+
+  -webkit-user-drag:
+    none;
+
+  filter:
+    drop-shadow(
+      0
+      7px
+      7px
+      rgba(
+        77,
+        39,
+        78,
+        0.12
+      )
+    );
+}
+
+
+/* ==========================================================
+   LITTLE BOUNCE WHEN CLICKED
+========================================================== */
+
+.fan-pulse-jewel.is-bursting
+.fan-pulse-jewel__button {
+  animation:
+    jewelHappyBounce
+    0.48s
+    ease;
+}
+
+
+@keyframes jewelHappyBounce {
+
+  0% {
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+  30% {
+    transform:
+      translateY(-7px)
+      scale(1.05)
+      rotate(-3deg);
+  }
+
+  60% {
+    transform:
+      translateY(-2px)
+      scale(0.98)
+      rotate(2deg);
+  }
+
+  100% {
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+}
+
+
+/* ==========================================================
+   BURST LAYER
+========================================================== */
+
+.fan-pulse-jewel__burst {
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  z-index:
+    8;
+
+  overflow:
+    visible;
+
+  pointer-events:
+    none;
+}
+
+
+/* ==========================================================
+   PARTICLES
+========================================================== */
+
+.fan-pulse-jewel__particle {
+  position:
+    absolute;
+
+  left:
+    50%;
+
+  top:
+    45%;
+
+  display:
+    block;
+
+  font-size:
+    1.35rem;
+
+  line-height:
+    1;
+
+  opacity:
+    0;
+
+  transform:
+    translate(
+      -50%,
+      -50%
+    )
+    scale(0.2);
+
+  filter:
+    drop-shadow(
+      0
+      3px
+      4px
+      rgba(
+        60,
+        30,
+        64,
+        0.12
+      )
+    );
+
+  animation:
+    jewelCharmBurst
+    1.15s
+    cubic-bezier(
+      0.16,
+      0.84,
+      0.35,
+      1
+    )
+    forwards;
+
+  animation-delay:
+    var(
+      --jewel-delay
+    );
+}
+
+
+@keyframes jewelCharmBurst {
+
+  0% {
+    opacity:
+      0;
+
+    transform:
+      translate(
+        -50%,
+        -50%
+      )
+      scale(0.15)
+      rotate(0deg);
+  }
+
+
+  12% {
+    opacity:
+      1;
+  }
+
+
+  55% {
+    opacity:
+      1;
+  }
+
+
+  100% {
+    opacity:
+      0;
+
+    transform:
+      translate(
+        calc(
+          -50% +
+          var(--jewel-x)
+        ),
+        calc(
+          -50% +
+          var(--jewel-y)
+        )
+      )
+      scale(
+        var(
+          --jewel-scale
+        )
+      )
+      rotate(
+        var(
+          --jewel-rotate
+        )
+      );
+  }
+
+}
+
+
+/* ==========================================================
+   WHEN FAN PULSE PANEL IS OPEN
+
+   Jewel moves upward so it does not sit on top
+   of the reaction panel.
+========================================================== */
+
+.fan-pulse-jewel.is-panel-open {
+  bottom:
+    350px;
+
+  transition:
+    bottom
+    0.25s
+    ease;
+}
+
+
+/* ==========================================================
+   MOBILE / TABLET
+========================================================== */
+
+@media (
+  max-width:
+  800px
+) {
+
+  .fan-pulse-jewel {
+    right:
+      1px;
+
+    bottom:
+      43px;
+
+    width:
+      76px;
+
+    height:
+      76px;
+  }
+
+
+  .fan-pulse-jewel.is-panel-open {
+    bottom:
+      325px;
+  }
+
+
+  .fan-pulse-jewel__particle {
+    font-size:
+      1.05rem;
+  }
+
+}
+
+
+/* ==========================================================
+   REDUCED MOTION
+========================================================== */
+
+@media (
+  prefers-reduced-motion:
+  reduce
+) {
+
+  .fan-pulse-jewel__particle {
+    animation-duration:
+      0.35s;
+  }
+
+
+  .fan-pulse-jewel.is-bursting
+  .fan-pulse-jewel__button {
+    animation:
+      none;
+  }
+
+}

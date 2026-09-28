@@ -1,0 +1,2704 @@
+/* ==================================================
+   GALLERY DASHBOARD
+   src/styles/pages/Gallery.css
+================================================== */
+
+
+/* ==================================================
+   PAGE
+================================================== */
+
+.gallery-page {
+  width: 100%;
+  overflow: hidden;
+
+  background: var(--cream);
+  color: var(--ink);
+}
+
+
+/* ==================================================
+   00 / GALLERY HOME
+================================================== */
+
+.gallery-home {
+  position: relative;
+
+  min-height: 82vh;
+
+  overflow: hidden;
+
+  border-bottom:
+    1px solid
+    rgba(149, 107, 209, 0.14);
+
+  background:
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(149, 107, 209, 0.12),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 85% 70%,
+      rgba(233, 90, 169, 0.1),
+      transparent 32%
+    ),
+    linear-gradient(
+      180deg,
+      #fffdfc,
+      #fff8f6
+    );
+}
+
+
+/* ==================================================
+   HOME GHOST TEXT
+================================================== */
+
+.gallery-home__ghost {
+  position: absolute;
+
+  z-index: 0;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size:
+    clamp(
+      10rem,
+      23vw,
+      24rem
+    );
+
+  font-weight: 500;
+
+  line-height: 0.8;
+
+  letter-spacing: -0.08em;
+
+  user-select: none;
+  pointer-events: none;
+}
+
+
+.gallery-home__ghost--jan {
+  top: 8%;
+  left: -2%;
+
+  color:
+    rgba(149, 107, 209, 0.045);
+}
+
+
+.gallery-home__ghost--jing {
+  right: -5%;
+  bottom: 2%;
+
+  color:
+    rgba(233, 90, 169, 0.045);
+}
+
+
+/* ==================================================
+   HOME INNER
+================================================== */
+
+.gallery-home__inner {
+  position: relative;
+
+  z-index: 2;
+
+  display: flex;
+  flex-direction: column;
+
+  width:
+    min(
+      1240px,
+      calc(100% - 10vw)
+    );
+
+  min-height: 82vh;
+
+  margin: 0 auto;
+
+  padding:
+    2rem
+    0;
+}
+
+
+/* ==================================================
+   HOME TOP
+================================================== */
+
+.gallery-home__top {
+  display: flex;
+
+  align-items: center;
+
+  justify-content:
+    space-between;
+
+  gap: 2rem;
+
+  padding-bottom: 1.1rem;
+
+  border-bottom:
+    1px solid
+    rgba(149, 107, 209, 0.18);
+}
+
+
+.gallery-home__top span {
+  color:
+    var(--muted);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.55rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.2em;
+}
+
+
+.gallery-home__top span:first-child {
+  color:
+    var(--couple-purple);
+}
+
+
+/* ==================================================
+   HOME HERO
+================================================== */
+
+.gallery-home__hero {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.4fr)
+    minmax(180px, 0.6fr);
+
+  align-items: end;
+
+  gap:
+    clamp(
+      3rem,
+      8vw,
+      8rem
+    );
+
+  padding:
+    4.5rem
+    0
+    4rem;
+}
+
+
+/* ==================================================
+   HOME TITLE
+================================================== */
+
+.gallery-home__intro h1 {
+  margin: 0;
+
+  color:
+    var(--ink);
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size:
+    clamp(
+      4.5rem,
+      7vw,
+      8.4rem
+    );
+
+  font-weight: 500;
+
+  line-height: 0.77;
+
+  letter-spacing: -0.06em;
+}
+
+
+.gallery-home__intro h1 span {
+  display: block;
+
+  width: fit-content;
+
+  margin-top: 0.12em;
+
+  padding-right: 0.12em;
+
+  background:
+    var(--couple-gradient);
+
+  background-clip: text;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  color: transparent;
+
+  font-family:
+    "Sacramento",
+    cursive;
+
+  font-size: 0.84em;
+
+  font-weight: 400;
+
+  line-height: 0.9;
+
+  letter-spacing: 0;
+}
+
+
+/* ==================================================
+   HOME DESCRIPTION
+================================================== */
+
+.gallery-home__intro p {
+  max-width: 42ch;
+
+  margin:
+    2rem
+    0
+    0;
+
+  color:
+    var(--muted);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.82rem;
+
+  font-weight: 500;
+
+  line-height: 1.8;
+}
+
+
+/* ==================================================
+   HOME COUNTER
+================================================== */
+
+.gallery-home__counter {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: flex-end;
+
+  text-align: right;
+}
+
+
+.gallery-home__counter strong {
+  background:
+    var(--couple-gradient);
+
+  background-clip: text;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  color: transparent;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size:
+    clamp(
+      5rem,
+      10vw,
+      9rem
+    );
+
+  font-weight: 400;
+
+  line-height: 0.75;
+
+  letter-spacing: -0.07em;
+}
+
+
+.gallery-home__counter span {
+  margin-top: 1rem;
+
+  color:
+    var(--muted);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.55rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.2em;
+}
+
+
+/* ==================================================
+   HOME BOTTOM
+================================================== */
+
+.gallery-home__bottom {
+  display: flex;
+
+  align-items: center;
+
+  justify-content:
+    space-between;
+
+  gap: 2rem;
+
+  margin-top: auto;
+
+  padding-top: 1.4rem;
+
+  border-top:
+    1px solid
+    rgba(149, 107, 209, 0.16);
+}
+
+
+.gallery-home__bottom p {
+  max-width: 42ch;
+
+  margin: 0;
+
+  color:
+    #706972;
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.53rem;
+
+  font-weight: 700;
+
+  line-height: 1.5;
+
+  letter-spacing: 0.11em;
+}
+
+
+.gallery-home__bottom button {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 1rem;
+
+  padding: 0;
+
+  border: 0;
+
+  background: none;
+
+  color:
+    var(--ink);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.52rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.16em;
+
+  cursor: pointer;
+}
+
+
+.gallery-home__bottom button span {
+  display: grid;
+
+  place-items: center;
+
+  width: 36px;
+  height: 36px;
+
+  border:
+    1px solid
+    rgba(149, 107, 209, 0.25);
+
+  border-radius: 50%;
+
+  color:
+    var(--couple-purple);
+
+  transition:
+    transform 0.25s ease;
+}
+
+
+.gallery-home__bottom button:hover span {
+  transform:
+    translateY(4px);
+}
+
+
+/* ==================================================
+   01 / PHOTO ARCHIVE
+================================================== */
+
+.gallery-archive {
+  width: 100%;
+
+  padding:
+    5.5rem
+    0
+    6rem;
+
+  background: #fff;
+
+  scroll-margin-top: 80px;
+}
+
+
+.gallery-archive__inner {
+  width:
+    min(
+      1440px,
+      calc(100% - 5vw)
+    );
+
+  margin: 0 auto;
+}
+
+
+/* ==================================================
+   ARCHIVE HEADER
+================================================== */
+
+.gallery-archive__header {
+  display: flex;
+
+  align-items: flex-end;
+
+  justify-content:
+    space-between;
+
+  gap: 3rem;
+
+  width:
+    min(
+      1200px,
+      100%
+    );
+
+  margin:
+    0 auto
+    2.2rem;
+}
+
+
+.gallery-archive__eyebrow {
+  margin:
+    0
+    0
+    0.8rem;
+
+  color:
+    var(--couple-purple);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.62rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.18em;
+}
+
+
+.gallery-archive__header h2 {
+  margin: 0;
+
+  color:
+    var(--ink);
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size:
+    clamp(
+      4.5rem,
+      6vw,
+      6rem
+    );
+
+  font-weight: 500;
+
+  line-height: 0.84;
+
+  letter-spacing: -0.05em;
+}
+
+
+.gallery-archive__header h2 span {
+  display: block;
+
+  width: fit-content;
+
+  margin-top: 0.08em;
+
+  padding-right: 0.12em;
+
+  background:
+    var(--couple-gradient);
+
+  background-clip: text;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  color: transparent;
+
+  font-family:
+    "Sacramento",
+    cursive;
+
+  font-size: 0.9em;
+
+  font-weight: 400;
+
+  letter-spacing: 0;
+}
+
+
+/* ==================================================
+   ARCHIVE COUNT
+================================================== */
+
+.gallery-archive__count {
+  display: flex;
+
+  align-items: baseline;
+
+  gap: 0.65rem;
+
+  padding-bottom: 0.5rem;
+}
+
+
+.gallery-archive__count strong {
+  color:
+    var(--ink);
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 3.6rem;
+
+  font-weight: 500;
+
+  line-height: 1;
+}
+
+
+.gallery-archive__count span {
+  color:
+    var(--muted);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.58rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.15em;
+}
+
+
+/* ==================================================
+   FILTER PANEL
+   COMPACT VERSION
+================================================== */
+
+.gallery-filter-panel {
+  position: sticky;
+
+  top: 70px;
+
+  z-index: 20;
+
+  display: grid;
+
+  gap: 0.7rem;
+
+  width:
+    min(
+      1240px,
+      100%
+    );
+
+  margin:
+    0 auto;
+
+  padding:
+    0.9rem
+    1.1rem;
+
+  border:
+    1px solid
+    rgba(149, 107, 209, 0.17);
+
+  border-radius: 15px;
+
+  background:
+    rgba(255, 255, 255, 0.95);
+
+  box-shadow:
+    0 18px 45px -34px
+    rgba(65, 38, 92, 0.55);
+
+  backdrop-filter:
+    blur(18px);
+
+  -webkit-backdrop-filter:
+    blur(18px);
+}
+
+
+/* ==================================================
+   FILTER ROW
+================================================== */
+
+.gallery-filter-row {
+  display: grid;
+
+  grid-template-columns:
+    105px
+    minmax(0, 1fr);
+
+  align-items: center;
+
+  gap: 0.9rem;
+}
+
+
+.gallery-filter-row + .gallery-filter-row {
+  padding-top: 0.7rem;
+
+  border-top:
+    1px solid
+    rgba(149, 107, 209, 0.11);
+}
+
+
+.gallery-filter-row__label {
+  color:
+    var(--ink);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.64rem;
+
+  font-weight: 800;
+
+  line-height: 1;
+
+  letter-spacing: 0.1em;
+}
+
+
+/* ==================================================
+   FILTER BUTTONS
+================================================== */
+
+.gallery-filter-row__buttons {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 0.4rem;
+}
+
+
+.gallery-filter-row__buttons button {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 0.5rem;
+
+  min-height: 34px;
+
+  padding:
+    0.48rem
+    0.78rem;
+
+  border:
+    1px solid
+    rgba(149, 107, 209, 0.2);
+
+  border-radius: 999px;
+
+  background: #fff;
+
+  color:
+    var(--ink);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.64rem;
+
+  font-weight: 700;
+
+  line-height: 1;
+
+  letter-spacing: 0.04em;
+
+  white-space: nowrap;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+.gallery-filter-row__buttons button:hover {
+  color:
+    var(--jan-purple-dark);
+
+  border-color:
+    var(--jan-purple);
+
+  background:
+    rgba(233, 221, 255, 0.32);
+
+  transform:
+    translateY(-1px);
+}
+
+
+.gallery-filter-row__buttons button.is-active {
+  border-color:
+    transparent;
+
+  background:
+    var(--couple-gradient);
+
+  color: #fff;
+
+  font-weight: 800;
+
+  box-shadow:
+    0 9px 20px -14px
+    rgba(104, 67, 159, 0.75);
+}
+
+
+/* ==================================================
+   CATEGORY COUNTS
+================================================== */
+
+.gallery-filter-row__buttons small {
+  display: grid;
+
+  place-items: center;
+
+  min-width: 20px;
+
+  height: 20px;
+
+  padding:
+    0
+    0.35rem;
+
+  border-radius: 999px;
+
+  background:
+    rgba(149, 107, 209, 0.1);
+
+  color: inherit;
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.54rem;
+
+  font-weight: 800;
+}
+
+
+.gallery-filter-row__buttons
+button.is-active
+small {
+  background:
+    rgba(255, 255, 255, 0.22);
+}
+
+
+/* ==================================================
+   PERSON FILTER
+================================================== */
+
+.gallery-filter-row__buttons--people button {
+  min-width: 100px;
+}
+
+
+.gallery-person-emoji {
+  font-size: 0.78rem;
+
+  line-height: 1;
+}
+
+
+/* ==================================================
+   ERA SELECT
+================================================== */
+
+.gallery-era-select {
+  position: relative;
+
+  width:
+    min(
+      390px,
+      100%
+    );
+}
+
+
+.gallery-era-select select {
+  width: 100%;
+
+  min-height: 36px;
+
+  padding:
+    0.5rem
+    2.5rem
+    0.5rem
+    0.85rem;
+
+  border:
+    1px solid
+    rgba(149, 107, 209, 0.2);
+
+  border-radius: 9px;
+
+  outline: none;
+
+  background: #fff;
+
+  color:
+    var(--ink);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.64rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.055em;
+
+  appearance: none;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+.gallery-era-select select:hover,
+.gallery-era-select select:focus {
+  border-color:
+    var(--jan-purple);
+
+  box-shadow:
+    0 0 0 3px
+    rgba(149, 107, 209, 0.08);
+}
+
+
+.gallery-era-select > span {
+  position: absolute;
+
+  top: 50%;
+  right: 0.85rem;
+
+  color:
+    var(--couple-purple);
+
+  font-size: 0.65rem;
+
+  transform:
+    translateY(-50%);
+
+  pointer-events: none;
+}
+
+
+/* ==================================================
+   FILTER SUMMARY
+================================================== */
+
+.gallery-filter-summary {
+  display: flex;
+
+  align-items: center;
+
+  justify-content:
+    space-between;
+
+  gap: 1rem;
+
+  width:
+    min(
+      1240px,
+      100%
+    );
+
+  margin:
+    0.8rem
+    auto
+    1.5rem;
+}
+
+
+.gallery-filter-summary > div {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  align-items: center;
+
+  gap: 0.5rem;
+}
+
+
+.gallery-filter-summary__label {
+  margin-right: 0.3rem;
+
+  color:
+    #938996;
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.55rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.15em;
+}
+
+
+.gallery-filter-summary strong {
+  padding:
+    0.34rem
+    0.6rem;
+
+  border-radius: 999px;
+
+  background:
+    var(--couple-soft-gradient);
+
+  color:
+    var(--jan-purple-dark);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.55rem;
+
+  font-weight: 700;
+
+  line-height: 1;
+
+  letter-spacing: 0.06em;
+}
+
+
+.gallery-filter-summary > button {
+  padding:
+    0
+    0
+    0.2rem;
+
+  border: 0;
+
+  border-bottom:
+    1px solid
+    currentColor;
+
+  background: none;
+
+  color:
+    var(--couple-purple);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.58rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+
+  cursor: pointer;
+}
+
+
+/* ==================================================
+   PINTEREST MASONRY
+================================================== */
+
+.gallery-masonry {
+  width: 100%;
+
+  column-count: 5;
+
+  column-gap: 10px;
+}
+
+
+/* ==================================================
+   PHOTO CARD
+================================================== */
+
+.gallery-photo {
+  display: inline-block;
+
+  width: 100%;
+
+  margin:
+    0
+    0
+    10px;
+
+  break-inside: avoid;
+
+  -webkit-column-break-inside:
+    avoid;
+
+  page-break-inside:
+    avoid;
+
+  vertical-align: top;
+}
+
+
+.gallery-photo__button {
+  display: block;
+
+  width: 100%;
+
+  padding: 0;
+
+  border: 0;
+
+  background:
+    transparent;
+
+  color:
+    inherit;
+
+  text-align:
+    left;
+
+  cursor:
+    pointer;
+}
+
+
+/* ==================================================
+   PHOTO IMAGE
+================================================== */
+
+.gallery-photo__image {
+  position: relative;
+
+  overflow: hidden;
+
+  width: 100%;
+
+  border-radius: 14px;
+
+  background:
+    var(--couple-soft-gradient);
+}
+
+
+.gallery-photo__image img {
+  display: block;
+
+  width: 100%;
+
+  height: auto;
+
+  max-width: 100%;
+
+  object-fit: contain;
+
+  transition:
+    transform
+    0.45s
+    cubic-bezier(
+      0.2,
+      0.8,
+      0.2,
+      1
+    );
+}
+
+
+/* ==================================================
+   PHOTO HOVER
+================================================== */
+
+.gallery-photo__overlay {
+  position: absolute;
+
+  inset: 0;
+
+  display: flex;
+
+  align-items: flex-end;
+
+  justify-content:
+    flex-end;
+
+  padding: 0.8rem;
+
+  background:
+    linear-gradient(
+      180deg,
+      transparent 45%,
+      rgba(20, 14, 23, 0.58)
+      100%
+    );
+
+  opacity: 0;
+
+  transition:
+    opacity 0.25s ease;
+
+  pointer-events: none;
+}
+
+
+.gallery-photo__overlay span {
+  padding:
+    0.48rem
+    0.72rem;
+
+  border-radius: 999px;
+
+  background:
+    rgba(255, 255, 255, 0.94);
+
+  color:
+    var(--ink);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.5rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+}
+
+
+.gallery-photo:hover
+.gallery-photo__overlay {
+  opacity: 1;
+}
+
+
+.gallery-photo:hover
+.gallery-photo__image img {
+  transform:
+    scale(1.025);
+}
+
+
+/* ==================================================
+   EMPTY STATE
+================================================== */
+
+.gallery-empty {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  min-height: 350px;
+
+  padding: 3rem;
+
+  border:
+    1px dashed
+    rgba(149, 107, 209, 0.28);
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(233, 221, 255, 0.32),
+      rgba(251, 217, 234, 0.32)
+    );
+
+  text-align: center;
+}
+
+
+.gallery-empty > span {
+  color:
+    var(--couple-pink);
+
+  font-size: 2rem;
+}
+
+
+.gallery-empty h3 {
+  margin:
+    1rem
+    0
+    0;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 2rem;
+
+  font-weight: 500;
+}
+
+
+.gallery-empty p {
+  margin:
+    0.5rem
+    0
+    0;
+
+  color:
+    var(--muted);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.7rem;
+
+  font-weight: 500;
+}
+
+
+.gallery-empty button {
+  margin-top: 1.2rem;
+
+  padding:
+    0.75rem
+    1.1rem;
+
+  border:
+    1px solid
+    var(--couple-purple);
+
+  border-radius: 999px;
+
+  background:
+    transparent;
+
+  color:
+    var(--couple-purple);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.6rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+
+  cursor: pointer;
+}
+
+
+/* ==================================================
+   CREDIT NOTE
+================================================== */
+
+.gallery-credit {
+  display: grid;
+
+  grid-template-columns:
+    140px
+    minmax(0, 1fr);
+
+  gap: 2rem;
+
+  width:
+    min(
+      1180px,
+      100%
+    );
+
+  margin:
+    5rem
+    auto
+    0;
+
+  padding-top: 1.5rem;
+
+  border-top:
+    1px solid
+    rgba(149, 107, 209, 0.14);
+}
+
+
+.gallery-credit span {
+  color:
+    var(--couple-purple);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.56rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.14em;
+}
+
+
+.gallery-credit p {
+  max-width: 72ch;
+
+  margin: 0;
+
+  color:
+    #8e858f;
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.62rem;
+
+  font-weight: 500;
+
+  line-height: 1.7;
+}
+
+
+/* ==================================================
+   FULLSCREEN LIGHTBOX
+================================================== */
+
+.gallery-lightbox {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 99999;
+
+  width: 100vw;
+  height: 100dvh;
+
+  overflow: hidden;
+
+  background:
+    rgba(8, 7, 10, 0.985);
+
+  color: #fff;
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  animation:
+    gallery-lightbox-open
+    0.2s ease
+    both;
+}
+
+
+/* ==================================================
+   LIGHTBOX IMAGE STAGE
+================================================== */
+
+.gallery-lightbox__stage {
+  position: absolute;
+
+  inset: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  padding:
+    58px
+    82px;
+
+  overflow: hidden;
+}
+
+
+/* ==================================================
+   LIGHTBOX IMAGE
+================================================== */
+
+.gallery-lightbox__image {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  max-width: 100%;
+  max-height: 100%;
+
+  object-fit: contain;
+
+  object-position: center;
+
+  user-select: none;
+
+  -webkit-user-drag: none;
+
+  animation:
+    gallery-lightbox-image
+    0.25s ease
+    both;
+}
+
+
+/* ==================================================
+   LIGHTBOX BRAND
+================================================== */
+
+.gallery-lightbox__brand {
+  position: absolute;
+
+  top: 22px;
+  left: 24px;
+
+  z-index: 10;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 0.75rem;
+
+  pointer-events: none;
+}
+
+
+.gallery-lightbox__brand strong {
+  color: #fff;
+
+  font-size: 0.7rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.16em;
+}
+
+
+.gallery-lightbox__brand span {
+  color:
+    rgba(255, 255, 255, 0.35);
+
+  font-size: 0.5rem;
+
+  font-weight: 500;
+
+  letter-spacing: 0.13em;
+}
+
+
+/* ==================================================
+   LIGHTBOX COUNTER
+================================================== */
+
+.gallery-lightbox__counter {
+  position: absolute;
+
+  top: 25px;
+  right: 86px;
+
+  z-index: 10;
+
+  color:
+    rgba(255, 255, 255, 0.85);
+
+  font-size: 0.56rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.14em;
+}
+
+
+.gallery-lightbox__counter span {
+  margin:
+    0
+    0.4rem;
+
+  color:
+    rgba(255, 255, 255, 0.3);
+}
+
+
+/* ==================================================
+   LIGHTBOX CLOSE
+================================================== */
+
+.gallery-lightbox__close {
+  position: absolute;
+
+  top: 15px;
+  right: 20px;
+
+  z-index: 12;
+
+  display: grid;
+
+  place-items: center;
+
+  width: 42px;
+  height: 42px;
+
+  padding: 0;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.18);
+
+  border-radius: 50%;
+
+  background:
+    rgba(255, 255, 255, 0.06);
+
+  color: #fff;
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 1.5rem;
+
+  font-weight: 300;
+
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.25s ease;
+}
+
+
+.gallery-lightbox__close:hover {
+  background:
+    rgba(255, 255, 255, 0.15);
+
+  transform:
+    rotate(90deg);
+}
+
+
+/* ==================================================
+   LIGHTBOX NAVIGATION
+================================================== */
+
+.gallery-lightbox__nav {
+  position: absolute;
+
+  top: 50%;
+
+  z-index: 12;
+
+  display: grid;
+
+  place-items: center;
+
+  width: 48px;
+  height: 48px;
+
+  padding: 0;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.18);
+
+  border-radius: 50%;
+
+  background:
+    rgba(8, 7, 10, 0.58);
+
+  color: #fff;
+
+  font-size: 1.05rem;
+
+  cursor: pointer;
+
+  backdrop-filter:
+    blur(10px);
+
+  -webkit-backdrop-filter:
+    blur(10px);
+
+  transform:
+    translateY(-50%);
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+
+.gallery-lightbox__nav:hover {
+  background:
+    rgba(255, 255, 255, 0.12);
+
+  border-color:
+    rgba(255, 255, 255, 0.4);
+}
+
+
+.gallery-lightbox__nav--prev {
+  left: 18px;
+}
+
+
+.gallery-lightbox__nav--next {
+  right: 18px;
+}
+
+
+/* ==================================================
+   LIGHTBOX CAPTION
+================================================== */
+
+.gallery-lightbox__caption {
+  position: absolute;
+
+  left: 24px;
+  bottom: 20px;
+
+  z-index: 10;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 0.3rem;
+
+  pointer-events: none;
+}
+
+
+.gallery-lightbox__caption > span {
+  color: #fff;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 1.6rem;
+
+  font-weight: 500;
+
+  line-height: 1;
+}
+
+
+.gallery-lightbox__caption small {
+  color:
+    rgba(255, 255, 255, 0.48);
+
+  font-size: 0.55rem;
+
+  font-weight: 600;
+
+  letter-spacing: 0.07em;
+}
+
+
+/* ==================================================
+   LIGHTBOX PHOTO CREDIT
+================================================== */
+
+.gallery-lightbox__hint {
+  position: absolute;
+
+  right: 24px;
+  bottom: 20px;
+
+  z-index: 20;
+
+  display: grid;
+
+  grid-template-columns: 1fr;
+
+  width: 560px;
+
+  max-width:
+    calc(
+      100vw - 48px
+    );
+
+  gap: 0.35rem;
+
+  text-align: right;
+
+  pointer-events: none;
+}
+
+
+.gallery-lightbox__hint-title {
+  display: block;
+
+  width: 100%;
+
+  color:
+    rgba(255, 255, 255, 0.55);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.5rem;
+
+  font-weight: 800;
+
+  line-height: 1.2;
+
+  letter-spacing: 0.14em;
+}
+
+
+.gallery-lightbox__hint-text {
+  display: block;
+
+  width: 100%;
+
+  color:
+    rgba(255, 255, 255, 0.36);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.56rem;
+
+  font-weight: 500;
+
+  line-height: 1.5;
+
+  letter-spacing: 0.02em;
+
+  white-space: normal;
+}
+
+
+/* ==================================================
+   LIGHTBOX FOCUS
+================================================== */
+
+.gallery-lightbox button:focus-visible {
+  outline:
+    2px solid
+    var(--couple-pink);
+
+  outline-offset: 3px;
+}
+
+
+/* ==================================================
+   ANIMATIONS
+================================================== */
+
+@keyframes gallery-lightbox-open {
+
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+
+}
+
+
+@keyframes gallery-lightbox-image {
+
+  from {
+    opacity: 0;
+
+    transform:
+      scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      scale(1);
+  }
+
+}
+
+
+/* ==================================================
+   LARGE LAPTOP
+   4-COLUMN MASONRY
+================================================== */
+
+@media (max-width: 1250px) {
+
+  .gallery-masonry {
+    column-count: 4;
+  }
+
+}
+
+
+/* ==================================================
+   TABLET
+   3-COLUMN MASONRY
+================================================== */
+
+@media (max-width: 950px) {
+
+  .gallery-home__inner {
+    width:
+      calc(
+        100% - 3rem
+      );
+  }
+
+
+  .gallery-home__hero {
+    grid-template-columns:
+      minmax(0, 1fr)
+      160px;
+
+    gap: 2rem;
+  }
+
+
+  .gallery-filter-panel {
+    padding:
+      0.8rem
+      0.9rem;
+  }
+
+
+  .gallery-filter-row {
+    grid-template-columns:
+      95px
+      minmax(0, 1fr);
+
+    gap: 0.7rem;
+  }
+
+
+  .gallery-filter-row__buttons button {
+    min-height: 33px;
+
+    padding:
+      0.45rem
+      0.7rem;
+
+    font-size: 0.62rem;
+  }
+
+
+  .gallery-masonry {
+    column-count: 3;
+  }
+
+
+  .gallery-lightbox__stage {
+    padding:
+      58px
+      66px
+      64px;
+  }
+
+}
+
+
+/* ==================================================
+   MOBILE
+   2-COLUMN PINTEREST MASONRY
+================================================== */
+
+@media (max-width: 700px) {
+
+  /* ==============================
+     HOME
+  ============================== */
+
+  .gallery-home {
+    min-height: auto;
+  }
+
+
+  .gallery-home__inner {
+    width:
+      calc(
+        100% - 2rem
+      );
+
+    min-height: auto;
+
+    padding:
+      6rem
+      0
+      2rem;
+  }
+
+
+  .gallery-home__top span:last-child {
+    display: none;
+  }
+
+
+  .gallery-home__hero {
+    grid-template-columns:
+      1fr;
+
+    gap: 3rem;
+
+    padding:
+      3rem
+      0;
+  }
+
+
+  .gallery-home__intro h1 {
+    font-size:
+      clamp(
+        4rem,
+        18vw,
+        6rem
+      );
+  }
+
+
+  .gallery-home__counter {
+    align-items:
+      flex-start;
+
+    text-align: left;
+  }
+
+
+  .gallery-home__counter strong {
+    font-size: 6rem;
+  }
+
+
+  .gallery-home__bottom {
+    align-items:
+      flex-start;
+
+    flex-direction:
+      column-reverse;
+  }
+
+
+  /* ==============================
+     ARCHIVE
+  ============================== */
+
+  .gallery-archive {
+    padding:
+      4rem
+      0;
+  }
+
+
+  .gallery-archive__inner {
+    width:
+      calc(
+        100% - 1rem
+      );
+  }
+
+
+  .gallery-archive__header {
+    align-items:
+      flex-start;
+
+    flex-direction:
+      column;
+
+    gap: 1.3rem;
+
+    margin-bottom: 2rem;
+
+    padding:
+      0
+      0.5rem;
+  }
+
+
+  .gallery-archive__count strong {
+    font-size: 3rem;
+  }
+
+
+  /* ==============================
+     FILTER PANEL
+  ============================== */
+
+  .gallery-filter-panel {
+    top: 64px;
+
+    gap: 0.6rem;
+
+    padding: 0.75rem;
+
+    border-radius: 12px;
+  }
+
+
+  .gallery-filter-row {
+    grid-template-columns:
+      1fr;
+
+    gap: 0.55rem;
+  }
+
+
+  .gallery-filter-row + .gallery-filter-row {
+    padding-top: 0.6rem;
+  }
+
+
+  .gallery-filter-row__label {
+    font-size: 0.6rem;
+  }
+
+
+  .gallery-filter-row__buttons {
+    flex-wrap: nowrap;
+
+    overflow-x: auto;
+
+    padding-bottom: 0.2rem;
+
+    scrollbar-width: none;
+  }
+
+
+  .gallery-filter-row__buttons::-webkit-scrollbar {
+    display: none;
+  }
+
+
+  .gallery-filter-row__buttons button {
+    flex: none;
+
+    min-height: 32px;
+
+    padding:
+      0.43rem
+      0.68rem;
+
+    font-size: 0.61rem;
+
+    font-weight: 700;
+  }
+
+
+  .gallery-filter-row__buttons--people button {
+    min-width: 96px;
+  }
+
+
+  .gallery-era-select {
+    width: 100%;
+  }
+
+
+  .gallery-era-select select {
+    min-height: 34px;
+
+    font-size: 0.61rem;
+  }
+
+
+  .gallery-filter-summary {
+    align-items:
+      flex-start;
+
+    flex-direction:
+      column;
+
+    margin-top: 0.7rem;
+
+    margin-bottom: 1.2rem;
+
+    padding:
+      0
+      0.5rem;
+  }
+
+
+  /* ==============================
+     MASONRY
+  ============================== */
+
+  .gallery-masonry {
+    column-count: 2;
+
+    column-gap: 7px;
+  }
+
+
+  .gallery-photo {
+    margin-bottom: 7px;
+  }
+
+
+  .gallery-photo__image {
+    border-radius: 10px;
+  }
+
+
+  /* ==============================
+     CREDIT
+  ============================== */
+
+  .gallery-credit {
+    grid-template-columns:
+      1fr;
+
+    gap: 0.8rem;
+
+    margin-top: 3.5rem;
+
+    padding:
+      1.2rem
+      0.5rem
+      0;
+  }
+
+
+  /* ==============================
+     LIGHTBOX
+  ============================== */
+
+  .gallery-lightbox__stage {
+    padding:
+      55px
+      8px
+      78px;
+  }
+
+
+  .gallery-lightbox__image {
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: contain;
+
+    object-position: center;
+  }
+
+
+  .gallery-lightbox__brand {
+    top: 18px;
+    left: 14px;
+  }
+
+
+  .gallery-lightbox__brand span {
+    display: none;
+  }
+
+
+  .gallery-lightbox__counter {
+    top: 21px;
+    right: 66px;
+  }
+
+
+  .gallery-lightbox__close {
+    top: 10px;
+    right: 10px;
+
+    width: 38px;
+    height: 38px;
+  }
+
+
+  .gallery-lightbox__nav {
+    width: 40px;
+    height: 40px;
+
+    background:
+      rgba(8, 7, 10, 0.65);
+  }
+
+
+  .gallery-lightbox__nav--prev {
+    left: 8px;
+  }
+
+
+  .gallery-lightbox__nav--next {
+    right: 8px;
+  }
+
+
+  .gallery-lightbox__caption {
+    left: 14px;
+    bottom: 16px;
+  }
+
+
+  .gallery-lightbox__caption > span {
+    font-size: 1.25rem;
+  }
+
+
+  .gallery-lightbox__hint {
+    right: 14px;
+    bottom: 14px;
+
+    width:
+      calc(
+        100% - 28px
+      );
+
+    text-align: left;
+  }
+
+
+  .gallery-lightbox__hint-title {
+    font-size: 0.48rem;
+  }
+
+
+  .gallery-lightbox__hint-text {
+    font-size: 0.5rem;
+  }
+
+}
+
+
+/* ==================================================
+   SMALL MOBILE
+================================================== */
+
+@media (max-width: 420px) {
+
+  .gallery-filter-panel {
+    padding: 0.7rem;
+  }
+
+
+  .gallery-filter-row__buttons button {
+    font-size: 0.6rem;
+  }
+
+
+  .gallery-masonry {
+    column-count: 2;
+
+    column-gap: 6px;
+  }
+
+
+  .gallery-photo {
+    margin-bottom: 6px;
+  }
+
+
+  .gallery-lightbox__stage {
+    padding:
+      52px
+      5px
+      78px;
+  }
+
+
+  .gallery-lightbox__brand strong {
+    font-size: 0.48rem;
+  }
+
+
+  .gallery-lightbox__counter {
+    font-size: 0.46rem;
+  }
+
+}
+
+
+/* ==================================================
+   REDUCED MOTION
+================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .gallery-home__bottom button span,
+  .gallery-filter-row__buttons button,
+  .gallery-photo__image img,
+  .gallery-photo__overlay,
+  .gallery-lightbox,
+  .gallery-lightbox__image,
+  .gallery-lightbox__close,
+  .gallery-lightbox__nav {
+    transition: none;
+
+    animation: none;
+  }
+
+
+  .gallery-home__bottom button:hover span,
+  .gallery-filter-row__buttons button:hover,
+  .gallery-photo:hover
+  .gallery-photo__image img {
+    transform: none;
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ==========================================================
+   MOBILE GALLERY — COMPACT 3-COLUMN PINTEREST VIEW
+========================================================== */
+
+@media (max-width: 700px) {
+
+  /* ========================================================
+     ARCHIVE WIDTH
+  ======================================================== */
+
+  .gallery-archive__inner {
+    width:
+      calc(
+        100% - 0.6rem
+      );
+  }
+
+
+  /* ========================================================
+     FILTER PANEL
+  ======================================================== */
+
+  .gallery-filter-panel,
+  .gallery-archive__filterbar {
+    top:
+      64px;
+
+    padding:
+      0.55rem;
+
+    gap:
+      0.4rem;
+
+    border-radius:
+      10px;
+  }
+
+
+  .gallery-filter-row {
+    grid-template-columns:
+      1fr;
+
+    gap:
+      0.3rem;
+  }
+
+
+  .gallery-filter-row + .gallery-filter-row {
+    padding-top:
+      0.4rem;
+  }
+
+
+  .gallery-filter-row__label {
+    font-size:
+      0.48rem;
+
+    letter-spacing:
+      0.1em;
+  }
+
+
+  /* ========================================================
+     HORIZONTAL FILTER CHIPS
+  ======================================================== */
+
+  .gallery-filter-row__buttons,
+  .gallery-filter-row__options {
+    display:
+      flex;
+
+    flex-wrap:
+      nowrap;
+
+    gap:
+      0.3rem;
+
+    overflow-x:
+      auto;
+
+    overflow-y:
+      hidden;
+
+    padding-bottom:
+      0.15rem;
+
+    scrollbar-width:
+      none;
+
+    -webkit-overflow-scrolling:
+      touch;
+  }
+
+
+  .gallery-filter-row__buttons::-webkit-scrollbar,
+  .gallery-filter-row__options::-webkit-scrollbar {
+    display:
+      none;
+  }
+
+
+  .gallery-filter-row__buttons button,
+  .gallery-filter-chip {
+    flex:
+      0
+      0
+      auto;
+
+    min-width:
+      0;
+
+    min-height:
+      28px;
+
+    padding:
+      0.35rem
+      0.5rem;
+
+    font-size:
+      0.5rem;
+
+    white-space:
+      nowrap;
+  }
+
+
+  .gallery-filter-chip__count {
+    font-size:
+      0.42rem;
+  }
+
+
+  /* ========================================================
+     ERA SELECT
+  ======================================================== */
+
+  .gallery-era-select {
+    width:
+      100%;
+  }
+
+
+  .gallery-era-select select {
+    width:
+      100%;
+
+    min-height:
+      30px;
+
+    padding:
+      0.35rem
+      2rem
+      0.35rem
+      0.55rem;
+
+    font-size:
+      0.52rem;
+  }
+
+
+  /* ========================================================
+     ACTIVE FILTER SUMMARY
+  ======================================================== */
+
+  .gallery-filter-summary,
+  .gallery-archive__summary {
+    margin-top:
+      0.55rem;
+
+    margin-bottom:
+      0.8rem;
+  }
+
+
+  .gallery-active-filters {
+    display:
+      flex;
+
+    flex-wrap:
+      wrap;
+
+    gap:
+      0.25rem;
+  }
+
+
+  .gallery-active-filter {
+    padding:
+      0.3rem
+      0.4rem;
+
+    font-size:
+      0.42rem;
+  }
+
+
+  /* ========================================================
+     THREE COLUMN MASONRY
+  ======================================================== */
+
+  .gallery-masonry {
+    column-count:
+      3 !important;
+
+    column-gap:
+      5px !important;
+  }
+
+
+  .gallery-photo {
+    margin-bottom:
+      5px !important;
+  }
+
+
+  .gallery-photo__image,
+  .gallery-photo__media {
+    border-radius:
+      6px;
+  }
+
+
+  /* Keep the mobile Pinterest wall visual.
+     Full information remains available in the lightbox.
+  */
+
+  .gallery-page
+  .gallery-photo__info {
+    display:
+      none;
+  }
+
+
+  .gallery-photo__view {
+    font-size:
+      0.35rem;
+  }
+
+}
+
+
+/* ==========================================================
+   VERY SMALL PHONE
+   KEEP 3 COLUMNS
+========================================================== */
+
+@media (max-width: 420px) {
+
+  .gallery-masonry {
+    column-count:
+      3 !important;
+
+    column-gap:
+      4px !important;
+  }
+
+
+  .gallery-photo {
+    margin-bottom:
+      4px !important;
+  }
+
+}

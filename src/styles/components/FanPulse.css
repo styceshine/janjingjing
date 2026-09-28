@@ -1,0 +1,1081 @@
+/* ==================================================
+   FAN PULSE
+================================================== */
+
+.fan-pulse {
+  width: 100%;
+
+  color:
+    var(--ink);
+}
+
+
+.fan-pulse__inner {
+  width:
+    min(
+      1100px,
+      calc(100% - 3rem)
+    );
+
+  margin:
+    0 auto;
+
+  padding:
+    clamp(4.5rem, 5vw, 7rem)
+    0;
+}
+
+
+/* ==================================================
+   HEADING
+================================================== */
+
+.fan-pulse__heading {
+  width:
+    min(
+      620px,
+      100%
+    );
+
+  margin:
+    0 auto;
+
+  text-align:
+    center;
+}
+
+
+.fan-pulse__eyebrow {
+  margin:
+    0
+    0
+    0.8rem;
+
+  color:
+    var(--couple-purple);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size:
+    0.6rem;
+
+  font-weight:
+    1000;
+
+  letter-spacing:
+    0.18em;
+}
+
+
+.fan-pulse__heading h2 {
+  margin:
+    0;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size:
+    clamp(
+      4rem,
+      8vw,
+      7rem
+    );
+
+  font-weight:
+    500;
+
+  line-height:
+    0.76;
+
+  letter-spacing:
+    -0.055em;
+}
+
+
+.fan-pulse__heading h2 span {
+  display:
+    block;
+
+  width:
+    fit-content;
+
+  margin:
+    0.08em
+    auto
+    0;
+
+  padding-right:
+    0.15em;
+
+  background:
+    var(--couple-gradient);
+
+  background-clip:
+    text;
+
+  -webkit-background-clip:
+    text;
+
+  -webkit-text-fill-color:
+    transparent;
+
+  color:
+    transparent;
+
+  font-family:
+    "Sacramento",
+    cursive;
+
+  font-size:
+    0.88em;
+
+  font-weight:
+    400;
+
+  letter-spacing:
+    0;
+}
+
+
+.fan-pulse__intro {
+  max-width:
+    51ch;
+
+  margin:
+    1.6rem
+    auto
+    0;
+
+  color:
+    var(--muted);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size:
+    0.7rem;
+
+  line-height:
+    1.8;
+}
+
+
+/* ==================================================
+   TOTAL
+================================================== */
+
+.fan-pulse__total {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  gap:
+    1rem;
+
+  width:
+    fit-content;
+
+  margin:
+    2.5rem
+    auto
+    0;
+
+  padding:
+    0.8rem
+    1.2rem;
+
+  border:
+    1px solid
+    rgba(149, 107, 209, 0.13);
+
+  border-radius:
+    999px;
+
+  background:
+    rgba(255, 255, 255, 0.78);
+}
+
+
+.fan-pulse__total > span,
+.fan-pulse__total > small {
+  color:
+    #817885;
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size:
+    0.5rem;
+
+  font-weight:
+    800;
+
+  letter-spacing:
+    0.1em;
+}
+
+
+.fan-pulse__total strong {
+  background:
+    var(--couple-gradient);
+
+  background-clip:
+    text;
+
+  -webkit-background-clip:
+    text;
+
+  -webkit-text-fill-color:
+    transparent;
+
+  color:
+    transparent;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size:
+    1.8rem;
+
+  line-height:
+    1;
+}
+
+
+/* ==================================================
+   GROUPS
+================================================== */
+
+.fan-pulse__groups {
+  display:
+    grid;
+
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(0, 1fr)
+    );
+
+  gap:
+    1rem;
+
+  margin-top:
+    3rem;
+}
+
+
+.fan-pulse-group {
+  position:
+    relative;
+
+  overflow:
+    hidden;
+
+  padding:
+    1.6rem;
+
+  border:
+    1px solid
+    rgba(149, 107, 209, 0.14);
+
+  border-radius:
+    24px;
+
+  background:
+    rgba(255, 255, 255, 0.88);
+
+  box-shadow:
+    0 28px 70px -52px
+    rgba(72, 42, 95, 0.5);
+}
+
+
+.fan-pulse-group::before {
+  content:
+    "";
+
+  position:
+    absolute;
+
+  width:
+    260px;
+
+  height:
+    260px;
+
+  border-radius:
+    50%;
+
+  filter:
+    blur(80px);
+
+  opacity:
+    0.16;
+
+  pointer-events:
+    none;
+}
+
+
+.fan-pulse-group--jan::before {
+  top:
+    -130px;
+
+  right:
+    -90px;
+
+  background:
+    var(--jan-purple);
+}
+
+
+.fan-pulse-group--jingjing::before {
+  right:
+    -90px;
+
+  bottom:
+    -130px;
+
+  background:
+    var(--jing-pink);
+}
+
+
+/* ==================================================
+   GROUP HEADER
+================================================== */
+
+.fan-pulse-group__head {
+  position:
+    relative;
+
+  z-index:
+    1;
+
+  display:
+    flex;
+
+  align-items:
+    flex-end;
+
+  justify-content:
+    space-between;
+
+  gap:
+    1.5rem;
+
+  padding-bottom:
+    1.4rem;
+
+  border-bottom:
+    1px solid
+    rgba(149, 107, 209, 0.1);
+}
+
+
+.fan-pulse-group__head > div:first-child > span {
+  color:
+    #8f8791;
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size:
+    0.5rem;
+
+  font-weight:
+    800;
+
+  letter-spacing:
+    0.13em;
+}
+
+
+.fan-pulse-group__head h3 {
+  margin:
+    0.15rem
+    0
+    0;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size:
+    clamp(
+      2.8rem,
+      5vw,
+      4.4rem
+    );
+
+  font-weight:
+    500;
+
+  line-height:
+    0.9;
+}
+
+
+.fan-pulse-group--jan
+.fan-pulse-group__head h3 {
+  color:
+    var(--jan-purple-dark);
+}
+
+
+.fan-pulse-group--jingjing
+.fan-pulse-group__head h3 {
+  color:
+    var(--jing-pink-dark);
+}
+
+
+.fan-pulse-group__head p {
+  margin:
+    0.6rem
+    0
+    0;
+
+  color:
+    var(--muted);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size:
+    0.65rem;
+}
+
+
+.fan-pulse-group__total {
+  text-align:
+    right;
+}
+
+
+.fan-pulse-group__total strong {
+  display:
+    block;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size:
+    2.4rem;
+
+  font-weight:
+    500;
+
+  line-height:
+    1;
+}
+
+
+.fan-pulse-group__total span {
+  display:
+    block;
+
+  margin-top:
+    0.25rem;
+
+  color:
+    #817983e3;
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size:
+    0.55rem;
+
+  font-weight:
+    800;
+
+  letter-spacing:
+    0.1em;
+}
+
+
+/* ==================================================
+   CHARMS
+================================================== */
+
+.fan-pulse-group__buttons {
+  position:
+    relative;
+
+  z-index:
+    1;
+
+  display:
+    grid;
+
+  gap:
+    0.55rem;
+
+  margin-top:
+    1.2rem;
+}
+
+
+.fan-pulse-charm {
+  display:
+    grid;
+
+  grid-template-columns:
+    auto
+    1fr
+    auto;
+
+  align-items:
+    center;
+
+  gap:
+    0.8rem;
+
+  width:
+    100%;
+
+  min-height:
+    64px;
+
+  padding:
+    0.7rem
+    0.9rem;
+
+  border:
+    1px solid
+    rgba(149, 107, 209, 0.13);
+
+  border-radius:
+    14px;
+
+  background:
+    rgba(255, 255, 255, 0.88);
+
+  color:
+    var(--ink);
+
+  text-align:
+    left;
+
+  cursor:
+    pointer;
+
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    background-color 0.18s ease;
+}
+
+
+.fan-pulse-charm:hover:not(:disabled) {
+  transform:
+    translateY(-2px);
+
+  border-color:
+    rgba(149, 107, 209, 0.32);
+
+  box-shadow:
+    0 15px 28px -24px
+    rgba(77, 46, 101, 0.7);
+}
+
+
+.fan-pulse-group--jan
+.fan-pulse-charm.is-reacted {
+  border-color:
+    rgba(149, 107, 209, 0.25);
+
+  background:
+    var(--jan-purple-soft);
+}
+
+
+.fan-pulse-group--jingjing
+.fan-pulse-charm.is-reacted {
+  border-color:
+    rgba(233, 90, 169, 0.22);
+
+  background:
+    var(--jing-pink-soft);
+}
+
+
+.fan-pulse-charm:disabled {
+  cursor:
+    default;
+}
+
+
+.fan-pulse-charm__emoji {
+  display:
+    grid;
+
+  place-items:
+    center;
+
+  width:
+    42px;
+
+  height:
+    42px;
+
+  border-radius:
+    50%;
+
+  background:
+    #fff;
+
+  font-size:
+    1.2rem;
+}
+
+
+.fan-pulse-charm__copy {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    0.18rem;
+}
+
+
+.fan-pulse-charm__copy strong {
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size:
+    0.65rem;
+
+  font-weight:
+    800;
+
+  letter-spacing:
+    0.04em;
+}
+
+
+.fan-pulse-charm__copy small {
+  color:
+    var(--muted);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size:
+    0.6rem;
+
+  font-weight:
+    600;
+}
+
+
+.fan-pulse-charm__check {
+  display:
+    grid;
+
+  place-items:
+    center;
+
+  width:
+    25px;
+
+  height:
+    25px;
+
+  border-radius:
+    50%;
+
+  background:
+    #fff;
+
+  color:
+    var(--couple-purple);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size:
+    0.55rem;
+
+  font-weight:
+    900;
+}
+
+
+/* ==================================================
+   RESPONSE
+================================================== */
+
+.fan-pulse__response {
+  min-height:
+    30px;
+
+  margin-top:
+    1.5rem;
+
+  color:
+    var(--couple-purple);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size:
+    0.58rem;
+
+  font-weight:
+    800;
+
+  letter-spacing:
+    0.04em;
+
+  text-align:
+    center;
+
+  opacity:
+    0.35;
+
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.fan-pulse__response.is-visible {
+  opacity:
+    1;
+
+  transform:
+    translateY(-2px);
+}
+
+
+.fan-pulse__error {
+  margin:
+    0.6rem
+    0
+    0;
+
+  color:
+    var(--jing-pink-dark);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size:
+    0.54rem;
+
+  font-weight:
+    600;
+
+  text-align:
+    center;
+}
+
+
+/* ==================================================
+   FOOTER
+================================================== */
+
+.fan-pulse__footer {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  gap:
+    1.2rem;
+
+  margin-top:
+    1.4rem;
+
+  color:
+    #958a98;
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size:
+    0.48rem;
+
+  font-weight:
+    800;
+
+  letter-spacing:
+    0.08em;
+}
+
+
+.fan-pulse__footer i {
+  color:
+    var(--couple-pink);
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size:
+    1.3rem;
+
+  font-style:
+    normal;
+}
+
+
+/* ==================================================
+   COMPACT VERSION
+================================================== */
+
+.fan-pulse--compact {
+  width:
+    100%;
+}
+
+
+.fan-pulse-compact__groups {
+  display:
+    grid;
+
+  gap:
+    0.85rem;
+}
+
+
+.fan-pulse-compact__group {
+  display:
+    grid;
+
+  gap:
+    0.45rem;
+}
+
+
+.fan-pulse-compact__name {
+  color:
+    var(--muted);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size:
+    0.46rem;
+
+  font-weight:
+    800;
+
+  letter-spacing:
+    0.11em;
+}
+
+
+.fan-pulse-compact__buttons {
+  display:
+    grid;
+
+  grid-template-columns:
+    repeat(
+      3,
+      1fr
+    );
+
+  gap:
+    0.35rem;
+}
+
+
+.fan-pulse-compact__buttons button {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  gap:
+    0.35rem;
+
+  min-height:
+    38px;
+
+  border:
+    1px solid
+    rgba(149, 107, 209, 0.14);
+
+  border-radius:
+    999px;
+
+  background:
+    #fff;
+
+  color:
+    var(--ink);
+
+  cursor:
+    pointer;
+}
+
+
+.fan-pulse-compact__buttons button.is-reacted {
+  background:
+    var(--couple-soft-gradient);
+}
+
+
+.fan-pulse-compact__buttons button span {
+  font-size:
+    0.9rem;
+}
+
+
+.fan-pulse-compact__buttons button small {
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size:
+    0.48rem;
+
+  font-weight:
+    800;
+}
+
+
+/* ==================================================
+   TABLET
+================================================== */
+
+@media (max-width: 800px) {
+
+  .fan-pulse__groups {
+    grid-template-columns:
+      1fr;
+  }
+
+}
+
+
+/* ==================================================
+   MOBILE
+================================================== */
+
+@media (max-width: 560px) {
+
+  .fan-pulse__inner {
+    width:
+      min(
+        100% - 2rem,
+        1100px
+      );
+  }
+
+
+  .fan-pulse__total {
+    flex-direction:
+      column;
+
+    gap:
+      0.2rem;
+
+    border-radius:
+      16px;
+
+    text-align:
+      center;
+  }
+
+
+  .fan-pulse-group {
+    padding:
+      1.2rem;
+
+    border-radius:
+      18px;
+  }
+
+
+  .fan-pulse-group__head {
+    align-items:
+      flex-start;
+
+    flex-direction:
+      column;
+  }
+
+
+  .fan-pulse-group__total {
+    text-align:
+      left;
+  }
+
+
+  .fan-pulse__footer {
+    flex-wrap:
+      wrap;
+
+    gap:
+      0.7rem;
+  }
+
+}
+
+
+/* ==================================================
+   REDUCED MOTION
+================================================== */
+
+@media (
+  prefers-reduced-motion:
+  reduce
+) {
+
+  .fan-pulse-charm,
+  .fan-pulse__response {
+    transition:
+      none;
+  }
+
+
+  .fan-pulse-charm:hover:not(:disabled) {
+    transform:
+      none;
+  }
+
+}
+
+
+
+
+
+

@@ -1,0 +1,552 @@
+/* ==================================================
+   FLOATING FAN PULSE
+================================================== */
+
+.floating-pulse {
+  position: fixed;
+
+  right:
+    clamp(
+      1rem,
+      2vw,
+      1.8rem
+    );
+
+  bottom:
+    clamp(
+      1rem,
+      2vw,
+      1.8rem
+    );
+
+  z-index: 900;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: flex-end;
+
+  gap: 0.75rem;
+
+  pointer-events: none;
+}
+
+
+/* ==================================================
+   LAUNCHER
+================================================== */
+
+.floating-pulse__launcher {
+  position: relative;
+
+  z-index: 20;
+
+  pointer-events: auto;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 0.65rem;
+
+  min-height: 54px;
+
+  padding:
+    0.45rem
+    1rem
+    0.45rem
+    0.45rem;
+
+  border:
+    1px solid
+    rgba(
+      149,
+      107,
+      209,
+      0.2
+    );
+
+  border-radius: 999px;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.94
+    );
+
+  color:
+    var(--ink);
+
+  box-shadow:
+    0 18px 45px -24px
+    rgba(
+      74,
+      43,
+      96,
+      0.55
+    );
+
+  backdrop-filter:
+    blur(18px);
+
+  -webkit-backdrop-filter:
+    blur(18px);
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+
+.floating-pulse__launcher:hover {
+  transform:
+    translateY(-2px);
+
+  border-color:
+    rgba(
+      149,
+      107,
+      209,
+      0.36
+    );
+
+  box-shadow:
+    0 22px 50px -24px
+    rgba(
+      74,
+      43,
+      96,
+      0.65
+    );
+}
+
+
+/* ==================================================
+   LAUNCHER HEART
+================================================== */
+
+.floating-pulse__launcher-heart {
+  display: grid;
+
+  place-items: center;
+
+  width: 42px;
+  height: 42px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background:
+    var(--couple-gradient);
+
+  color: #fff;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 1.4rem;
+
+  line-height: 1;
+}
+
+
+/* ==================================================
+   LAUNCHER TEXT
+================================================== */
+
+.floating-pulse__launcher-copy {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: flex-start;
+}
+
+
+.floating-pulse__launcher-copy strong {
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.5rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.11em;
+}
+
+
+.floating-pulse__launcher-copy small {
+  margin-top: 0.15rem;
+
+  color:
+    var(--muted);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.42rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.1em;
+}
+
+
+/* ==================================================
+   PANEL
+================================================== */
+
+.floating-pulse__panel {
+  position: relative;
+
+  z-index: 15;
+
+  pointer-events: none;
+
+  width:
+    min(
+      360px,
+      calc(100vw - 2rem)
+    );
+
+  padding: 1.2rem;
+
+  border:
+    1px solid
+    rgba(
+      149,
+      107,
+      209,
+      0.16
+    );
+
+  border-radius: 20px;
+
+  background:
+    rgba(
+      255,
+      253,
+      252,
+      0.97
+    );
+
+  box-shadow:
+    0 28px 70px -35px
+    rgba(
+      66,
+      38,
+      88,
+      0.55
+    );
+
+  backdrop-filter:
+    blur(22px);
+
+  -webkit-backdrop-filter:
+    blur(22px);
+
+  opacity: 0;
+
+  visibility: hidden;
+
+  transform:
+    translateY(12px)
+    scale(0.97);
+
+  transform-origin:
+    bottom right;
+
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+/* ==================================================
+   OPEN PANEL
+================================================== */
+
+.floating-pulse.is-open
+.floating-pulse__panel {
+  pointer-events: auto;
+
+  opacity: 1;
+
+  visibility: visible;
+
+  transform:
+    translateY(0)
+    scale(1);
+}
+
+
+/* ==================================================
+   PANEL HEADER
+================================================== */
+
+.floating-pulse__panel-head {
+  display: flex;
+
+  align-items: flex-start;
+
+  justify-content: space-between;
+
+  gap: 1rem;
+}
+
+
+.floating-pulse__panel-head
+div > span {
+  color:
+    var(--couple-purple);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.54rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.14em;
+}
+
+
+.floating-pulse__panel-head h2 {
+  margin:
+    0.25rem
+    0
+    0;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 2rem;
+
+  font-weight: 600;
+
+  line-height: 0.9;
+}
+
+
+.floating-pulse__panel-head h2 i {
+  margin-left: 0.25rem;
+
+  color:
+    var(--couple-pink);
+
+  font-style: normal;
+}
+
+
+/* ==================================================
+   CLOSE BUTTON
+================================================== */
+
+.floating-pulse__close {
+  display: grid;
+
+  place-items: center;
+
+  width: 32px;
+  height: 32px;
+
+  flex-shrink: 0;
+
+  border:
+    1px solid
+    rgba(
+      149,
+      107,
+      209,
+      0.14
+    );
+
+  border-radius: 50%;
+
+  background: #fff;
+
+  color:
+    var(--muted);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 1rem;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease;
+}
+
+
+.floating-pulse__close:hover {
+  transform:
+    rotate(5deg);
+
+  border-color:
+    rgba(
+      149,
+      107,
+      209,
+      0.35
+    );
+}
+
+
+/* ==================================================
+   DESCRIPTION
+================================================== */
+
+.floating-pulse__description {
+  margin:
+    0.3rem
+    0
+    0.4rem;
+
+  color:
+    var(--muted);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.61rem;
+
+  line-height: 1.6;
+}
+
+
+/* ==================================================
+   LEGEND
+================================================== */
+
+.floating-pulse__legend {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 1rem;
+
+  margin-top: 1rem;
+
+  padding-top: 0.8rem;
+
+  border-top:
+    1px solid
+    rgba(
+      149,
+      107,
+      209,
+      0.1
+    );
+}
+
+
+.floating-pulse__legend span {
+  color:
+    #998e9c;
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.41rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.05em;
+}
+
+
+/* ==================================================
+   MOBILE
+================================================== */
+
+@media (
+  max-width:
+  800px
+) {
+
+  .floating-pulse {
+    right: 0.8rem;
+    bottom: 0.8rem;
+  }
+
+
+  .floating-pulse__panel {
+    width:
+      calc(
+        100vw - 1.6rem
+      );
+  }
+
+
+  .floating-pulse__launcher-copy {
+    display: none;
+  }
+
+
+  .floating-pulse__launcher {
+    min-height: auto;
+
+    padding: 0.4rem;
+  }
+
+
+  .floating-pulse__launcher-heart {
+    width: 46px;
+    height: 46px;
+  }
+
+
+  .floating-pulse__legend {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 0.4rem;
+  }
+
+}
+
+
+/* ==================================================
+   REDUCED MOTION
+================================================== */
+
+@media (
+  prefers-reduced-motion:
+  reduce
+) {
+
+  .floating-pulse__launcher,
+  .floating-pulse__panel,
+  .floating-pulse__close {
+    transition: none;
+  }
+
+
+  .floating-pulse__launcher:hover,
+  .floating-pulse__close:hover {
+    transform: none;
+  }
+
+}

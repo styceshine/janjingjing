@@ -1,0 +1,1499 @@
+/* ==================================================
+   ADMIN GALLERY
+================================================== */
+
+.admin-gallery {
+  display: grid;
+
+  grid-template-columns:
+    235px
+    minmax(0, 1fr);
+
+  min-height: 100vh;
+
+  background: #fffaf8;
+
+  color: var(--ink);
+}
+
+
+/* ==================================================
+   SIDEBAR
+================================================== */
+
+.admin-gallery-sidebar {
+  position: sticky;
+  top: 0;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  height: 100vh;
+
+  padding: 1.5rem 1.1rem;
+
+  border-right:
+    1px solid
+    rgba(149, 107, 209, 0.14);
+
+  background:
+    rgba(255, 255, 255, 0.94);
+}
+
+
+.admin-gallery-brand {
+  display: flex;
+  align-items: center;
+
+  gap: 0.8rem;
+
+  width: 100%;
+
+  padding:
+    0
+    0
+    1.4rem;
+
+  border: 0;
+
+  border-bottom:
+    1px solid
+    rgba(149, 107, 209, 0.12);
+
+  background: transparent;
+
+  color: inherit;
+
+  text-align: left;
+
+  cursor: pointer;
+}
+
+
+.admin-gallery-brand > span {
+  display: grid;
+  place-items: center;
+
+  width: 40px;
+  height: 40px;
+
+  border-radius: 50%;
+
+  background:
+    var(--couple-gradient);
+
+  color: #fff;
+}
+
+
+.admin-gallery-brand div {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.admin-gallery-brand strong {
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.68rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.13em;
+}
+
+
+.admin-gallery-brand small {
+  margin-top: 0.2rem;
+
+  color: var(--muted);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.46rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.11em;
+}
+
+
+/* ==================================================
+   NAVIGATION
+================================================== */
+
+.admin-gallery-nav {
+  display: grid;
+
+  gap: 0.4rem;
+
+  margin-top: 2rem;
+}
+
+
+.admin-gallery-nav button {
+  display: grid;
+
+  grid-template-columns:
+    30px
+    1fr;
+
+  align-items: center;
+
+  min-height: 44px;
+
+  padding:
+    0
+    0.85rem;
+
+  border:
+    1px solid
+    transparent;
+
+  border-radius: 12px;
+
+  background: transparent;
+
+  color: #79717c;
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.64rem;
+
+  font-weight: 700;
+
+  text-align: left;
+
+  cursor: pointer;
+}
+
+
+.admin-gallery-nav button span {
+  color: #aaa0ac;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 0.86rem;
+}
+
+
+.admin-gallery-nav button.is-active {
+  border-color:
+    rgba(149, 107, 209, 0.12);
+
+  background:
+    var(--couple-soft-gradient);
+
+  color:
+    var(--jan-purple-dark);
+}
+
+
+.admin-gallery-sidebar__bottom {
+  display: grid;
+
+  gap: 0.5rem;
+
+  padding-top: 1.1rem;
+
+  border-top:
+    1px solid
+    rgba(149, 107, 209, 0.12);
+}
+
+
+.admin-gallery-sidebar__bottom button {
+  min-height: 40px;
+
+  padding:
+    0
+    0.7rem;
+
+  border:
+    1px solid
+    rgba(149, 107, 209, 0.14);
+
+  border-radius: 9px;
+
+  background: #fff;
+
+  color:
+    var(--couple-purple);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.5rem;
+
+  font-weight: 800;
+
+  text-align: left;
+
+  cursor: pointer;
+}
+
+
+/* ==================================================
+   MAIN
+================================================== */
+
+.admin-gallery-main {
+  width:
+    min(1380px, 100%);
+
+  margin: 0 auto;
+
+  padding:
+    4rem
+    clamp(2rem, 5vw, 5rem);
+}
+
+
+/* ==================================================
+   HEADER
+================================================== */
+
+.admin-gallery-header {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(250px, 380px);
+
+  align-items: end;
+
+  gap: 4rem;
+
+  padding-bottom: 3rem;
+
+  border-bottom:
+    1px solid
+    rgba(149, 107, 209, 0.13);
+}
+
+
+.admin-gallery-header > div > p {
+  margin:
+    0
+    0
+    0.8rem;
+
+  color:
+    var(--couple-purple);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.58rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.17em;
+}
+
+
+.admin-gallery-header h1 {
+  margin: 0;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size:
+    clamp(
+      4rem,
+      7vw,
+      7rem
+    );
+
+  font-weight: 500;
+
+  line-height: 0.77;
+
+  letter-spacing: -0.06em;
+}
+
+
+.admin-gallery-header h1 span {
+  display: block;
+
+  width: fit-content;
+
+  margin-top: 0.1em;
+
+  background:
+    var(--couple-gradient);
+
+  background-clip: text;
+
+  -webkit-background-clip:
+    text;
+
+  -webkit-text-fill-color:
+    transparent;
+
+  color: transparent;
+
+  font-family:
+    "Sacramento",
+    cursive;
+
+  font-size: 0.84em;
+
+  font-weight: 400;
+}
+
+
+.admin-gallery-header > p {
+  margin: 0;
+
+  color: var(--muted);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.72rem;
+
+  line-height: 1.8;
+}
+
+
+/* ==================================================
+   MESSAGE
+================================================== */
+
+.admin-gallery-message {
+  margin:
+    1.5rem
+    0
+    0;
+
+  padding:
+    0.9rem
+    1rem;
+
+  border-radius: 10px;
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.65rem;
+
+  font-weight: 700;
+}
+
+
+.admin-gallery-message.is-success {
+  border:
+    1px solid
+    rgba(69, 157, 111, 0.2);
+
+  background:
+    rgba(103, 187, 141, 0.11);
+
+  color: #397b59;
+}
+
+
+.admin-gallery-message.is-error {
+  border:
+    1px solid
+    rgba(191, 63, 136, 0.18);
+
+  background:
+    rgba(251, 217, 234, 0.32);
+
+  color:
+    var(--jing-pink-dark);
+}
+
+
+/* ==================================================
+   SECTIONS
+================================================== */
+
+.admin-gallery-editor,
+.admin-gallery-library {
+  margin-top: 3rem;
+
+  padding: 2rem;
+
+  border:
+    1px solid
+    rgba(149, 107, 209, 0.14);
+
+  border-radius: 20px;
+
+  background:
+    rgba(255, 255, 255, 0.82);
+
+  box-shadow:
+    0 24px 60px -48px
+    rgba(77, 44, 103, 0.45);
+}
+
+
+.admin-gallery-section-title {
+  display: flex;
+
+  align-items: flex-end;
+
+  justify-content: space-between;
+
+  gap: 2rem;
+
+  padding-bottom: 1.5rem;
+
+  border-bottom:
+    1px solid
+    rgba(149, 107, 209, 0.11);
+}
+
+
+.admin-gallery-section-title p {
+  margin:
+    0
+    0
+    0.4rem;
+
+  color:
+    var(--couple-purple);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.52rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.13em;
+}
+
+
+.admin-gallery-section-title h2 {
+  margin: 0;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 2.5rem;
+
+  font-weight: 500;
+}
+
+
+.admin-gallery-section-title > button {
+  border: 0;
+
+  background: transparent;
+
+  color:
+    var(--jing-pink-dark);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.5rem;
+
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+
+.admin-gallery-section-title > span {
+  color: #9c929e;
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.5rem;
+
+  font-weight: 800;
+}
+
+
+/* ==================================================
+   FORM
+================================================== */
+
+.admin-gallery-form {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(0, 1fr)
+    );
+
+  gap: 1.1rem;
+
+  margin-top: 1.7rem;
+}
+
+
+.admin-gallery-wide {
+  grid-column:
+    1 / -1;
+}
+
+
+.admin-gallery-field {
+  display: grid;
+
+  gap: 0.5rem;
+}
+
+
+.admin-gallery-field > span,
+.admin-gallery-label {
+  color: #817683;
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.52rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.11em;
+}
+
+
+.admin-gallery-field input {
+  width: 100%;
+
+  height: 45px;
+
+  padding:
+    0
+    0.9rem;
+
+  border:
+    1px solid
+    rgba(149, 107, 209, 0.18);
+
+  border-radius: 10px;
+
+  outline: none;
+
+  background: #fff;
+
+  color:
+    var(--ink);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.72rem;
+}
+
+
+.admin-gallery-field input:focus {
+  border-color:
+    var(--jan-purple);
+
+  box-shadow:
+    0 0 0 3px
+    rgba(149, 107, 209, 0.08);
+}
+
+
+/* ==================================================
+   UPLOAD
+================================================== */
+
+.admin-gallery-upload {
+  display: grid;
+
+  gap: 0.6rem;
+}
+
+
+.admin-gallery-upload__box {
+  display: grid;
+
+  grid-template-columns:
+    180px
+    minmax(0, 1fr);
+
+  align-items: center;
+
+  gap: 1.5rem;
+
+  padding: 1rem;
+
+  border:
+    1px dashed
+    rgba(149, 107, 209, 0.25);
+
+  border-radius: 14px;
+
+  background:
+    rgba(233, 221, 255, 0.1);
+}
+
+
+.admin-gallery-upload__preview {
+  display: grid;
+
+  place-items: center;
+
+  width: 180px;
+
+  aspect-ratio:
+    4 / 5;
+
+  overflow: hidden;
+
+  border-radius: 12px;
+
+  background:
+    var(--couple-soft-gradient);
+
+  text-align: center;
+}
+
+
+.admin-gallery-upload__preview img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+
+.admin-gallery-upload__preview div > span {
+  font-size: 1.5rem;
+}
+
+
+.admin-gallery-upload__preview p {
+  margin:
+    0.5rem
+    0
+    0;
+
+  color:
+    var(--couple-purple);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.48rem;
+
+  font-weight: 800;
+}
+
+
+.admin-gallery-upload__controls label {
+  display: inline-flex;
+
+  align-items: center;
+
+  min-height: 42px;
+
+  padding:
+    0
+    1rem;
+
+  border-radius: 999px;
+
+  background:
+    var(--couple-gradient);
+
+  color: #fff;
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.52rem;
+
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+
+.admin-gallery-upload__controls input {
+  display: none;
+}
+
+
+.admin-gallery-upload__controls p {
+  margin:
+    0.8rem
+    0
+    0;
+
+  color:
+    var(--muted);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.62rem;
+}
+
+
+.admin-gallery-upload__controls small {
+  display: block;
+
+  margin-top: 0.5rem;
+
+  color: #aaa0ac;
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.52rem;
+}
+
+
+/* ==================================================
+   PEOPLE
+================================================== */
+
+.admin-gallery-people {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 0.55rem;
+
+  margin: 0;
+
+  padding: 1rem;
+
+  border:
+    1px solid
+    rgba(149, 107, 209, 0.14);
+
+  border-radius: 12px;
+}
+
+
+.admin-gallery-people legend {
+  padding:
+    0
+    0.35rem;
+
+  color: #817683;
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.52rem;
+
+  font-weight: 800;
+}
+
+
+.admin-gallery-people button {
+  padding:
+    0.55rem
+    0.85rem;
+
+  border:
+    1px solid
+    rgba(149, 107, 209, 0.18);
+
+  border-radius: 999px;
+
+  background: #fff;
+
+  color:
+    var(--ink);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.56rem;
+
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+
+.admin-gallery-people button.is-selected {
+  border-color:
+    transparent;
+
+  background:
+    var(--couple-gradient);
+
+  color: #fff;
+}
+
+
+/* ==================================================
+   PUBLISH
+================================================== */
+
+.admin-gallery-publish {
+  display: flex;
+
+  align-items: center;
+
+  gap: 0.9rem;
+
+  padding: 1rem;
+
+  border:
+    1px solid
+    rgba(149, 107, 209, 0.14);
+
+  border-radius: 12px;
+
+  background: #fff;
+
+  cursor: pointer;
+}
+
+
+.admin-gallery-publish > input {
+  position: absolute;
+
+  opacity: 0;
+
+  pointer-events: none;
+}
+
+
+.admin-gallery-publish__switch {
+  position: relative;
+
+  flex:
+    0
+    0 auto;
+
+  width: 44px;
+  height: 24px;
+
+  border-radius: 999px;
+
+  background:
+    #ddd5df;
+}
+
+
+.admin-gallery-publish__switch::after {
+  content: "";
+
+  position: absolute;
+
+  top: 3px;
+  left: 3px;
+
+  width: 18px;
+  height: 18px;
+
+  border-radius: 50%;
+
+  background: #fff;
+
+  transition:
+    transform 0.2s ease;
+}
+
+
+.admin-gallery-publish
+input:checked
++
+.admin-gallery-publish__switch {
+  background:
+    var(--jan-purple-strong);
+}
+
+
+.admin-gallery-publish
+input:checked
++
+.admin-gallery-publish__switch::after {
+  transform:
+    translateX(20px);
+}
+
+
+.admin-gallery-publish div {
+  display: flex;
+
+  flex-direction: column;
+}
+
+
+.admin-gallery-publish strong {
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.59rem;
+}
+
+
+.admin-gallery-publish small {
+  margin-top: 0.25rem;
+
+  color:
+    var(--muted);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.56rem;
+}
+
+
+/* ==================================================
+   ACTIONS
+================================================== */
+
+.admin-gallery-actions {
+  display: flex;
+
+  gap: 0.7rem;
+}
+
+
+.admin-gallery-actions button {
+  display: flex;
+
+  align-items: center;
+
+  justify-content:
+    space-between;
+
+  min-width: 170px;
+
+  min-height: 46px;
+
+  padding:
+    0
+    1rem;
+
+  border: 0;
+
+  border-radius: 999px;
+
+  background:
+    var(--couple-gradient);
+
+  color: #fff;
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.55rem;
+
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+
+.admin-gallery-actions button.is-secondary {
+  min-width: auto;
+
+  border:
+    1px solid
+    rgba(149, 107, 209, 0.18);
+
+  background: #fff;
+
+  color:
+    var(--couple-purple);
+}
+
+
+/* ==================================================
+   LIBRARY
+================================================== */
+
+.admin-gallery-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      3,
+      minmax(0, 1fr)
+    );
+
+  gap: 1rem;
+
+  margin-top: 1.5rem;
+}
+
+
+.admin-gallery-card {
+  overflow: hidden;
+
+  border:
+    1px solid
+    rgba(149, 107, 209, 0.12);
+
+  border-radius: 15px;
+
+  background: #fff;
+}
+
+
+.admin-gallery-card__image {
+  position: relative;
+
+  aspect-ratio:
+    4 / 5;
+
+  overflow: hidden;
+
+  background:
+    var(--couple-soft-gradient);
+}
+
+
+.admin-gallery-card__image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+
+.admin-gallery-card__image > span {
+  position: absolute;
+
+  top: 0.7rem;
+  right: 0.7rem;
+
+  padding:
+    0.35rem
+    0.55rem;
+
+  border-radius: 999px;
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.43rem;
+
+  font-weight: 800;
+}
+
+
+.admin-gallery-card__image > span.is-published {
+  background:
+    rgba(255, 255, 255, 0.9);
+
+  color: #397b59;
+}
+
+
+.admin-gallery-card__image > span.is-draft {
+  background:
+    rgba(255, 255, 255, 0.9);
+
+  color:
+    var(--jing-pink-dark);
+}
+
+
+.admin-gallery-card__content {
+  padding: 1rem;
+}
+
+
+.admin-gallery-card__people {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 0.3rem;
+}
+
+
+.admin-gallery-card__people span {
+  padding:
+    0.25rem
+    0.45rem;
+
+  border-radius: 999px;
+
+  background:
+    var(--couple-soft-gradient);
+
+  color:
+    var(--jan-purple-dark);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.43rem;
+
+  font-weight: 800;
+
+  text-transform: uppercase;
+}
+
+
+.admin-gallery-card h3 {
+  margin:
+    0.8rem
+    0
+    0;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 1.5rem;
+
+  font-weight: 600;
+
+  line-height: 1;
+}
+
+
+.admin-gallery-card__content > p {
+  margin:
+    0.5rem
+    0
+    0;
+
+  color:
+    var(--muted);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.58rem;
+}
+
+
+.admin-gallery-card__content > small {
+  display: block;
+
+  margin-top: 0.55rem;
+
+  color: #9d929f;
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.48rem;
+}
+
+
+.admin-gallery-card__actions {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      3,
+      1fr
+    );
+
+  gap: 0.35rem;
+
+  margin-top: 1rem;
+}
+
+
+.admin-gallery-card__actions button {
+  min-height: 34px;
+
+  border:
+    1px solid
+    rgba(149, 107, 209, 0.16);
+
+  border-radius: 999px;
+
+  background: #fff;
+
+  color:
+    var(--couple-purple);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.43rem;
+
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+
+.admin-gallery-card__actions button.is-danger {
+  color:
+    var(--jing-pink-dark);
+}
+
+
+/* ==================================================
+   EMPTY
+================================================== */
+
+.admin-gallery-empty {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 180px;
+
+  margin-top: 1.5rem;
+
+  border:
+    1px dashed
+    rgba(149, 107, 209, 0.2);
+
+  border-radius: 14px;
+
+  color:
+    var(--muted);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.68rem;
+}
+
+
+.admin-gallery-empty strong {
+  color:
+    var(--ink);
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 1.6rem;
+
+  font-weight: 500;
+}
+
+
+.admin-gallery-empty span {
+  margin-top: 0.4rem;
+}
+
+
+/* ==================================================
+   FOOTER
+================================================== */
+
+.admin-gallery-footer {
+  display: flex;
+
+  justify-content:
+    space-between;
+
+  margin-top: 4rem;
+
+  padding-top: 1.5rem;
+
+  border-top:
+    1px solid
+    rgba(149, 107, 209, 0.12);
+
+  color: #aaa0ac;
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.47rem;
+
+  font-weight: 700;
+}
+
+
+/* ==================================================
+   TABLET
+================================================== */
+
+@media (max-width: 1000px) {
+
+  .admin-gallery-grid {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0, 1fr)
+      );
+  }
+
+}
+
+
+@media (max-width: 950px) {
+
+  .admin-gallery {
+    grid-template-columns:
+      190px
+      minmax(0, 1fr);
+  }
+
+
+  .admin-gallery-main {
+    padding:
+      3rem
+      2rem;
+  }
+
+
+  .admin-gallery-header {
+    grid-template-columns:
+      1fr;
+
+    gap: 1.5rem;
+  }
+
+}
+
+
+/* ==================================================
+   MOBILE
+================================================== */
+
+@media (max-width: 700px) {
+
+  .admin-gallery {
+    display: block;
+  }
+
+
+  .admin-gallery-sidebar {
+    position: relative;
+
+    height: auto;
+
+    padding: 1rem;
+
+    border-right: 0;
+
+    border-bottom:
+      1px solid
+      rgba(149, 107, 209, 0.14);
+  }
+
+
+  .admin-gallery-nav {
+    grid-template-columns:
+      repeat(
+        3,
+        1fr
+      );
+
+    margin-top: 1rem;
+  }
+
+
+  .admin-gallery-nav button {
+    display: flex;
+
+    justify-content:
+      center;
+
+    gap: 0.3rem;
+
+    padding:
+      0
+      0.4rem;
+
+    font-size: 0.5rem;
+  }
+
+
+  .admin-gallery-sidebar__bottom {
+    display: none;
+  }
+
+
+  .admin-gallery-main {
+    padding:
+      3rem
+      1rem;
+  }
+
+
+  .admin-gallery-form {
+    grid-template-columns:
+      1fr;
+  }
+
+
+  .admin-gallery-wide {
+    grid-column: auto;
+  }
+
+
+  .admin-gallery-editor,
+  .admin-gallery-library {
+    padding: 1.2rem;
+  }
+
+
+  .admin-gallery-upload__box {
+    grid-template-columns:
+      1fr;
+  }
+
+
+  .admin-gallery-upload__preview {
+    width: 100%;
+    max-width: 220px;
+  }
+
+
+  .admin-gallery-grid {
+    grid-template-columns:
+      1fr;
+  }
+
+
+  .admin-gallery-actions {
+    flex-direction:
+      column;
+  }
+
+
+  .admin-gallery-actions button {
+    width: 100%;
+  }
+
+}

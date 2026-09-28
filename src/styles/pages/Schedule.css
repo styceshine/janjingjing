@@ -1,0 +1,2402 @@
+/* ==================================================
+   SCHEDULE PAGE
+================================================== */
+
+.schedule-page {
+  width: 100%;
+
+  overflow: hidden;
+
+  background:
+    var(--cream);
+
+  color:
+    var(--ink);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+}
+
+
+/* ==================================================
+   SHARED SMALL TEXT
+
+   Keep readable:
+   minimum around .55rem / 700
+================================================== */
+
+.schedule-eyebrow {
+  margin:
+    0;
+
+  color:
+    var(--couple-purple);
+
+  font-size:
+    0.62rem;
+
+  font-weight:
+    800;
+
+  line-height:
+    1;
+
+  letter-spacing:
+    0.18em;
+}
+
+
+/* ==================================================
+   00 / COMPACT INTRO
+================================================== */
+
+.schedule-intro {
+  position:
+    relative;
+
+  overflow:
+    hidden;
+
+  padding:
+    2rem
+    0
+    3rem;
+
+  border-bottom:
+    1px solid
+    rgba(
+      149,
+      107,
+      209,
+      0.13
+    );
+
+  background:
+    radial-gradient(
+      circle at 8% 30%,
+      rgba(
+        149,
+        107,
+        209,
+        0.1
+      ),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 90% 65%,
+      rgba(
+        233,
+        90,
+        169,
+        0.09
+      ),
+      transparent 28%
+    ),
+    #fffaf9;
+}
+
+
+.schedule-intro__inner {
+  width:
+    min(
+      1240px,
+      calc(
+        100% - 8vw
+      )
+    );
+
+  margin:
+    0 auto;
+}
+
+
+/* ==================================================
+   INTRO META
+================================================== */
+
+.schedule-intro__meta {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    space-between;
+
+  gap:
+    1rem;
+
+  padding-bottom:
+    0.9rem;
+
+  border-bottom:
+    1px solid
+    rgba(
+      149,
+      107,
+      209,
+      0.17
+    );
+}
+
+
+.schedule-intro__meta span {
+  color:
+    var(--muted);
+
+  font-size:
+    0.6rem;
+
+  font-weight:
+    700;
+
+  letter-spacing:
+    0.17em;
+}
+
+
+.schedule-intro__meta span:first-child {
+  color:
+    var(--couple-purple);
+}
+
+
+/* ==================================================
+   INTRO GRID
+================================================== */
+
+.schedule-intro__grid {
+  display:
+    grid;
+
+  grid-template-columns:
+    minmax(
+      0,
+      0.9fr
+    )
+    minmax(
+      420px,
+      1.1fr
+    );
+
+  align-items:
+    center;
+
+  gap:
+    clamp(
+      3rem,
+      7vw,
+      7rem
+    );
+
+  padding-top:
+    2.6rem;
+}
+
+
+/* ==================================================
+   INTRO COPY
+================================================== */
+
+.schedule-intro__copy h1 {
+  margin:
+    0.8rem
+    0
+    0;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size:
+    clamp(
+      4rem,
+      7vw,
+      6.8rem
+    );
+
+  font-weight:
+    500;
+
+  line-height:
+    0.79;
+
+  letter-spacing:
+    -0.055em;
+}
+
+
+.schedule-intro__copy h1 span {
+  display:
+    block;
+
+  width:
+    fit-content;
+
+  margin-top:
+    0.1em;
+
+  padding-right:
+    0.12em;
+
+  background:
+    var(--couple-gradient);
+
+  -webkit-background-clip:
+    text;
+
+  background-clip:
+    text;
+
+  color:
+    transparent;
+
+  -webkit-text-fill-color:
+    transparent;
+
+  font-family:
+    "Sacramento",
+    cursive;
+
+  font-size:
+    0.92em;
+
+  font-weight:
+    400;
+
+  letter-spacing:
+    0;
+}
+
+
+.schedule-intro__text {
+  max-width:
+    39ch;
+
+  margin:
+    1.5rem
+    0
+    0;
+
+  color:
+    var(--muted);
+
+  font-size:
+    0.72rem;
+
+  font-weight:
+    500;
+
+  line-height:
+    1.75;
+}
+
+
+/* ==================================================
+   FEATURED NEXT EVENT
+================================================== */
+
+.schedule-featured {
+  position:
+    relative;
+
+  overflow:
+    hidden;
+
+  padding:
+    1.35rem;
+
+  border:
+    1px solid
+    rgba(
+      149,
+      107,
+      209,
+      0.2
+    );
+
+  border-radius:
+    20px;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.82
+    );
+
+  box-shadow:
+    0 24px 60px -48px
+    rgba(
+      69,
+      39,
+      100,
+      0.7
+    );
+}
+
+
+.schedule-featured::before {
+  content:
+    "";
+
+  position:
+    absolute;
+
+  top:
+    0;
+
+  left:
+    0;
+
+  width:
+    100%;
+
+  height:
+    4px;
+
+  background:
+    var(--couple-gradient);
+}
+
+
+/* ==================================================
+   FEATURED TOP
+================================================== */
+
+.schedule-featured__top {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    space-between;
+
+  gap:
+    1rem;
+
+  padding-bottom:
+    0.9rem;
+
+  border-bottom:
+    1px solid
+    rgba(
+      149,
+      107,
+      209,
+      0.1
+    );
+}
+
+
+.schedule-featured__top > span:first-child {
+  color:
+    var(--muted);
+
+  font-size:
+    0.58rem;
+
+  font-weight:
+    800;
+
+  letter-spacing:
+    0.15em;
+}
+
+
+.schedule-featured__status {
+  padding:
+    0.4rem
+    0.65rem;
+
+  border-radius:
+    999px;
+
+  background:
+    var(--couple-soft-gradient);
+
+  color:
+    var(--jan-purple-dark);
+
+  font-size:
+    0.55rem;
+
+  font-weight:
+    800;
+
+  letter-spacing:
+    0.08em;
+}
+
+
+/* ==================================================
+   FEATURED BODY
+================================================== */
+
+.schedule-featured__body {
+  display:
+    grid;
+
+  grid-template-columns:
+    110px
+    minmax(
+      0,
+      1fr
+    );
+
+  align-items:
+    center;
+
+  gap:
+    1.5rem;
+
+  padding-top:
+    1.25rem;
+}
+
+
+/* ==================================================
+   FEATURED DATE
+================================================== */
+
+.schedule-featured__date {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    0.8rem;
+}
+
+
+.schedule-featured__date strong {
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size:
+    4.3rem;
+
+  font-weight:
+    500;
+
+  line-height:
+    0.8;
+}
+
+
+.schedule-featured__date > div {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+}
+
+
+.schedule-featured__date span {
+  color:
+    var(--couple-purple);
+
+  font-size:
+    0.72rem;
+
+  font-weight:
+    800;
+
+  letter-spacing:
+    0.1em;
+}
+
+
+.schedule-featured__date small {
+  margin-top:
+    0.15rem;
+
+  color:
+    var(--muted);
+
+  font-size:
+    0.58rem;
+
+  font-weight:
+    700;
+}
+
+
+/* ==================================================
+   FEATURED INFO
+================================================== */
+
+.schedule-featured__tag {
+  display:
+    inline-flex;
+
+  padding:
+    0.32rem
+    0.55rem;
+
+  border-radius:
+    999px;
+
+  background:
+    var(--couple-soft-gradient);
+
+  color:
+    var(--jan-purple-dark);
+
+  font-size:
+    0.55rem;
+
+  font-weight:
+    800;
+
+  letter-spacing:
+    0.08em;
+}
+
+
+.schedule-featured__info h2 {
+  max-width:
+    18ch;
+
+  margin:
+    0.7rem
+    0
+    0;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size:
+    clamp(
+      1.8rem,
+      3vw,
+      2.6rem
+    );
+
+  font-weight:
+    600;
+
+  line-height:
+    0.95;
+}
+
+
+.schedule-featured__subtitle {
+  margin:
+    0.45rem
+    0
+    0;
+
+  color:
+    var(--couple-purple);
+
+  font-size:
+    0.6rem;
+
+  font-weight:
+    800;
+
+  letter-spacing:
+    0.1em;
+}
+
+
+.schedule-featured__details {
+  display:
+    flex;
+
+  flex-wrap:
+    wrap;
+
+  gap:
+    0.45rem
+    1rem;
+
+  margin-top:
+    0.8rem;
+}
+
+
+.schedule-featured__details span {
+  color:
+    var(--muted);
+
+  font-size:
+    0.6rem;
+
+  font-weight:
+    700;
+
+  line-height:
+    1.5;
+}
+
+
+/* ==================================================
+   01 / MAIN CALENDAR SECTION
+================================================== */
+
+.schedule-main {
+  padding:
+    3.25rem
+    0
+    4rem;
+
+  background:
+    #fff;
+}
+
+
+.schedule-main__inner {
+  width:
+    min(
+      1240px,
+      calc(
+        100% - 8vw
+      )
+    );
+
+  margin:
+    0 auto;
+}
+
+
+/* ==================================================
+   SECTION HEADING
+================================================== */
+
+.schedule-heading {
+  display:
+    flex;
+
+  align-items:
+    flex-end;
+
+  justify-content:
+    space-between;
+
+  gap:
+    2rem;
+
+  margin-bottom:
+    1.6rem;
+}
+
+
+.schedule-heading h2 {
+  margin:
+    0.5rem
+    0
+    0;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size:
+    clamp(
+      3.2rem,
+      5.3vw,
+      5rem
+    );
+
+  font-weight:
+    500;
+
+  line-height:
+    0.82;
+
+  letter-spacing:
+    -0.05em;
+}
+
+
+.schedule-heading h2 span {
+  display:
+    inline;
+
+  margin-left:
+    0.12em;
+
+  background:
+    var(--couple-gradient);
+
+  -webkit-background-clip:
+    text;
+
+  background-clip:
+    text;
+
+  color:
+    transparent;
+
+  -webkit-text-fill-color:
+    transparent;
+
+  font-family:
+    "Sacramento",
+    cursive;
+
+  font-weight:
+    400;
+
+  letter-spacing:
+    0;
+}
+
+
+.schedule-heading__month {
+  padding-bottom:
+    0.35rem;
+
+  color:
+    var(--muted);
+
+  font-size:
+    0.62rem;
+
+  font-weight:
+    800;
+
+  letter-spacing:
+    0.14em;
+
+  text-transform:
+    uppercase;
+}
+
+
+/* ==================================================
+   FILTER
+================================================== */
+
+.schedule-filter {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    1.2rem;
+
+  margin-bottom:
+    1.3rem;
+
+  padding:
+    0.8rem
+    1rem;
+
+  border:
+    1px solid
+    rgba(
+      149,
+      107,
+      209,
+      0.14
+    );
+
+  border-radius:
+    14px;
+
+  background:
+    #fff;
+}
+
+
+.schedule-filter__label {
+  flex:
+    none;
+
+  color:
+    var(--muted);
+
+  font-size:
+    0.58rem;
+
+  font-weight:
+    800;
+
+  letter-spacing:
+    0.12em;
+}
+
+
+.schedule-filter__buttons {
+  display:
+    flex;
+
+  flex-wrap:
+    wrap;
+
+  gap:
+    0.45rem;
+}
+
+
+.schedule-filter__buttons button {
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  gap:
+    0.4rem;
+
+  min-height:
+    36px;
+
+  padding:
+    0.55rem
+    0.9rem;
+
+  border:
+    1px solid
+    rgba(
+      149,
+      107,
+      209,
+      0.18
+    );
+
+  border-radius:
+    999px;
+
+  background:
+    #fff;
+
+  color:
+    var(--ink);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size:
+    0.58rem;
+
+  font-weight:
+    700;
+
+  letter-spacing:
+    0.05em;
+
+  cursor:
+    pointer;
+
+  transition:
+    0.2s ease;
+}
+
+
+.schedule-filter__buttons button:hover {
+  border-color:
+    var(--couple-purple);
+
+  background:
+    rgba(
+      233,
+      221,
+      255,
+      0.28
+    );
+}
+
+
+.schedule-filter__buttons button.is-active {
+  border-color:
+    transparent;
+
+  background:
+    var(--couple-gradient);
+
+  color:
+    #fff;
+
+  font-weight:
+    800;
+}
+
+
+/* ==================================================
+   CALENDAR + LIST LAYOUT
+================================================== */
+
+.schedule-calendar-layout {
+  display:
+    grid;
+
+  grid-template-columns:
+    minmax(
+      0,
+      1fr
+    )
+    340px;
+
+  align-items:
+    start;
+
+  gap:
+    1rem;
+}
+
+
+/* ==================================================
+   CALENDAR
+================================================== */
+
+.schedule-calendar {
+  width:
+    100%;
+
+  overflow:
+    hidden;
+
+  border:
+    1px solid
+    rgba(
+      149,
+      107,
+      209,
+      0.15
+    );
+
+  border-radius:
+    18px;
+
+  background:
+   #f3dbf378;
+}
+
+
+/* ==================================================
+   CALENDAR TOP
+================================================== */
+
+.schedule-calendar__top {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    space-between;
+
+  min-height:
+    54px;
+
+  padding:
+    0.7rem
+    0.9rem;
+
+  border-bottom:
+    1px solid
+    rgba(
+      149,
+      107,
+      209,
+      0.1
+    );
+}
+
+
+.schedule-calendar__top h3 {
+  margin:
+    0;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size:
+    1.6rem;
+
+  font-weight:
+    600;
+}
+
+
+.schedule-calendar__top button {
+  display:
+    grid;
+
+  place-items:
+    center;
+
+  width:
+    34px;
+
+  height:
+    34px;
+
+  padding:
+    0;
+
+  border:
+    1px solid
+    rgba(
+      149,
+      107,
+      209,
+      0.18
+    );
+
+  border-radius:
+    50%;
+
+  background:
+    #fff;
+
+  color:
+    var(--couple-purple);
+
+  font-size:
+    0.9rem;
+
+  cursor:
+    pointer;
+}
+
+
+/* ==================================================
+   WEEKDAYS
+================================================== */
+
+.schedule-calendar__weekdays {
+  display:
+    grid;
+
+  grid-template-columns:
+    repeat(
+      7,
+      minmax(
+        0,
+        1fr
+      )
+    );
+
+  border-bottom:
+    1px solid
+    rgba(
+      149,
+      107,
+      209,
+      0.1
+    );
+}
+
+
+.schedule-calendar__weekdays span {
+  min-width:
+    0;
+
+  padding:
+    0.6rem
+    0.25rem;
+
+  color:
+    var(--muted);
+
+  font-size:
+    0.55rem;
+
+  font-weight:
+    800;
+
+  letter-spacing:
+    0.08em;
+
+  text-align:
+    center;
+}
+
+
+/* ==================================================
+   CALENDAR GRID
+
+   No horizontal scroll.
+================================================== */
+
+.schedule-calendar__grid {
+  display:
+    grid;
+
+  width:
+    100%;
+
+  grid-template-columns:
+    repeat(
+      7,
+      minmax(
+        0,
+        1fr
+      )
+    );
+}
+
+
+/* ==================================================
+   DAY CELL
+================================================== */
+
+.schedule-calendar__day {
+  position:
+    relative;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    flex-start;
+
+  min-width:
+    0;
+
+  min-height:
+    86px;
+
+  padding:
+    0.55rem;
+
+  border:
+    0;
+
+  border-right:
+    1px solid
+    rgba(
+      149,
+      107,
+      209,
+      0.08
+    );
+
+  border-bottom:
+    1px solid
+    rgba(
+      149,
+      107,
+      209,
+      0.08
+    );
+
+  background:
+    #fff;
+
+  color:
+    var(--ink);
+
+  text-align:
+    left;
+
+  cursor:
+    pointer;
+
+  transition:
+    background-color
+    0.2s ease;
+}
+
+
+.schedule-calendar__day:nth-child(
+  7n
+) {
+  border-right:
+    0;
+}
+
+
+.schedule-calendar__day:hover {
+  background:
+    rgba(
+      233,
+      221,
+      255,
+      0.2
+    );
+}
+
+
+.schedule-calendar__day--empty {
+  cursor:
+    default;
+
+  background:
+    #fcfafb;
+}
+
+
+.schedule-calendar__day--empty:hover {
+  background:
+    #fcfafb;
+}
+
+
+/* ==================================================
+   DAY NUMBER
+================================================== */
+
+.schedule-calendar__number {
+  display:
+    grid;
+
+  place-items:
+    center;
+
+  width:
+    25px;
+
+  height:
+    25px;
+
+  border-radius:
+    50%;
+
+  color:
+    var(--ink);
+
+  font-size:
+    0.62rem;
+
+  font-weight:
+    800;
+}
+
+
+/* ==================================================
+   EVENT DATE
+================================================== */
+
+.schedule-calendar__day.has-event {
+  background:
+    rgba(
+      250,
+      245,
+      252,
+      0.7
+    );
+}
+
+
+.schedule-calendar__day.is-selected {
+  background:
+    var(--couple-soft-gradient);
+
+  box-shadow:
+    inset
+    0
+    0
+    0
+    2px
+    rgba(
+      149,
+      107,
+      209,
+      0.35
+    );
+}
+
+
+.schedule-calendar__day.is-today
+.schedule-calendar__number {
+  background:
+    var(--ink);
+
+  color:
+    #fff;
+}
+
+
+/* ==================================================
+   EVENT MARKERS
+================================================== */
+
+.schedule-calendar__markers {
+  display:
+    flex;
+
+  flex-wrap:
+    wrap;
+
+  gap:
+    3px;
+
+  margin-top:
+    0.55rem;
+}
+
+
+.schedule-calendar__marker {
+  display:
+    block;
+
+  width:
+    7px;
+
+  height:
+    7px;
+
+  border-radius:
+    50%;
+}
+
+
+.schedule-calendar__marker--upcoming {
+  background:
+    var(--couple-purple);
+}
+
+
+.schedule-calendar__marker--ongoing {
+  background:
+    var(--couple-pink);
+}
+
+
+.schedule-calendar__marker--past {
+  background:
+    #c6bec7;
+}
+
+
+/* ==================================================
+   EVENT COUNT
+================================================== */
+
+.schedule-calendar__count {
+  margin-top:
+    0.4rem;
+
+  overflow:
+    hidden;
+
+  width:
+    100%;
+
+  color:
+    var(--muted);
+
+  font-size:
+    0.55rem;
+
+  font-weight:
+    700;
+
+  line-height:
+    1.2;
+
+  text-overflow:
+    ellipsis;
+
+  white-space:
+    nowrap;
+}
+
+
+/* ==================================================
+   LEGEND
+================================================== */
+
+.schedule-calendar__legend {
+  display:
+    flex;
+
+  flex-wrap:
+    wrap;
+
+  gap:
+    1rem;
+
+  padding:
+    0.75rem
+    0.9rem;
+
+  border-top:
+    1px solid
+    rgba(
+      149,
+      107,
+      209,
+      0.1
+    );
+}
+
+
+.schedule-calendar__legend span {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    0.4rem;
+
+  color:
+    var(--muted);
+
+  font-size:
+    0.55rem;
+
+  font-weight:
+    1000;
+
+  letter-spacing:
+    0.08em;
+}
+
+
+.schedule-calendar__legend i {
+  display:
+    block;
+
+  width:
+    7px;
+
+  height:
+    7px;
+
+  border-radius:
+    50%;
+}
+
+
+.schedule-calendar__legend i.is-upcoming {
+  background:
+    var(--couple-purple);
+}
+
+
+.schedule-calendar__legend i.is-past {
+  background:
+    #c6bec7;
+}
+
+
+.schedule-calendar__legend i.is-today {
+  background:
+    var(--ink);
+}
+
+
+/* ==================================================
+   RIGHT DAILY PANEL
+================================================== */
+
+.schedule-day-panel {
+  overflow:
+    hidden;
+
+  border:
+    1px solid
+    rgba(
+      149,
+      107,
+      209,
+      0.15
+    );
+
+  border-radius:
+    18px;
+
+  background:
+    #fff;
+}
+
+
+/* ==================================================
+   DAILY PANEL HEADER
+================================================== */
+
+.schedule-day-panel__head {
+  padding:
+    1rem
+    1.1rem;
+
+  border-bottom:
+    1px solid
+    rgba(
+      149,
+      107,
+      209,
+      0.1
+    );
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(
+        233,
+        221,
+        255,
+        0.32
+      ),
+      rgba(
+        251,
+        217,
+        234,
+        0.3
+      )
+    );
+}
+
+
+.schedule-day-panel__head > span {
+  color:
+    var(--couple-purple);
+
+  font-size:
+    0.55rem;
+
+  font-weight:
+    800;
+
+  letter-spacing:
+    0.13em;
+}
+
+
+.schedule-day-panel__head h3 {
+  margin:
+    0.45rem
+    0
+    0;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size:
+    3rem;
+
+  font-weight:
+    500;
+
+  line-height:
+    0.85;
+}
+
+
+.schedule-day-panel__head p {
+  margin:
+    0.4rem
+    0
+    0;
+
+  color:
+    var(--muted);
+
+  font-size:
+    0.58rem;
+
+  font-weight:
+    700;
+
+  letter-spacing:
+    0.08em;
+}
+
+
+/* ==================================================
+   DAILY EVENT LIST
+================================================== */
+
+.schedule-day-panel__list {
+  display:
+    grid;
+
+  max-height:
+    455px;
+
+  overflow-y:
+    auto;
+
+  scrollbar-width:
+    thin;
+
+  scrollbar-color:
+    rgba(
+      149,
+      107,
+      209,
+      0.35
+    )
+    transparent;
+}
+
+
+/* ==================================================
+   MINI EVENT
+================================================== */
+
+.schedule-mini-event {
+  position:
+    relative;
+
+  padding:
+    0.9rem
+    1rem
+    0.95rem
+    1.15rem;
+
+  border-bottom:
+    1px solid
+    rgba(
+      149,
+      107,
+      209,
+      0.09
+    );
+}
+
+
+.schedule-mini-event::before {
+  content:
+    "";
+
+  position:
+    absolute;
+
+  top:
+    0;
+
+  bottom:
+    0;
+
+  left:
+    0;
+
+  width:
+    3px;
+}
+
+
+.schedule-mini-event--upcoming::before {
+  background:
+    var(--couple-purple);
+}
+
+
+.schedule-mini-event--ongoing::before {
+  background:
+    var(--couple-pink);
+}
+
+
+.schedule-mini-event--past::before {
+  background:
+    #c6bec7;
+}
+
+
+/* ==================================================
+   MINI EVENT TOP
+================================================== */
+
+.schedule-mini-event__top {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    space-between;
+
+  gap:
+    1rem;
+}
+
+
+.schedule-mini-event__top > span:first-child {
+  color:
+    var(--ink);
+
+  font-size:
+    0.6rem;
+
+  font-weight:
+    800;
+}
+
+
+.schedule-mini-event__status {
+  padding:
+    0.3rem
+    0.45rem;
+
+  border-radius:
+    999px;
+
+  font-size:
+    0.52rem;
+
+  font-weight:
+    800;
+
+  letter-spacing:
+    0.06em;
+}
+
+
+.schedule-mini-event__status.is-upcoming {
+  background:
+    rgba(
+      149,
+      107,
+      209,
+      0.12
+    );
+
+  color:
+    var(--jan-purple-dark);
+}
+
+
+.schedule-mini-event__status.is-ongoing {
+  background:
+    rgba(
+      233,
+      90,
+      169,
+      0.12
+    );
+
+  color:
+    var(--jing-pink-dark);
+}
+
+
+.schedule-mini-event__status.is-past {
+  background:
+    #f0edef;
+
+  color:
+    #928992;
+}
+
+
+/* ==================================================
+   MINI EVENT TEXT
+================================================== */
+
+.schedule-mini-event h4 {
+  margin:
+    0.55rem
+    0
+    0;
+
+  color:
+    var(--ink);
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size:
+    1.25rem;
+
+  font-weight:
+    600;
+
+  line-height:
+    1.05;
+}
+
+
+.schedule-mini-event p {
+  margin:
+    0.3rem
+    0
+    0;
+
+  color:
+    var(--muted);
+
+  font-size:
+    0.55rem;
+
+  font-weight:
+    700;
+
+  line-height:
+    1.45;
+}
+
+
+.schedule-mini-event__subtitle {
+  color:
+    var(--couple-purple)
+    !important;
+
+  font-weight:
+    800
+    !important;
+}
+
+
+.schedule-mini-event__note {
+  margin-top:
+    0.55rem
+    !important;
+
+  color:
+    #a05770
+    !important;
+
+  font-weight:
+    600
+    !important;
+}
+
+
+/* ==================================================
+   NO EVENT
+================================================== */
+
+.schedule-day-panel__empty {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  min-height:
+    180px;
+
+  padding:
+    2rem;
+
+  text-align:
+    center;
+}
+
+
+.schedule-day-panel__empty span {
+  color:
+    var(--couple-pink);
+
+  font-size:
+    1.3rem;
+}
+
+
+.schedule-day-panel__empty p {
+  margin:
+    0.6rem
+    0
+    0;
+
+  color:
+    var(--muted);
+
+  font-size:
+    0.58rem;
+
+  font-weight:
+    700;
+}
+
+
+/* ==================================================
+   VIEW MONTH
+================================================== */
+
+.schedule-day-panel__show-month {
+  width:
+    100%;
+
+  padding:
+    0.8rem
+    1rem;
+
+  border:
+    0;
+
+  border-top:
+    1px solid
+    rgba(
+      149,
+      107,
+      209,
+      0.1
+    );
+
+  background:
+    #fff;
+
+  color:
+    var(--couple-purple);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size:
+    0.55rem;
+
+  font-weight:
+    800;
+
+  letter-spacing:
+    0.09em;
+
+  cursor:
+    pointer;
+}
+
+
+/* ==================================================
+   TABLET
+================================================== */
+
+@media (
+  max-width:
+  1000px
+) {
+
+  .schedule-intro__inner,
+  .schedule-main__inner {
+    width:
+      calc(
+        100% - 3rem
+      );
+  }
+
+
+  .schedule-intro__grid {
+    grid-template-columns:
+      1fr
+      1fr;
+
+    gap:
+      2rem;
+  }
+
+
+  .schedule-calendar-layout {
+    grid-template-columns:
+      minmax(
+        0,
+        1fr
+      )
+      300px;
+  }
+
+
+  .schedule-calendar__day {
+    min-height:
+      78px;
+
+    padding:
+      0.45rem;
+  }
+
+}
+
+
+/* ==================================================
+   MOBILE
+================================================== */
+
+@media (
+  max-width:
+  700px
+) {
+
+  /* ==============================
+     INTRO
+  ============================== */
+
+  .schedule-intro {
+    padding:
+      6.3rem
+      0
+      2.2rem;
+  }
+
+
+  .schedule-intro__inner,
+  .schedule-main__inner {
+    width:
+      calc(
+        100% - 1.5rem
+      );
+  }
+
+
+  .schedule-intro__meta span:last-child {
+    display:
+      none;
+  }
+
+
+  .schedule-intro__grid {
+    grid-template-columns:
+      1fr;
+
+    gap:
+      1.8rem;
+
+    padding-top:
+      2rem;
+  }
+
+
+  .schedule-intro__copy h1 {
+    font-size:
+      clamp(
+        3.8rem,
+        17vw,
+        5.4rem
+      );
+  }
+
+
+  .schedule-intro__text {
+    margin-top:
+      1.2rem;
+  }
+
+
+  /* ==============================
+     FEATURED
+  ============================== */
+
+  .schedule-featured {
+    padding:
+      1rem;
+  }
+
+
+  .schedule-featured__body {
+    grid-template-columns:
+      85px
+      1fr;
+
+    gap:
+      1rem;
+
+    padding-top:
+      1rem;
+  }
+
+
+  .schedule-featured__date strong {
+    font-size:
+      3.4rem;
+  }
+
+
+  .schedule-featured__info h2 {
+    font-size:
+      1.65rem;
+  }
+
+
+  /* ==============================
+     MAIN
+  ============================== */
+
+  .schedule-main {
+    padding:
+      2.8rem
+      0
+      3rem;
+  }
+
+
+  .schedule-heading {
+    align-items:
+      flex-start;
+
+    flex-direction:
+      column;
+
+    gap:
+      0.8rem;
+
+    margin-bottom:
+      1.2rem;
+  }
+
+
+  .schedule-heading h2 {
+    font-size:
+      3.4rem;
+  }
+
+
+  /* ==============================
+     FILTER
+  ============================== */
+
+  .schedule-filter {
+    align-items:
+      flex-start;
+
+    flex-direction:
+      column;
+
+    gap:
+      0.7rem;
+
+    padding:
+      0.8rem;
+  }
+
+
+  .schedule-filter__buttons {
+    display:
+      grid;
+
+    width:
+      100%;
+
+    grid-template-columns:
+      repeat(
+        2,
+        1fr
+      );
+  }
+
+
+  .schedule-filter__buttons button {
+    width:
+      100%;
+
+    min-width:
+      0;
+  }
+
+
+  /* ==============================
+     CALENDAR + LIST
+  ============================== */
+
+  .schedule-calendar-layout {
+    grid-template-columns:
+      1fr;
+
+    gap:
+      1rem;
+  }
+
+
+  /* IMPORTANT:
+     no horizontal overflow */
+  .schedule-calendar {
+    width:
+      100%;
+
+    overflow:
+      hidden;
+  }
+
+
+  .schedule-calendar__weekdays,
+  .schedule-calendar__grid {
+    width:
+      100%;
+
+    min-width:
+      0;
+  }
+
+
+  .schedule-calendar__weekdays {
+    grid-template-columns:
+      repeat(
+        7,
+        minmax(
+          0,
+          1fr
+        )
+      );
+  }
+
+
+  .schedule-calendar__grid {
+    grid-template-columns:
+      repeat(
+        7,
+        minmax(
+          0,
+          1fr
+        )
+      );
+  }
+
+
+  /* ==============================
+     SMALL MOBILE CALENDAR CELLS
+  ============================== */
+
+  .schedule-calendar__day {
+    min-width:
+      0;
+
+    min-height:
+      62px;
+
+    padding:
+      0.3rem;
+  }
+
+
+  .schedule-calendar__number {
+    width:
+      22px;
+
+    height:
+      22px;
+
+    font-size:
+      0.58rem;
+  }
+
+
+  .schedule-calendar__weekdays span {
+    overflow:
+      hidden;
+
+    padding:
+      0.5rem
+      0;
+
+    font-size:
+      0.5rem;
+
+    letter-spacing:
+      0;
+  }
+
+
+  .schedule-calendar__markers {
+    gap:
+      2px;
+
+    margin-top:
+      0.35rem;
+  }
+
+
+  .schedule-calendar__marker {
+    width:
+      5px;
+
+    height:
+      5px;
+  }
+
+
+  .schedule-calendar__count {
+    display:
+      none;
+  }
+
+
+  /* ==============================
+     DAILY PANEL
+  ============================== */
+
+  .schedule-day-panel__list {
+    max-height:
+      none;
+
+    overflow:
+      visible;
+  }
+
+}
+
+
+/* ==================================================
+   VERY SMALL MOBILE
+================================================== */
+
+@media (
+  max-width:
+  420px
+) {
+
+  .schedule-calendar__day {
+    min-height:
+      56px;
+
+    padding:
+      0.24rem;
+  }
+
+
+  .schedule-calendar__number {
+    width:
+      20px;
+
+    height:
+      20px;
+
+    font-size:
+      0.55rem;
+  }
+
+
+  .schedule-calendar__top h3 {
+    font-size:
+      1.35rem;
+  }
+
+
+  .schedule-calendar__legend {
+    gap:
+      0.7rem;
+  }
+
+
+  .schedule-calendar__legend span {
+    font-size:
+      0.5rem;
+  }
+
+}
+
+
+/* ==================================================
+   REDUCED MOTION
+================================================== */
+
+@media (
+  prefers-reduced-motion:
+  reduce
+) {
+
+  .schedule-filter__buttons button,
+  .schedule-calendar__day {
+    transition:
+      none;
+  }
+
+}

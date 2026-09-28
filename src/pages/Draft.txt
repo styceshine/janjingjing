@@ -1,0 +1,31 @@
+<section>
+    {/*==================================================
+        CAREER TIMELINE
+    ================================================== */}
+    <div className="jan-timeline">
+        {janCareerTimeline.map((item) => (
+        <div className="jan-timeline-item" key={item.id}>
+            {/* DATE */}
+            <div className="jan-timeline-date">
+            <strong>{item.year}</strong>
+
+            <span>{item.date}</span>
+            </div>
+
+            {/* TIMELINE DOT */}
+            <div className="jan-timeline-marker">
+            <span className="jan-timeline-dot" />
+            </div>
+
+            {/* WORK */}
+            <div className="jan-timeline-content">
+            <h3>{item.title}</h3>
+
+            <p>
+                as <strong>{item.role}</strong>
+            </p>
+            </div>
+        </div>
+        ))}
+    </div>
+</section> 

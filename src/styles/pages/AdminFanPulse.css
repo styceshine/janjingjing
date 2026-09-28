@@ -1,0 +1,443 @@
+/* ==================================================
+   ADMIN FAN PULSE
+================================================== */
+
+.admin-pulse {
+  min-height: 100vh;
+
+  padding:
+    3rem
+    1.5rem;
+
+  background:
+    #fff9f7;
+
+  color:
+    var(--ink);
+}
+
+
+.admin-pulse__container {
+  width:
+    min(
+      1050px,
+      100%
+    );
+
+  margin:
+    0 auto;
+}
+
+
+/* ==================================================
+   TOP
+================================================== */
+
+.admin-pulse__top {
+  display: flex;
+
+  align-items: flex-start;
+
+  justify-content: space-between;
+
+  gap: 2rem;
+
+  margin-bottom: 2rem;
+}
+
+
+.admin-pulse__eyebrow {
+  margin:
+    0
+    0
+    0.5rem;
+
+  color:
+    var(--couple-purple);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.55rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.14em;
+}
+
+
+.admin-pulse__top h1 {
+  margin: 0;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size:
+    clamp(
+      3rem,
+      7vw,
+      5rem
+    );
+
+  font-weight: 500;
+
+  line-height: 0.9;
+}
+
+
+.admin-pulse__intro {
+  margin:
+    0.8rem
+    0
+    0;
+
+  color:
+    var(--muted);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.7rem;
+
+  line-height: 1.6;
+}
+
+
+/* ==================================================
+   ACTIONS
+================================================== */
+
+.admin-pulse__actions {
+  display: flex;
+
+  align-items: center;
+
+  gap: 0.5rem;
+}
+
+
+.admin-pulse__actions button,
+.admin-pulse__actions a {
+  padding:
+    0.7rem
+    1rem;
+
+  border:
+    1px solid
+    rgba(
+      149,
+      107,
+      209,
+      0.18
+    );
+
+  border-radius: 999px;
+
+  background: #fff;
+
+  color:
+    var(--ink);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.55rem;
+
+  font-weight: 800;
+
+  text-decoration: none;
+
+  cursor: pointer;
+}
+
+
+.admin-pulse__actions button:disabled {
+  opacity: 0.6;
+
+  cursor: default;
+}
+
+
+/* ==================================================
+   ERROR
+================================================== */
+
+.admin-pulse__error {
+  margin-bottom: 1rem;
+
+  padding: 1rem;
+
+  border-radius: 12px;
+
+  background:
+    #fff0f5;
+
+  color:
+    var(--jing-pink-dark);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.65rem;
+}
+
+
+/* ==================================================
+   OVERVIEW
+================================================== */
+
+.admin-pulse__overview {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      3,
+      minmax(0, 1fr)
+    );
+
+  gap: 1rem;
+
+  margin-bottom: 1rem;
+}
+
+
+.admin-pulse__overview-card {
+  padding: 1.4rem;
+
+  border:
+    1px solid
+    rgba(
+      149,
+      107,
+      209,
+      0.14
+    );
+
+  border-radius: 18px;
+
+  background: #fff;
+}
+
+
+.admin-pulse__overview-card--jan {
+  background:
+    var(--jan-purple-soft);
+}
+
+
+.admin-pulse__overview-card--jingjing {
+  background:
+    var(--jing-pink-soft);
+}
+
+
+.admin-pulse__overview-card > span {
+  display: block;
+
+  color:
+    var(--muted);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.5rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+}
+
+
+.admin-pulse__overview-card strong {
+  display: block;
+
+  margin-top: 0.5rem;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 2.8rem;
+
+  font-weight: 500;
+
+  line-height: 1;
+}
+
+
+.admin-pulse__overview-card small {
+  display: block;
+
+  margin-top: 0.5rem;
+
+  font-size: 0.85rem;
+}
+
+
+/* ==================================================
+   REACTIONS
+================================================== */
+
+.admin-pulse__reactions {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(0, 1fr)
+    );
+
+  gap: 0.75rem;
+}
+
+
+.admin-pulse__reaction {
+  display: grid;
+
+  grid-template-columns:
+    auto
+    1fr
+    auto;
+
+  align-items: center;
+
+  gap: 1rem;
+
+  padding: 1rem;
+
+  border:
+    1px solid
+    rgba(
+      149,
+      107,
+      209,
+      0.12
+    );
+
+  border-radius: 14px;
+
+  background: #fff;
+}
+
+
+.admin-pulse__reaction-emoji {
+  display: grid;
+
+  place-items: center;
+
+  width: 46px;
+  height: 46px;
+
+  border-radius: 50%;
+
+  background:
+    #fff9f7;
+
+  font-size: 1.3rem;
+}
+
+
+.admin-pulse__reaction-copy {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 0.2rem;
+}
+
+
+.admin-pulse__reaction-copy span {
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.65rem;
+
+  font-weight: 800;
+}
+
+
+.admin-pulse__reaction-copy small {
+  color:
+    var(--muted);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.45rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+}
+
+
+.admin-pulse__reaction strong {
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 2rem;
+
+  font-weight: 500;
+}
+
+
+/* ==================================================
+   FOOTER
+================================================== */
+
+.admin-pulse__footer {
+  margin-top: 1.2rem;
+
+  color:
+    var(--muted);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size: 0.55rem;
+}
+
+
+/* ==================================================
+   MOBILE
+================================================== */
+
+@media (
+  max-width:
+  700px
+) {
+
+  .admin-pulse {
+    padding:
+      2rem
+      1rem;
+  }
+
+
+  .admin-pulse__top {
+    flex-direction: column;
+  }
+
+
+  .admin-pulse__overview {
+    grid-template-columns:
+      1fr;
+  }
+
+
+  .admin-pulse__reactions {
+    grid-template-columns:
+      1fr;
+  }
+
+}
