@@ -3,7 +3,7 @@ import MediaCard from "../components/MediaCard";
 import MediaCarousel from "../components/MediaCarousel";
 import ScheduleCard from "../components/ScheduleCard";
 import Jewel from "../components/Jewel";
-import Footer from "../components/Footer"
+import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
 
 import {
@@ -13,17 +13,9 @@ import {
   janAchievements,
 } from "../data/janData";
 
+import { useEffect, useMemo, useState } from "react";
 
-import {
-  useEffect,
-  useMemo,
-  useState,
-} from "react"
-
-import {
-  supabase,
-} from "../lib/supabase"
-
+import { supabase } from "../lib/supabase";
 
 import {
   scheduleEvents,
@@ -31,14 +23,9 @@ import {
   getEffectiveScheduleStatus,
   mapSupabaseScheduleEvent,
   mergeScheduleEvents,
-} from "../data/scheduleData"
-
-
-
-
+} from "../data/scheduleData";
 
 function Jan() {
-
   /* ==================================================
      SPLIT JAN'S WORKS INTO TWO CAROUSEL ROWS
 
@@ -68,231 +55,93 @@ function Jan() {
     }
   });
 
-
-
-
-
-
-
-
-
   /* ==================================================
    LIVE JAN SCHEDULE
    Local schedule + Supabase schedule
 ================================================== */
 
-const [
-  databaseScheduleEvents,
-  setDatabaseScheduleEvents,
-] =
-  useState([])
+  const [databaseScheduleEvents, setDatabaseScheduleEvents] = useState([]);
 
-
-/* ==================================================
+  /* ==================================================
    FETCH PUBLISHED EVENTS FROM SUPABASE
 ================================================== */
 
-useEffect(
-  () => {
+  useEffect(() => {
+    let active = true;
 
-    let active =
-      true
+    const loadSchedule = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("events")
+          .select("*")
+          .eq("is_published", true)
+          .order("start_at", {
+            ascending: true,
+          });
 
-
-    const loadSchedule =
-      async () => {
-
-        try {
-
-          const {
-            data,
-            error,
-          } =
-            await supabase
-              .from("events")
-              .select("*")
-              .eq(
-                "is_published",
-                true
-              )
-              .order(
-                "start_at",
-                {
-                  ascending:
-                    true,
-                }
-              )
-
-
-          if (
-            error
-          ) {
-
-            throw error
-
-          }
-
-
-          const mappedEvents =
-            (
-              data ||
-              []
-            ).map(
-              (row) => {
-
-                let posterUrl =
-                  ""
-
-
-                if (
-                  row.image_path
-                ) {
-
-                  const {
-                    data:
-                      posterData,
-                  } =
-                    supabase
-                      .storage
-                      .from(
-                        "schedule"
-                      )
-                      .getPublicUrl(
-                        row.image_path
-                      )
-
-
-                  posterUrl =
-                    posterData
-                      ?.publicUrl ||
-                    ""
-
-                }
-
-
-                return (
-                  mapSupabaseScheduleEvent(
-                    row,
-                    posterUrl
-                  )
-                )
-
-              }
-            )
-
-
-          if (
-            active
-          ) {
-
-            setDatabaseScheduleEvents(
-              mappedEvents
-            )
-
-          }
-
+        if (error) {
+          throw error;
         }
 
-        catch (
-          error
-        ) {
+        const mappedEvents = (data || []).map((row) => {
+          let posterUrl = "";
 
-          console.error(
-            "Unable to load Jan schedule:",
-            error
-          )
+          if (row.image_path) {
+            const { data: posterData } = supabase.storage
+              .from("schedule")
+              .getPublicUrl(row.image_path);
 
+            posterUrl = posterData?.publicUrl || "";
+          }
+
+          return mapSupabaseScheduleEvent(row, posterUrl);
+        });
+
+        if (active) {
+          setDatabaseScheduleEvents(mappedEvents);
         }
-
+      } catch (error) {
+        console.error("Unable to load Jan schedule:", error);
       }
+    };
 
-
-    loadSchedule()
-
+    loadSchedule();
 
     return () => {
+      active = false;
+    };
+  }, []);
 
-      active =
-        false
-
-    }
-
-  },
-  []
-)
-
-
-/* ==================================================
+  /* ==================================================
    MERGE LOCAL + DATABASE EVENTS
 ================================================== */
 
-const mergedScheduleEvents =
-  useMemo(
-    () =>
-      mergeScheduleEvents(
-        scheduleEvents,
-        databaseScheduleEvents
-      ),
-    [
-      databaseScheduleEvents,
-    ]
-  )
+  const mergedScheduleEvents = useMemo(
+    () => mergeScheduleEvents(scheduleEvents, databaseScheduleEvents),
+    [databaseScheduleEvents],
+  );
 
-
-/* ==================================================
+  /* ==================================================
    FIND JAN'S NEXT ACTIVE EVENT
 ================================================== */
 
-const nextJanEvent =
-  useMemo(
-    () => {
+  const nextJanEvent = useMemo(() => {
+    const upcoming = getUpcomingEvents(mergedScheduleEvents);
 
-      const upcoming =
-        getUpcomingEvents(
-          mergedScheduleEvents
-        )
+    return (
+      upcoming.find((event) => {
+        const people = event.people || event.artists || [];
 
+        const status = getEffectiveScheduleStatus(event);
 
-      return (
-        upcoming.find(
-          (event) => {
-
-            const people =
-              event.people ||
-              event.artists ||
-              []
-
-
-            const status =
-              getEffectiveScheduleStatus(
-                event
-              )
-
-
-            return (
-              people.includes(
-                "jan"
-              ) &&
-              status !==
-                "cancelled" &&
-              status !==
-                "postponed"
-            )
-
-          }
-        ) ||
-        null
-      )
-
-    },
-    [
-      mergedScheduleEvents,
-    ]
-  )
-
-
-  
-
+        return (
+          people.includes("jan") &&
+          status !== "cancelled" &&
+          status !== "postponed"
+        );
+      }) || null
+    );
+  }, [mergedScheduleEvents]);
 
   return (
     <>
@@ -514,6 +363,7 @@ const nextJanEvent =
         {/* ==================================================
     00 / PROFILE
 ================================================== */}
+
         <section id="profile" className="jan-section jan-profile-section">
           <div className="jan-section-heading">
             <p>00 / PROFILE</p>
@@ -526,6 +376,10 @@ const nextJanEvent =
 
             <span>actress • singer • performer ♡</span>
           </div>
+
+          {/* ==================================================
+      PROFILE EDITORIAL
+  ================================================== */}
 
           <div className="jan-profile-editorial">
             {/* PHOTO */}
@@ -568,10 +422,12 @@ const nextJanEvent =
                 <p>Ployshompoo Supasap</p>
               </div>
 
-              {/* <div className="jan-profile-fact">
-                <span>THAI NAME</span>
-                <p>พลอยชมพู ศุภทรัพย์</p>
-              </div> */}
+              {/*
+      <div className="jan-profile-fact">
+        <span>THAI NAME</span>
+        <p>พลอยชมพู ศุภทรัพย์</p>
+      </div>
+      */}
 
               <div className="jan-profile-fact">
                 <span>NICKNAME</span>
@@ -588,116 +444,122 @@ const nextJanEvent =
                 <p>Capricorn</p>
               </div>
 
-              
-
               <div className="jan-profile-fact">
                 <span>KNOWN FOR</span>
                 <p>Acting • Music • SIZZY</p>
               </div>
             </div>
           </div>
+
+          {/* ==================================================
+      A LITTLE MORE ABOUT JAN
+  ================================================== */}
+
+          <div className="jan-favorites">
+            <div className="jan-favorites-heading">
+              <p>GET TO KNOW HER</p>
+
+              <h3>
+                A little more
+                <em> about Jan ♡</em>
+              </h3>
+            </div>
+
+            {/* ==================================================
+        FAVORITES TABLE
+    ================================================== */}
+
+            <div className="jan-favorites-table">
+              <div className="jan-favorite-item">
+                <span>FAVORITE FOOD</span>
+                <p>—</p>
+              </div>
+
+              <div className="jan-favorite-item">
+                <span>FAVORITE DRINK</span>
+                <p>—</p>
+              </div>
+
+              <div className="jan-favorite-item">
+                <span>FAVORITE FASHION STYLE</span>
+                <p>Chill and Cool</p>
+              </div>
+
+              <div className="jan-favorite-item">
+                <span>FAVORITE COLOR</span>
+                <p>Purple</p>
+              </div>
+
+              <div className="jan-favorite-item">
+                <span>HOBBIES</span>
+                <p>Painting • Workshops • Handcrafts</p>
+              </div>
+
+              <div className="jan-favorite-item">
+                <span>PETS</span>
+                <p>Dogs</p>
+              </div>
+
+              <div className="jan-favorite-item">
+                <span>FAVORITE MOVIE</span>
+                <p>—</p>
+              </div>
+
+              <div className="jan-favorite-item">
+                <span>SPORT</span>
+                <p>—</p>
+              </div>
+
+              <div className="jan-favorite-item">
+                <span>FAVORITE ARTIST</span>
+                <p>Karina Yu</p>
+              </div>
+
+              <div className="jan-favorite-item">
+                <span>MOTTO</span>
+                <p>—</p>
+              </div>
+            </div>
+
+            {/* ==================================================
+        SOCIALS
+    ================================================== */}
+
+            <div className="jan-socials">
+              <span className="jan-socials-label">FIND JAN ONLINE</span>
+
+              <div className="jan-social-links">
+                <a
+                  href="https://www.instagram.com/janhae/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Instagram ↗
+                </a>
+
+                <a href="https://x.com/janhae" target="_blank" rel="noreferrer">
+                  X ↗
+                </a>
+
+                <a
+                  href="https://www.tiktok.com/@janhae?is_from_webapp=1&sender_device=pc"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  TikTok ↗
+                </a>
+
+                <a
+                  href="https://weibo.com/u/4020580354"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Weibo ↗
+                </a>
+              </div>
+            </div>
+          </div>
         </section>
-
-        {/* ==================================================
-    A LITTLE MORE ABOUT JAN
-================================================== */}
-        <div className="jan-favorites">
-          <div className="jan-favorites-heading">
-            <p>GET TO KNOW HER</p>
-
-            <h3>
-              A little more
-              <em> about Jan ♡</em>
-            </h3>
-          </div>
-
-          <div className="jan-favorites-table">
-            <div className="jan-favorite-item">
-              <span>FAVORITE FOOD</span>
-              <p>—</p>
-            </div>
-
-            <div className="jan-favorite-item">
-              <span>FAVORITE DRINK</span>
-              <p>—</p>
-            </div>
-
-            <div className="jan-favorite-item">
-              <span>FAVORITE FASHION STYLE</span>
-              <p>Chill and Cool</p>
-            </div>
-
-            <div className="jan-favorite-item">
-              <span>FAVORITE COLOR</span>
-              <p>Purple</p>
-            </div>
-
-            <div className="jan-favorite-item">
-              <span>HOBBIES</span>
-              <p>Painting • Workshops • Handcrafts</p>
-            </div>
-
-            <div className="jan-favorite-item">
-              <span>PETS</span>
-              <p>Dogs</p>
-            </div>
-
-            <div className="jan-favorite-item">
-              <span>FAVORITE MOVIE</span>
-              <p>—</p>
-            </div>
-
-            <div className="jan-favorite-item">
-              <span>SPORT</span>
-              <p>—</p>
-            </div>
-
-            <div className="jan-favorite-item">
-              <span>FAVORITE ARTIST</span>
-              <p>Karina Yu</p>
-            </div>
-
-            <div className="jan-favorite-item">
-              <span>MOTTO</span>
-              <p>—</p>
-            </div>
-          </div>
-
-          {/* SOCIALS */}
-          <div className="jan-socials">
-            <span className="jan-socials-label">FIND JAN ONLINE</span>
-
-            <div className="jan-social-links">
-              <a
-                href="https://www.instagram.com/janhae/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Instagram ↗
-              </a>
-
-              <a href="https://x.com/janhae" target="_blank" rel="noreferrer">
-                X ↗
-              </a>
-
-              <a
-                href="https://www.tiktok.com/@janhae?is_from_webapp=1&sender_device=pc"
-                target="_blank"
-                rel="noreferrer"
-              >
-                TikTok ↗
-              </a>
-
-              <a
-                href="https://weibo.com/u/4020580354"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Weibo ↗
-              </a>
-            </div>
-          </div>
-        </div>
 
         {/* ==================================================
     CAREER JOURNEY
@@ -1199,7 +1061,6 @@ const nextJanEvent =
             <span>→</span>
           </Link>
         </section>
-         
       </main>
       <Footer />
     </>

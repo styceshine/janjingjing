@@ -10,7 +10,7 @@ export const galleryPersonFilters = [
 export const galleryCategoryFilters = [
   { id: "all", label: "ALL" },
   { id: "selfie", label: "SELFIE" },
-  { id: "series", label: "SERIES" },
+  { id: "series", label: "SERIES" }, 
   { id: "events", label: "EVENTS" },
   { id: "fancons", label: "FANCONS" },
   { id: "editorial", label: "EDITORIAL" },

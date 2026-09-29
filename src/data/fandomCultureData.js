@@ -96,7 +96,7 @@ export const fandomCultureItems = [
 
     region: "THAILAND",
 
-    label: "PAIR FANBASE",
+    label: "JAN FANBASE",
 
      
 
@@ -183,7 +183,7 @@ export const fandomCultureItems = [
 
     region: "PHILIPPINES",
 
-    label: "PAIR FANBASE",
+    label: "JINGJING FANBASE",
 
     description:
       "A Philippines-based fan account sharing JanJingJing updates, photos and pair activities.",

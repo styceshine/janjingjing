@@ -5974,7 +5974,7 @@ a {
     "Sacramento",
     cursive;
 
-  font-size: 1.4rem;
+  font-size: 0.9rem;
 
   transform:
     rotate(4deg);
@@ -6009,7 +6009,7 @@ a {
     "Sacramento",
     cursive;
 
-  font-size: 1.25rem;
+  font-size: 0.9rem;
 
   transform:
     rotate(-5deg);
@@ -7987,6 +7987,10 @@ a {
    HERO
 ================================================== */
 
+/* ==================================================
+   JAN HERO
+================================================== */
+
 .jan-hero {
   position: relative;
 
@@ -7998,7 +8002,6 @@ a {
     5rem;
 
   display: flex;
-
   align-items: center;
 
   overflow: hidden;
@@ -8021,6 +8024,10 @@ a {
     );
 }
 
+
+/* ==================================================
+   LARGE BACKGROUND WORD
+================================================== */
 
 .jan-hero-bg-text {
   position: absolute;
@@ -8046,7 +8053,12 @@ a {
 }
 
 
-/* GRID */
+/* ==================================================
+   HERO GRID
+
+   JAN:
+   INTRO | PHOTO | EXPLORE
+================================================== */
 
 .jan-hero-grid {
   position: relative;
@@ -8072,7 +8084,16 @@ a {
 }
 
 
-/* HERO COPY */
+/* ==================================================
+   LEFT — HERO INTRO
+================================================== */
+
+.jan-hero-copy {
+  position: relative;
+}
+
+
+/* KICKER */
 
 .jan-page-kicker {
   margin:
@@ -8084,11 +8105,14 @@ a {
     var(--jan-purple-strong);
 
   font-size: 0.65rem;
+
   font-weight: 1000;
 
   letter-spacing: 0.28em;
 }
 
+
+/* NAME */
 
 .jan-hero-copy h1 {
   margin: 0;
@@ -8116,6 +8140,8 @@ a {
 }
 
 
+/* DESCRIPTION */
+
 .jan-hero-description {
   max-width: 520px;
 
@@ -8128,17 +8154,19 @@ a {
 
   font-family:
     "Cormorant Garamond",
-    serif
-    ;
+    serif;
 
   font-size: 1.15rem;
+
   font-weight: 700;
 
   line-height: 1.7;
 }
 
 
-/* TAGS */
+/* ==================================================
+   HERO SOCIAL TAGS
+================================================== */
 
 .jan-hero-tags {
   display: flex;
@@ -8160,17 +8188,36 @@ a {
   color:
     var(--jan-purple-dark);
 
-  font-size: 0.60rem;
+  font-size: 0.6rem;
+
   font-weight: 1000;
 
   letter-spacing: 0.15em;
 }
 
 
+/* IMPORTANT:
+   Keep links looking like the tag itself.
+*/
+
+.jan-hero-tags a {
+  color: inherit;
+
+  text-decoration: none;
+}
+
+
+/* ==================================================
+   HERO HANDWRITING
+================================================== */
+
 .jan-hero-handwriting {
   display: block;
 
   margin-top: 2rem;
+
+  color:
+    var(--jan-purple-strong);
 
   font-family:
     "Sacramento",
@@ -8178,16 +8225,13 @@ a {
 
   font-size: 1.9rem;
 
-  color:
-    var(--jan-purple-strong);
-
   transform:
     rotate(-3deg);
 }
 
 
 /* ==================================================
-   HERO PHOTO
+   CENTER — HERO PHOTO
 ================================================== */
 
 .jan-hero-photo {
@@ -8204,18 +8248,34 @@ a {
 
   transform:
     rotate(2deg);
+
+  overflow: visible;
 }
 
 
-.jan-hero-photo img {
+/*
+   IMPORTANT FIX:
+
+   Use > img instead of img.
+
+   This targets ONLY Jan's main photo
+   and does not affect an image inside Jewel.
+*/
+
+.jan-hero-photo > img {
   display: block;
 
   width: 100%;
+
   height: 540px;
 
   object-fit: cover;
 }
 
+
+/* ==================================================
+   HERO TAPE
+================================================== */
 
 .jan-hero-tape {
   position: absolute;
@@ -8233,6 +8293,7 @@ a {
     rotate(-5deg);
 
   display: grid;
+
   place-items: center;
 
   background:
@@ -8246,6 +8307,10 @@ a {
     var(--jan-purple-dark);
 }
 
+
+/* ==================================================
+   HERO PHOTO CARD
+================================================== */
 
 .jan-photo-card {
   position: absolute;
@@ -8270,13 +8335,14 @@ a {
 
 
 .jan-photo-card span {
+  color:
+    var(--jan-purple-dark);
+
   font-size: 0.5rem;
+
   font-weight: 700;
 
   letter-spacing: 0.18em;
-
-  color:
-    var(--jan-purple-dark);
 }
 
 
@@ -8295,11 +8361,7 @@ a {
 
 
 /* ==================================================
-   PROFILE INFO
-================================================== */
-
-/* ==================================================
-   JAN HERO — EXPLORE INDEX
+   RIGHT — EXPLORE JAN
 ================================================== */
 
 .jan-hero-side {
@@ -8311,6 +8373,7 @@ a {
     1.5rem;
 
   display: flex;
+
   flex-direction: column;
 
   background:
@@ -8332,16 +8395,20 @@ a {
     var(--jan-purple-strong);
 
   font-size: 0.7rem;
+
   font-weight: 1000;
 
   letter-spacing: 0.22em;
 }
 
 
-/* INDEX */
+/* ==================================================
+   EXPLORE INDEX
+================================================== */
 
 .jan-hero-index {
   display: flex;
+
   flex-direction: column;
 
   border-top:
@@ -8392,11 +8459,12 @@ a {
     serif;
 
   font-size: 1rem;
+
   font-weight: 600;
 }
 
 
-/* SMALL CATEGORY */
+/* CATEGORY */
 
 .jan-hero-index-item div p {
   margin:
@@ -8408,6 +8476,7 @@ a {
     var(--jan-purple-strong);
 
   font-size: 0.55rem;
+
   font-weight: 1000;
 
   letter-spacing: 0.14em;
@@ -8419,17 +8488,18 @@ a {
 .jan-hero-index-item div strong {
   display: block;
 
+  color:
+    var(--ink);
+
   font-family:
     "Cormorant Garamond",
     serif;
 
   font-size: 1rem;
+
   font-weight: 700;
 
   line-height: 1.05;
-
-  color:
-    var(--ink);
 }
 
 
@@ -8440,6 +8510,7 @@ a {
     rgba(104, 44, 160, 0.363);
 
   font-size: 0.85rem;
+
   font-weight: 1000;
 
   transition:
@@ -8451,13 +8522,11 @@ a {
 /* HOVER */
 
 .jan-hero-index-item:hover {
-  padding-left:
-    0.35rem;
+  padding-left: 0.35rem;
 }
 
 
-.jan-hero-index-item:hover
-div strong {
+.jan-hero-index-item:hover div strong {
   color:
     var(--jan-purple-dark);
 }
@@ -8472,7 +8541,9 @@ div strong {
 }
 
 
-/* BOTTOM NOTE */
+/* ==================================================
+   BOTTOM NOTE
+================================================== */
 
 .jan-hero-side-note {
   margin:
@@ -8480,8 +8551,7 @@ div strong {
     0
     0;
 
-  padding-top:
-    1.2rem;
+  padding-top: 1.2rem;
 
   color:
     var(--jan-purple-strong);
@@ -8494,6 +8564,274 @@ div strong {
 
   text-align: right;
 }
+
+
+/* ==================================================
+   TABLET — JAN HERO
+
+   Mirrors JingJing:
+   JAN = INTRO | PHOTO
+         EXPLORE BELOW
+================================================== */
+
+@media (max-width: 1000px) {
+
+  .jan-hero {
+    min-height: auto;
+  }
+
+
+  .jan-hero-grid {
+    grid-template-columns:
+      1fr
+      1fr;
+
+    gap: 2rem;
+  }
+
+
+  /*
+     Because Jan is the mirrored layout,
+     EXPLORE becomes the full-width item below.
+  */
+
+  .jan-hero-side {
+    grid-column:
+      1 / -1;
+
+    width: 100%;
+
+    max-width: 650px;
+
+    height: auto;
+
+    margin:
+      2rem
+      auto
+      0;
+
+    border-left: 0;
+
+    border-top:
+      1px solid
+      rgba(149, 107, 209, 0.16);
+  }
+
+
+  .jan-hero-photo {
+    width: 100%;
+
+    max-width: 430px;
+
+    justify-self: center;
+  }
+
+}
+
+
+/* ==================================================
+   MOBILE — JAN HERO
+
+   Same order as JingJing:
+   INTRO
+   PHOTO
+   EXPLORE
+================================================== */
+
+@media (max-width: 700px) {
+
+  .jan-hero {
+    min-height: auto;
+
+    padding:
+      7rem
+      1.5rem
+      5rem;
+  }
+
+
+  .jan-hero-grid {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3rem;
+  }
+
+
+  /* ==================================================
+     INTRO FIRST
+  ================================================== */
+
+  .jan-hero-copy {
+    order: 1;
+
+    width: 100%;
+
+    text-align: center;
+  }
+
+
+  .jan-hero-description {
+    margin-left: auto;
+
+    margin-right: auto;
+  }
+
+
+  .jan-hero-tags {
+    justify-content: center;
+  }
+
+
+  /* ==================================================
+     PHOTO SECOND
+  ================================================== */
+
+  .jan-hero-photo {
+    order: 2;
+
+    width:
+      min(430px, 100%);
+
+    max-width: none;
+
+    margin: auto;
+
+    justify-self: auto;
+  }
+
+
+  .jan-hero-photo > img {
+    height: 500px;
+  }
+
+
+  /* ==================================================
+     EXPLORE THIRD
+  ================================================== */
+
+  .jan-hero-side {
+    order: 3;
+
+    width: 100%;
+
+    max-width: none;
+
+    height: auto;
+
+    margin-top: 0;
+
+    border-left: 0;
+
+    border-top:
+      1px solid
+      rgba(149, 107, 209, 0.16);
+  }
+
+}
+
+
+/* ==================================================
+   SMALL MOBILE
+================================================== */
+
+@media (max-width: 480px) {
+
+  .jan-hero {
+    padding:
+      6rem
+      1.25rem
+      4rem;
+  }
+
+
+  .jan-hero-grid {
+    gap: 2.5rem;
+  }
+
+
+  .jan-page-kicker {
+    font-size: 0.58rem;
+  }
+
+
+  .jan-hero-copy h1 {
+    font-size:
+      clamp(3.7rem, 17vw, 5rem);
+
+    line-height: 0.8;
+  }
+
+
+  .jan-hero-description {
+    font-size: 0.95rem;
+
+    line-height: 1.6;
+  }
+
+
+  .jan-hero-tags {
+    gap: 0.45rem;
+  }
+
+
+  .jan-hero-tags span {
+    padding:
+      0.4rem
+      0.6rem;
+
+    font-size: 0.5rem;
+  }
+
+
+  .jan-hero-handwriting {
+    margin-top: 1.5rem;
+
+    font-size: 1.6rem;
+  }
+
+
+  .jan-hero-photo {
+    width:
+      min(330px, 92vw);
+  }
+
+
+  .jan-hero-photo > img {
+    height:
+      clamp(
+        390px,
+        120vw,
+        470px
+      );
+  }
+
+
+  .jan-photo-card {
+    left: 10px;
+
+    bottom: 15px;
+  }
+
+
+  .jan-hero-side {
+    padding:
+      1.5rem
+      1.15rem;
+  }
+
+
+  .jan-hero-side-note {
+    text-align: left;
+  }
+
+}
+
+
+
+
+
 
 /* ==================================================
    QUICK NAV
@@ -27766,171 +28104,196 @@ li + li::before {
 
 
 
-  /* ========================================================
-     04 / PHOTO DIARY
-     DESKTOP COLLAGE SHRUNK TO PHONE SIZE
-  ======================================================== */
+/* ========================================================
+   04 / PHOTO DIARY
+   MOBILE — DESKTOP COLLAGE SHRUNK TO PHONE SIZE
+======================================================== */
 
-  .photo-diary-grid {
-    width:
-      100%;
+.photo-diary-grid {
+  width: 100%;
 
-    display:
-      grid;
+  display: grid;
 
-    grid-template-columns:
-      1fr
-      0.82fr
-      1fr;
+  grid-template-columns:
+    1fr
+    0.82fr
+    1fr;
 
-    grid-template-rows:
-      150px
-      115px;
+  grid-template-rows:
+    150px
+    115px;
 
-    gap:
-      0.45rem;
-  }
+  gap: 0.45rem;
+}
 
 
-  .diary-card,
-  .diary-card-jan,
-  .diary-card-jing,
-  .diary-card-couple-top,
-  .diary-card-couple-small {
-    width:
-      100%;
+/* ========================================================
+   CARDS
+======================================================== */
 
-    min-width:
-      0;
+.diary-card,
+.diary-card-jan,
+.diary-card-jing,
+.diary-card-couple-top,
+.diary-card-couple-small {
+  width: 100%;
 
-    min-height:
-      0;
+  min-width: 0;
+  min-height: 0;
 
-    padding:
-      4px;
+  padding: 4px;
 
-    transform:
-      none;
-  }
+  transform: none;
+}
 
 
-  .diary-card-jan {
-    grid-column:
-      1;
+/* JAN LARGE */
 
-    grid-row:
-      1 / 3;
-  }
+.diary-card-jan {
+  grid-column: 1;
 
-
-  .diary-card-couple-top {
-    grid-column:
-      2;
-
-    grid-row:
-      1;
-  }
+  grid-row:
+    1 / 3;
+}
 
 
-  .diary-card-couple-small {
-    grid-column:
-      2;
+/* COUPLE TOP */
 
-    grid-row:
-      2;
-  }
+.diary-card-couple-top {
+  grid-column: 2;
 
-
-  .diary-card-jing {
-    grid-column:
-      3;
-
-    grid-row:
-      1 / 3;
-  }
+  grid-row: 1;
+}
 
 
-  .diary-card img {
-    width:
-      100%;
+/* COUPLE SMALL */
 
-    height:
-      100%;
+.diary-card-couple-small {
+  grid-column: 2;
 
-    min-height:
-      0;
-
-    object-fit:
-      cover;
-  }
+  grid-row: 2;
+}
 
 
-  .diary-caption {
-    bottom:
-      -8px;
+/* JINGJING LARGE */
 
-    padding:
-      0.2rem
-      0.3rem;
-  }
+.diary-card-jing {
+  grid-column: 3;
 
-
-  .diary-caption span {
-    font-size:
-      0.25rem;
-  }
+  grid-row:
+    1 / 3;
+}
 
 
-  .diary-caption p {
-    font-size:
-      0.65rem;
-  }
+/* ========================================================
+   IMAGES
+======================================================== */
+
+.diary-card img {
+  width: 100%;
+  height: 100%;
+
+  min-height: 0;
+
+  object-fit: cover;
+}
 
 
-  .diary-tape {
-    top:
-      -7px;
+/* ========================================================
+   CAPTIONS
+======================================================== */
 
-    width:
-      48px;
+.diary-caption {
+  bottom: -8px;
 
-    height:
-      14px;
-
-    font-size:
-      0.4rem;
-  }
+  padding:
+    0.2rem
+    0.3rem;
+}
 
 
-  .diary-doodle {
-    display:
-      none;
-  }
+.diary-caption span {
+  font-size: 0.25rem;
+}
 
 
-  .photo-diary-category-links {
-    margin-top:
-      1rem;
-
-    gap:
-      0.5rem;
-
-    flex-wrap:
-      nowrap;
-
-    justify-content:
-      center;
-
-    font-size:
-      0.38rem;
-  }
+.diary-caption p {
+  font-size: 0.65rem;
+}
 
 
-  .photo-diary-divider {
-    margin-top:
-      2.8rem;
-  }
+/* ========================================================
+   TAPE
+   Smaller for mobile collage
+======================================================== */
 
+.diary-tape {
+  top: -4px;
+
+  width: 32px;
+  height: 9px;
+
+  font-size: 0.28rem;
+
+  line-height: 1;
+
+  display: grid;
+
+  place-items: center;
+}
+
+
+/* JAN PURPLE TAPE */
+
+.diary-tape-purple {
+  transform:
+    translateX(-50%)
+    rotate(-5deg);
+}
+
+
+/* JINGJING PINK TAPE */
+
+.diary-tape-pink {
+  transform:
+    translateX(-50%)
+    rotate(5deg);
+}
+
+
+/* ========================================================
+   DOODLES
+======================================================== */
+
+.diary-doodle {
+  display: none;
+}
+
+
+/* ========================================================
+   CATEGORY LINKS
+======================================================== */
+
+.photo-diary-category-links {
+  margin-top: 1rem;
+
+  gap: 0.5rem;
+
+  flex-wrap: nowrap;
+
+  justify-content: center;
+
+  font-size: 0.38rem;
+}
+
+
+/* ========================================================
+   DIVIDER
+======================================================== */
+
+.photo-diary-divider {
+  margin-top: 2.8rem;
+}
 
 
   /* ========================================================
