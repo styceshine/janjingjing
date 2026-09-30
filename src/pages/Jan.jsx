@@ -472,7 +472,7 @@ function Jan() {
             <div className="jan-favorites-table">
               <div className="jan-favorite-item">
                 <span>FAVORITE FOOD</span>
-                <p>—</p>
+                <p>Shabu-shabu • Grilled food</p>
               </div>
 
               <div className="jan-favorite-item">
