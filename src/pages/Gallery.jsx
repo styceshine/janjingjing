@@ -1,74 +1,28 @@
 // src/pages/Gallery.jsx
 
+import { useEffect, useMemo, useState } from "react";
 
+import { useSearchParams } from "react-router-dom";
 
-import {
+import Navbar from "../components/Navbar";
 
-  useEffect,
+import Footer from "../components/Footer";
 
-  useMemo,
-
-  useState,
-
-} from "react"
-
-
+import GalleryLightbox from "../components/GalleryLightbox";
 
 import {
-
-  useSearchParams,
-
-} from "react-router-dom"
-
-
-
-import Navbar from "../components/Navbar"
-
-import Footer from "../components/Footer"
-
-import GalleryLightbox from "../components/GalleryLightbox"
-
-
-
-import {
-
   buildGalleryFilterOptions,
-
   galleryPersonFilters,
-
   galleryCategoryFilters,
-
   galleryEraFilters,
-
   galleryPhotos,
-
   mapSupabaseGalleryPhoto,
-
   mergeGalleryPhotos,
+} from "../data/galleryData";
 
-} from "../data/galleryData"
+import { supabase } from "../lib/supabase";
 
-
-
-import {
-
-  supabase,
-
-} from "../lib/supabase"
-
-
-
-import "../styles/pages/Gallery.css"
-
-
-
-
-
-
-
-
-
-
+import "../styles/pages/Gallery.css";
 
 /* ==================================================
 
@@ -76,175 +30,19 @@ import "../styles/pages/Gallery.css"
 
 ================================================== */
 
-
-
-function getGalleryPublicUrl(
-
-  imagePath
-
-) {
-
-
-
-  if (
-
-    !imagePath
-
-  ) {
-
-
-
-    return ""
-
-
-
+function getGalleryPublicUrl(imagePath) {
+  if (!imagePath) {
+    return "";
   }
 
+  const { data } = supabase.storage
 
+    .from("gallery")
 
+    .getPublicUrl(imagePath);
 
-
-  const {
-
-    data,
-
-  } =
-
-    supabase.storage
-
-      .from(
-
-        "gallery"
-
-      )
-
-      .getPublicUrl(
-
-        imagePath
-
-      )
-
-
-
-
-
-  return (
-
-    data?.publicUrl ||
-
-    ""
-
-  )
-
-
-
+  return data?.publicUrl || "";
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* ==================================================
-
-   SHUFFLE
-
-================================================== */
-
-
-
-
-
-function shuffleArray(array) {
-
-
-
-  const shuffled = [...array]
-
-
-
-  for (
-
-    let i = shuffled.length - 1;
-
-    i > 0;
-
-    i--
-
-  ) {
-
-
-
-    const randomIndex =
-
-      Math.floor(
-
-        Math.random() *
-
-        (i + 1)
-
-      )
-
-
-
-
-
-    const temporary =
-
-      shuffled[i]
-
-
-
-
-
-    shuffled[i] =
-
-      shuffled[randomIndex]
-
-
-
-
-
-    shuffled[randomIndex] =
-
-      temporary
-
-
-
-  }
-
-
-
-  return shuffled
-
-}
-
-
-
-
 
 /* ==================================================
 
@@ -252,280 +50,71 @@ function shuffleArray(array) {
 
 ================================================== */
 
-
-
 function Gallery() {
+  const [searchParams, setSearchParams] = useSearchParams();
 
-
-
-  const [
-
-    searchParams,
-
-    setSearchParams,
-
-  ] = useSearchParams()
-
-
-
-
-
-    /* ==================================================
+  /* ==================================================
 
      SUPABASE PHOTOS
 
   ================================================== */
 
+  const [databasePhotos, setDatabasePhotos] = useState([]);
 
+  useEffect(() => {
+    let active = true;
 
-  const [
+    const loadDatabasePhotos = async () => {
+      try {
+        const {
+          data,
 
-    databasePhotos,
+          error,
+        } = await supabase
 
-    setDatabasePhotos,
+          .from("gallery_photos")
 
-  ] =
+          .select("*")
 
-    useState([])
+          .eq(
+            "is_published",
 
+            true,
+          )
 
+          .order(
+            "sort_order",
 
-  /* ==================================================
+            {
+              ascending: true,
+            },
+          )
 
-     LOCKED RANDOM ORDER
+          .order(
+            "created_at",
 
-     Wait for Supabase, combine all photos, shuffle once,
-     then keep that exact order for this page visit.
+            {
+              ascending: false,
+            },
+          );
 
-  ================================================== */
+        if (error) {
+          throw error;
+        }
 
+        const converted = (data || []).map((row) =>
+          mapSupabaseGalleryPhoto(
+            row,
 
+            getGalleryPublicUrl(row.image_path),
+          ),
+        );
 
-  const [
-
-    randomPhotos,
-
-    setRandomPhotos,
-
-  ] = useState([])
-
-
-
-  const [
-
-    galleryReady,
-
-    setGalleryReady,
-
-  ] = useState(false)
-
-
-
-
-
-  useEffect(
-
-    () => {
-
-
-
-      let active =
-
-        true
-
-
-
-
-
-      const loadDatabasePhotos =
-
-        async () => {
-
-
-
-          try {
-
-
-
-            const {
-
-              data,
-
-              error,
-
-            } =
-
-              await supabase
-
-                .from(
-
-                  "gallery_photos"
-
-                )
-
-                .select("*")
-
-                .eq(
-
-                  "is_published",
-
-                  true
-
-                )
-
-                .order(
-
-                  "sort_order",
-
-                  {
-
-                    ascending:
-
-                      true,
-
-                  }
-
-                )
-
-                .order(
-
-                  "created_at",
-
-                  {
-
-                    ascending:
-
-                      false,
-
-                  }
-
-                )
-
-
-
-
-
-            if (
-
-              error
-
-            ) {
-
-
-
-              throw error
-
-
-
-            }
-
-
-
-
-
-            const converted =
-
-              (
-
-                data ||
-
-                []
-
-              ).map(
-
-                (
-
-                  row
-
-                ) =>
-
-
-
-                  mapSupabaseGalleryPhoto(
-
-                    row,
-
-                    getGalleryPublicUrl(
-
-                      row.image_path
-
-                    )
-
-                  )
-
-
-
-              )
-
-
-
-
-
-            if (
-
-              active
-
-            ) {
-
-
-
-              const combinedPhotos =
-
-                mergeGalleryPhotos(
-
-                  galleryPhotos,
-
-                  converted
-
-                )
-
-
-
-              setDatabasePhotos(
-
-                converted
-
-              )
-
-
-
-              setRandomPhotos(
-
-                shuffleArray(
-
-                  combinedPhotos
-
-                )
-
-              )
-
-
-
-              setGalleryReady(
-
-                true
-
-              )
-
-
-
-            }
-
-
-
-          }
-
-
-
-          catch (
-
-            error
-
-          ) {
-
-
-
-            /*
+        if (active) {
+          setDatabasePhotos(converted);
+        }
+      } catch (error) {
+        /*
 
              * Existing local gallery remains available
 
@@ -533,89 +122,20 @@ function Gallery() {
 
              */
 
+        console.error(
+          "Public gallery Supabase error:",
 
-
-            console.error(
-
-              "Public gallery Supabase error:",
-
-              error
-
-            )
-
-
-
-            if (
-
-              active
-
-            ) {
-
-
-
-              setRandomPhotos(
-
-                shuffleArray(
-
-                  galleryPhotos
-
-                )
-
-              )
-
-
-
-              setGalleryReady(
-
-                true
-
-              )
-
-
-
-            }
-
-
-
-          }
-
-
-
-        }
-
-
-
-
-
-      loadDatabasePhotos()
-
-
-
-
-
-      return () => {
-
-
-
-        active =
-
-          false
-
-
-
+          error,
+        );
       }
+    };
 
+    loadDatabasePhotos();
 
-
-    },
-
-    []
-
-  )
-
-
-
-
+    return () => {
+      active = false;
+    };
+  }, []);
 
   /* ==================================================
 
@@ -623,45 +143,26 @@ function Gallery() {
 
   ================================================== */
 
-
-
-  const allGalleryPhotos =
-
-    useMemo(
-
-      () =>
-
-        mergeGalleryPhotos(
-
-          galleryPhotos,
-
-          databasePhotos
-
-        ),
-
-      [
+  const allGalleryPhotos = useMemo(
+    () =>
+      mergeGalleryPhotos(
+        galleryPhotos,
 
         databasePhotos,
+      ),
 
-      ]
-
-    )
-
-
-
-
+    [databasePhotos],
+  );
 
   /* ==================================================
 
-     RANDOM ORDER
+     STABLE ALL VIEW
 
-     randomPhotos is created once after the Supabase
-     request finishes. Scrolling and filtering do not
-     create another shuffle.
+     No random shuffling. The gallery keeps the same
+     order from galleryData.js, followed by published
+     Supabase photos in their database sort order.
 
   ================================================== */
-
-
 
   /* ==================================================
 
@@ -669,61 +170,31 @@ function Gallery() {
 
   ================================================== */
 
-
-
-  const categoryFilters =
-
-    useMemo(
-
-      () =>
-
-        buildGalleryFilterOptions(
-
-          galleryCategoryFilters,
-
-          allGalleryPhotos,
-
-          "category"
-
-        ),
-
-      [
+  const categoryFilters = useMemo(
+    () =>
+      buildGalleryFilterOptions(
+        galleryCategoryFilters,
 
         allGalleryPhotos,
 
-      ]
+        "category",
+      ),
 
-    )
+    [allGalleryPhotos],
+  );
 
-
-
-
-
-  const eraFilters =
-
-    useMemo(
-
-      () =>
-
-        buildGalleryFilterOptions(
-
-          galleryEraFilters,
-
-          allGalleryPhotos,
-
-          "era"
-
-        ),
-
-      [
+  const eraFilters = useMemo(
+    () =>
+      buildGalleryFilterOptions(
+        galleryEraFilters,
 
         allGalleryPhotos,
 
-      ]
+        "era",
+      ),
 
-    )
-
-
+    [allGalleryPhotos],
+  );
 
   /* ==================================================
 
@@ -731,37 +202,13 @@ function Gallery() {
 
   ================================================== */
 
+  const requestedPerson = searchParams.get("filter") || "all";
 
-
-  const requestedPerson =
-
-    searchParams.get("filter") ||
-
-    "all"
-
-
-
-
-
-  const personFilter =
-
-    galleryPersonFilters.some(
-
-      (item) =>
-
-        item.id ===
-
-        requestedPerson
-
-    )
-
-      ? requestedPerson
-
-      : "all"
-
-
-
-
+  const personFilter = galleryPersonFilters.some(
+    (item) => item.id === requestedPerson,
+  )
+    ? requestedPerson
+    : "all";
 
   /* ==================================================
 
@@ -769,31 +216,9 @@ function Gallery() {
 
   ================================================== */
 
+  const [categoryFilter, setCategoryFilter] = useState("all");
 
-
-  const [
-
-    categoryFilter,
-
-    setCategoryFilter,
-
-  ] = useState("all")
-
-
-
-
-
-  const [
-
-    eraFilter,
-
-    setEraFilter,
-
-  ] = useState("all")
-
-
-
-
+  const [eraFilter, setEraFilter] = useState("all");
 
   /* ==================================================
 
@@ -801,114 +226,24 @@ function Gallery() {
 
   ================================================== */
 
-
-
-  const [
-
-    lightboxIndex,
-
-    setLightboxIndex,
-
-  ] = useState(null)
-
-
-
-
+  const [lightboxIndex, setLightboxIndex] = useState(null);
 
   /* ==================================================
 
      PERSON PHOTOS
 
-     ALL / JAN / JINGJING / TOGETHER all use the same
-     locked random order for the current page visit.
-
   ================================================== */
 
+  const personPhotos = useMemo(() => {
+    if (personFilter === "all") {
+      return allGalleryPhotos;
+    }
 
-
-  const personPhotos =
-
-    useMemo(
-
-      () => {
-
-
-
-        if (
-
-          !galleryReady
-
-        ) {
-
-
-
-          return []
-
-
-
-        }
-
-
-
-
-
-        if (
-
-          personFilter ===
-
-          "all"
-
-        ) {
-
-
-
-          return randomPhotos
-
-
-
-        }
-
-
-
-
-
-        return randomPhotos.filter(
-
-          (photo) =>
-
-            Array.isArray(
-
-              photo.people
-
-            ) &&
-
-            photo.people.includes(
-
-              personFilter
-
-            )
-
-        )
-
-
-
-      },
-
-      [
-
-        galleryReady,
-
-        personFilter,
-
-        randomPhotos,
-
-      ]
-
-    )
-
-
-
-
+    return allGalleryPhotos.filter(
+      (photo) =>
+        Array.isArray(photo.people) && photo.people.includes(personFilter),
+    );
+  }, [personFilter, allGalleryPhotos]);
 
   /* ==================================================
 
@@ -916,83 +251,16 @@ function Gallery() {
 
   ================================================== */
 
+  const visiblePhotos = useMemo(() => {
+    return personPhotos.filter((photo) => {
+      const categoryMatches =
+        categoryFilter === "all" || photo.category === categoryFilter;
 
+      const eraMatches = eraFilter === "all" || photo.era === eraFilter;
 
-  const visiblePhotos =
-
-    useMemo(
-
-      () => {
-
-
-
-        return personPhotos.filter(
-
-          (photo) => {
-
-
-
-            const categoryMatches =
-
-              categoryFilter ===
-
-                "all" ||
-
-              photo.category ===
-
-                categoryFilter
-
-
-
-
-
-            const eraMatches =
-
-              eraFilter ===
-
-                "all" ||
-
-              photo.era ===
-
-                eraFilter
-
-
-
-
-
-            return (
-
-              categoryMatches &&
-
-              eraMatches
-
-            )
-
-
-
-          }
-
-        )
-
-
-
-      },
-
-      [
-
-        personPhotos,
-
-        categoryFilter,
-
-        eraFilter,
-
-      ]
-
-    )
-
-
-
-
+      return categoryMatches && eraMatches;
+    });
+  }, [personPhotos, categoryFilter, eraFilter]);
 
   /* ==================================================
 
@@ -1000,121 +268,28 @@ function Gallery() {
 
   ================================================== */
 
-
-
-  const categoryCounts =
-
-    useMemo(
-
-      () => {
-
-
-
-        const source =
-
-          eraFilter ===
-
-          "all"
-
-            ? personPhotos
-
-            : personPhotos.filter(
-
-                (photo) =>
-
-                  photo.era ===
-
-                  eraFilter
-
-              )
-
-
-
-
-
-        const counts = {
-
-          all:
-
-            source.length,
-
-        }
-
-
-
-
-
-        categoryFilters.forEach(
-
-          (category) => {
-
-
-
-            if (
-
-              category.id ===
-
-              "all"
-
-            ) {
-
-
-
-              return
-
-            }
-
-
-
-
-
-            counts[
-
-              category.id
-
-            ] =
-
-              source.filter(
-
-                (photo) =>
-
-                  photo.category ===
-
-                  category.id
-
-              ).length
-
-
-
-          }
-
-        )
-
-
-
-
-
-        return counts
-
-
-
-      },
-
-      [
-
-        personPhotos,
-
-        eraFilter,
-
-        categoryFilters
-
-      ]
-
-    )
-
-
-
-
+  const categoryCounts = useMemo(() => {
+    const source =
+      eraFilter === "all"
+        ? personPhotos
+        : personPhotos.filter((photo) => photo.era === eraFilter);
+
+    const counts = {
+      all: source.length,
+    };
+
+    categoryFilters.forEach((category) => {
+      if (category.id === "all") {
+        return;
+      }
+
+      counts[category.id] = source.filter(
+        (photo) => photo.category === category.id,
+      ).length;
+    });
+
+    return counts;
+  }, [personPhotos, eraFilter, categoryFilters]);
 
   /* ==================================================
 
@@ -1122,71 +297,17 @@ function Gallery() {
 
   ================================================== */
 
+  const availableEras = useMemo(() => {
+    const usedEras = new Set(
+      personPhotos
 
+        .map((photo) => photo.era)
 
-  const availableEras =
+        .filter(Boolean),
+    );
 
-    useMemo(
-
-      () => {
-
-
-
-        const usedEras =
-
-          new Set(
-
-            personPhotos
-
-              .map(
-
-                (photo) =>
-
-                  photo.era
-
-              )
-
-              .filter(Boolean)
-
-          )
-
-
-
-
-
-        return eraFilters.filter(
-
-          (era) =>
-
-            era.id ===
-
-              "all" ||
-
-            usedEras.has(
-
-              era.id
-
-            )
-
-        )
-
-
-
-      },
-
-      [
-
-        personPhotos,
-
-         eraFilters,
-
-      ]
-
-    )
-
-
-
-
+    return eraFilters.filter((era) => era.id === "all" || usedEras.has(era.id));
+  }, [personPhotos, eraFilters]);
 
   /* ==================================================
 
@@ -1194,39 +315,9 @@ function Gallery() {
 
   ================================================== */
 
-
-
-  useEffect(
-
-    () => {
-
-
-
-      setLightboxIndex(
-
-        null
-
-      )
-
-
-
-    },
-
-    [
-
-      personFilter,
-
-      categoryFilter,
-
-      eraFilter,
-
-    ]
-
-  )
-
-
-
-
+  useEffect(() => {
+    setLightboxIndex(null);
+  }, [personFilter, categoryFilter, eraFilter]);
 
   /* ==================================================
 
@@ -1234,69 +325,19 @@ function Gallery() {
 
   ================================================== */
 
+  const changePerson = (personId) => {
+    setCategoryFilter("all");
 
+    setEraFilter("all");
 
-  const changePerson =
-
-    (personId) => {
-
-
-
-      setCategoryFilter(
-
-        "all"
-
-      )
-
-
-
-      setEraFilter(
-
-        "all"
-
-      )
-
-
-
-
-
-      if (
-
-        personId ===
-
-        "all"
-
-      ) {
-
-
-
-        setSearchParams({})
-
-
-
-      } else {
-
-
-
-        setSearchParams({
-
-          filter:
-
-            personId,
-
-        })
-
-
-
-      }
-
-
-
+    if (personId === "all") {
+      setSearchParams({});
+    } else {
+      setSearchParams({
+        filter: personId,
+      });
     }
-
-
-
-
+  };
 
   /* ==================================================
 
@@ -1304,35 +345,11 @@ function Gallery() {
 
   ================================================== */
 
+  const clearFilters = () => {
+    setCategoryFilter("all");
 
-
-  const clearFilters =
-
-    () => {
-
-
-
-      setCategoryFilter(
-
-        "all"
-
-      )
-
-
-
-      setEraFilter(
-
-        "all"
-
-      )
-
-
-
-    }
-
-
-
-
+    setEraFilter("all");
+  };
 
   /* ==================================================
 
@@ -1340,57 +357,19 @@ function Gallery() {
 
   ================================================== */
 
+  const scrollToArchive = () => {
+    document
 
+      .getElementById("photo-archive")
 
-  const scrollToArchive =
+      ?.scrollIntoView({
+        behavior: "smooth",
 
-    () => {
+        block: "start",
+      });
+  };
 
-
-
-      document
-
-        .getElementById(
-
-          "photo-archive"
-
-        )
-
-        ?.scrollIntoView({
-
-          behavior:
-
-            "smooth",
-
-
-
-          block:
-
-            "start",
-
-        })
-
-
-
-    }
-
-
-
-
-
-  const secondaryFilterActive =
-
-    categoryFilter !==
-
-      "all" ||
-
-    eraFilter !==
-
-      "all"
-
-
-
-
+  const secondaryFilterActive = categoryFilter !== "all" || eraFilter !== "all";
 
   /* ==================================================
 
@@ -1398,339 +377,93 @@ function Gallery() {
 
   ================================================== */
 
-
-
   const activePersonLabel =
+    galleryPersonFilters.find((item) => item.id === personFilter)?.label ||
+    "ALL";
 
-    galleryPersonFilters.find(
+  const activeCategoryLabel = categoryFilters.find(
+    (item) => item.id === categoryFilter,
+  )?.label;
 
-      (item) =>
-
-        item.id ===
-
-        personFilter
-
-    )?.label ||
-
-    "ALL"
-
-
-
-
-
-  const activeCategoryLabel =
-
-    categoryFilters.find(
-
-      (item) =>
-
-        item.id ===
-
-        categoryFilter
-
-    )?.label
-
-
-
-
-
-  const activeEraLabel =
-
-    eraFilters.find(
-
-      (item) =>
-
-        item.id ===
-
-        eraFilter
-
-    )?.label
-
-
-
-
+  const activeEraLabel = eraFilters.find(
+    (item) => item.id === eraFilter,
+  )?.label;
 
   return (
-
-
-
     <>
-
       <Navbar />
 
-
-
-
-
       <main className="gallery-page">
-
-
-
-
-
         {/* ==================================================
 
             00 / GALLERY HOME
 
         ================================================== */}
 
-
-
-        <section
-
-          className="gallery-home"
-
-          id="gallery-home"
-
-        >
-
-
-
+        <section className="gallery-home" id="gallery-home">
           <span
-
             className="gallery-home__ghost gallery-home__ghost--jan"
-
             aria-hidden="true"
-
           >
-
             JAN
-
           </span>
-
-
-
-
 
           <span
-
             className="gallery-home__ghost gallery-home__ghost--jing"
-
             aria-hidden="true"
-
           >
-
             JINGJING
-
           </span>
-
-
-
-
 
           <div className="gallery-home__inner">
-
-
-
-
-
             {/* TOP */}
 
-
-
             <div className="gallery-home__top">
+              <span>00 / GALLERY</span>
 
-
-
-              <span>
-
-                00 / GALLERY
-
-              </span>
-
-
-
-
-
-              <span>
-
-                JANJINGJING VISUAL ARCHIVE
-
-              </span>
-
-
-
+              <span>JANJINGJING VISUAL ARCHIVE</span>
             </div>
-
-
-
-
 
             {/* HERO */}
 
-
-
             <div className="gallery-home__hero">
-
-
-
-
-
               <div className="gallery-home__intro">
-
-
-
                 <h1>
-
-
-
                   Moments worth
-
-
-
-                  <span>
-
-                    keeping.
-
-                  </span>
-
-
-
+                  <span>keeping.</span>
                 </h1>
 
-
-
-
-
                 <p>
-
-
-
-                  A growing visual archive of
-
-                  Jan, JingJing, and the moments
-
+                  A growing visual archive of Jan, JingJing, and the moments
                   that became part of their story.
-
-
-
                 </p>
-
-
-
               </div>
-
-
-
-
 
               <div className="gallery-home__counter">
-
-
-
                 <strong>
+                  {String(allGalleryPhotos.length).padStart(
+                    2,
 
-
-
-                  {
-
-                    String(
-
-                      allGalleryPhotos.length
-
-                    ).padStart(
-
-                      2,
-
-                      "0"
-
-                    )
-
-                  }
-
-
-
+                    "0",
+                  )}
                 </strong>
 
-
-
-
-
-                <span>
-
-                  MEMORIES
-
-                </span>
-
-
-
+                <span>MEMORIES</span>
               </div>
-
-
-
             </div>
-
-
-
-
 
             {/* BOTTOM */}
 
-
-
             <div className="gallery-home__bottom">
+              <p>PHOTOS & MEDIA BELONG TO THEIR RESPECTIVE OWNERS.</p>
 
-
-
-              <p>
-
-
-
-                PHOTOS & MEDIA BELONG TO THEIR
-
-                RESPECTIVE OWNERS.
-
-
-
-              </p>
-
-
-
-
-
-              <button
-
-                type="button"
-
-                onClick={
-
-                  scrollToArchive
-
-                }
-
-              >
-
-
-
+              <button type="button" onClick={scrollToArchive}>
                 SCROLL TO EXPLORE
-
-
-
-                <span>
-
-                  ↓
-
-                </span>
-
-
-
+                <span>↓</span>
               </button>
-
-
-
             </div>
-
-
-
           </div>
-
-
-
         </section>
-
-
-
-
 
         {/* ==================================================
 
@@ -1738,137 +471,30 @@ function Gallery() {
 
         ================================================== */}
 
-
-
-        <section
-
-          className="gallery-archive"
-
-          id="photo-archive"
-
-        >
-
-
-
+        <section className="gallery-archive" id="photo-archive">
           <div className="gallery-archive__inner">
-
-
-
-
-
             {/* ==================================================
 
                 HEADER
 
             ================================================== */}
 
-
-
             <div className="gallery-archive__header">
-
-
-
               <div>
-
-
-
-                <p className="gallery-archive__eyebrow">
-
-                  01 / PHOTO ARCHIVE
-
-                </p>
-
-
-
-
+                <p className="gallery-archive__eyebrow">01 / PHOTO ARCHIVE</p>
 
                 <h2>
-
-
-
                   Every frame,
-
-
-
-                  <span>
-
-                    in one place.
-
-                  </span>
-
-
-
+                  <span>in one place.</span>
                 </h2>
-
-
-
               </div>
-
-
-
-
 
               <div className="gallery-archive__count">
+                <strong>{visiblePhotos.length}</strong>
 
-
-
-                <strong>
-
-                  {
-
-                    galleryReady
-
-                      ? visiblePhotos.length
-
-                      : "…"
-
-                  }
-
-                </strong>
-
-
-
-
-
-                <span>
-
-
-
-                  {
-
-                    galleryReady
-
-                      ? (
-
-                          visiblePhotos.length ===
-
-                          1
-
-                            ? "PHOTO"
-
-                            : "PHOTOS"
-
-                        )
-
-                      : "LOADING"
-
-                  }
-
-
-
-                </span>
-
-
-
+                <span>{visiblePhotos.length === 1 ? "PHOTO" : "PHOTOS"}</span>
               </div>
-
-
-
             </div>
-
-
-
-
 
             {/* ==================================================
 
@@ -1876,385 +502,77 @@ function Gallery() {
 
             ================================================== */}
 
-
-
             <div className="gallery-filter-panel">
-
-
-
-
-
               {/* EXPLORE */}
 
-
-
               <div className="gallery-filter-row">
-
-
-
-                <span className="gallery-filter-row__label">
-
-                  EXPLORE
-
-                </span>
-
-
-
-
+                <span className="gallery-filter-row__label">EXPLORE</span>
 
                 <div className="gallery-filter-row__buttons gallery-filter-row__buttons--people">
+                  {galleryPersonFilters.map((person) => (
+                    <button
+                      key={person.id}
+                      type="button"
+                      className={personFilter === person.id ? "is-active" : ""}
+                      onClick={() => changePerson(person.id)}
+                    >
+                      <span>{person.label}</span>
 
-
-
-                  {galleryPersonFilters.map(
-
-                    (person) => (
-
-
-
-                      <button
-
-                        key={
-
-                          person.id
-
-                        }
-
-
-
-                        type="button"
-
-
-
-                        className={
-
-                          personFilter ===
-
-                          person.id
-
-                            ? "is-active"
-
-                            : ""
-
-                        }
-
-
-
-                        onClick={() =>
-
-                          changePerson(
-
-                            person.id
-
-                          )
-
-                        }
-
-                      >
-
-
-
-                        <span>
-
-                          {
-
-                            person.label
-
-                          }
-
+                      {person.emoji && (
+                        <span className="gallery-person-emoji">
+                          {person.emoji}
                         </span>
-
-
-
-
-
-                        {person.emoji && (
-
-
-
-                          <span className="gallery-person-emoji">
-
-                            {
-
-                              person.emoji
-
-                            }
-
-                          </span>
-
-
-
-                        )}
-
-
-
-                      </button>
-
-
-
-                    )
-
-                  )}
-
-
-
+                      )}
+                    </button>
+                  ))}
                 </div>
-
-
-
               </div>
-
-
-
-
 
               {/* CATEGORY */}
 
-
-
               <div className="gallery-filter-row">
-
-
-
-                <span className="gallery-filter-row__label">
-
-                  CATEGORY
-
-                </span>
-
-
-
-
+                <span className="gallery-filter-row__label">CATEGORY</span>
 
                 <div className="gallery-filter-row__buttons">
+                  {categoryFilters.map((category) => (
+                    <button
+                      key={category.id}
+                      type="button"
+                      className={
+                        categoryFilter === category.id ? "is-active" : ""
+                      }
+                      onClick={() => setCategoryFilter(category.id)}
+                    >
+                      <span>{category.label}</span>
 
-
-
-                  {categoryFilters.map(
-
-                    (category) => (
-
-
-
-                      <button
-
-                        key={
-
-                          category.id
-
-                        }
-
-
-
-                        type="button"
-
-
-
-                        className={
-
-                          categoryFilter ===
-
-                          category.id
-
-                            ? "is-active"
-
-                            : ""
-
-                        }
-
-
-
-                        onClick={() =>
-
-                          setCategoryFilter(
-
-                            category.id
-
-                          )
-
-                        }
-
-                      >
-
-
-
-                        <span>
-
-                          {
-
-                            category.label
-
-                          }
-
-                        </span>
-
-
-
-
-
-                        <small>
-
-
-
-                          {
-
-                            categoryCounts[
-
-                              category.id
-
-                            ] || 0
-
-                          }
-
-
-
-                        </small>
-
-
-
-                      </button>
-
-
-
-                    )
-
-                  )}
-
-
-
+                      <small>{categoryCounts[category.id] || 0}</small>
+                    </button>
+                  ))}
                 </div>
-
-
-
               </div>
-
-
-
-
 
               {/* ERA / PROJECT */}
 
-
-
               <div className="gallery-filter-row">
-
-
-
-                <span className="gallery-filter-row__label">
-
-                  ERA / PROJECT
-
-                </span>
-
-
-
-
+                <span className="gallery-filter-row__label">ERA / PROJECT</span>
 
                 <div className="gallery-era-select">
-
-
-
                   <select
-
-                    value={
-
-                      eraFilter
-
-                    }
-
-
-
-                    onChange={
-
-                      (event) =>
-
-                        setEraFilter(
-
-                          event.target.value
-
-                        )
-
-                    }
-
-
-
+                    value={eraFilter}
+                    onChange={(event) => setEraFilter(event.target.value)}
                     aria-label="Filter gallery by era or project"
-
                   >
-
-
-
-                    {availableEras.map(
-
-                      (era) => (
-
-
-
-                        <option
-
-                          key={
-
-                            era.id
-
-                          }
-
-
-
-                          value={
-
-                            era.id
-
-                          }
-
-                        >
-
-                          {
-
-                            era.label
-
-                          }
-
-                        </option>
-
-
-
-                      )
-
-                    )}
-
-
-
+                    {availableEras.map((era) => (
+                      <option key={era.id} value={era.id}>
+                        {era.label}
+                      </option>
+                    ))}
                   </select>
 
-
-
-
-
-                  <span
-
-                    aria-hidden="true"
-
-                  >
-
-                    ↓
-
-                  </span>
-
-
-
+                  <span aria-hidden="true">↓</span>
                 </div>
-
-
-
               </div>
-
-
-
             </div>
-
-
-
-
 
             {/* ==================================================
 
@@ -2262,133 +580,27 @@ function Gallery() {
 
             ================================================== */}
 
-
-
             <div className="gallery-filter-summary">
-
-
-
               <div>
-
-
-
-                <span className="gallery-filter-summary__label">
-
-                  SHOWING
-
-                </span>
-
-
-
-
+                <span className="gallery-filter-summary__label">SHOWING</span>
 
                 <strong>
-
-
-
-                  {
-
-                    personFilter ===
-
-                    "all"
-
-                      ? "ALL MEMORIES"
-
-                      : activePersonLabel
-
-                  }
-
-
-
+                  {personFilter === "all" ? "ALL MEMORIES" : activePersonLabel}
                 </strong>
 
-
-
-
-
-                {categoryFilter !==
-
-                  "all" && (
-
-
-
-                  <strong>
-
-                    {
-
-                      activeCategoryLabel
-
-                    }
-
-                  </strong>
-
-
-
+                {categoryFilter !== "all" && (
+                  <strong>{activeCategoryLabel}</strong>
                 )}
 
-
-
-
-
-                {eraFilter !==
-
-                  "all" && (
-
-
-
-                  <strong>
-
-                    {
-
-                      activeEraLabel
-
-                    }
-
-                  </strong>
-
-
-
-                )}
-
-
-
+                {eraFilter !== "all" && <strong>{activeEraLabel}</strong>}
               </div>
 
-
-
-
-
               {secondaryFilterActive && (
-
-
-
-                <button
-
-                  type="button"
-
-                  onClick={
-
-                    clearFilters
-
-                  }
-
-                >
-
+                <button type="button" onClick={clearFilters}>
                   CLEAR FILTERS
-
                 </button>
-
-
-
               )}
-
-
-
             </div>
-
-
-
-
 
             {/* ==================================================
 
@@ -2396,259 +608,50 @@ function Gallery() {
 
             ================================================== */}
 
-
-
-            {!galleryReady ? (
-
-
-
-              <div className="gallery-empty">
-
-
-
-                <span>
-
-                  ♡
-
-                </span>
-
-
-
-                <h3>
-
-                  Loading memories...
-
-                </h3>
-
-
-
-                <p>
-
-                  Preparing a fresh random gallery for you.
-
-                </p>
-
-
-
-              </div>
-
-
-
-            ) : visiblePhotos.length >
-
-            0 ? (
-
-
-
+            {visiblePhotos.length > 0 ? (
               <div className="gallery-masonry">
-
-
-
                 {visiblePhotos.map(
-
                   (
-
                     photo,
 
-                    index
-
+                    index,
                   ) => (
-
-
-
-                    <article
-
-                      key={
-
-                        photo.id
-
-                      }
-
-
-
-                      className="gallery-photo"
-
-                    >
-
-
-
+                    <article key={photo.id} className="gallery-photo">
                       <button
-
                         type="button"
-
-
-
                         className="gallery-photo__button"
-
-
-
-                        aria-label={
-
-                          `View ${
-
-                            photo.title ||
-
-                            "photo"
-
-                          } fullscreen`
-
-                        }
-
-
-
-                        onClick={() =>
-
-                          setLightboxIndex(
-
-                            index
-
-                          )
-
-                        }
-
+                        aria-label={`View ${photo.title || "photo"} fullscreen`}
+                        onClick={() => setLightboxIndex(index)}
                       >
-
-
-
                         <div className="gallery-photo__image">
-
-
-
                           <img
-
-                            src={
-
-                              photo.image
-
-                            }
-
-
-
-                            alt={
-
-                              photo.alt ||
-
-                              photo.title ||
-
-                              "Gallery photo"
-
-                            }
-
-
-
+                            src={photo.image}
+                            alt={photo.alt || photo.title || "Gallery photo"}
                             loading="lazy"
-
                           />
 
-
-
-
-
                           <div className="gallery-photo__overlay">
-
-
-
-                            <span>
-
-                              VIEW ↗
-
-                            </span>
-
-
-
+                            <span>VIEW ↗</span>
                           </div>
-
-
-
                         </div>
-
-
-
                       </button>
-
-
-
                     </article>
-
-
-
-                  )
-
+                  ),
                 )}
-
-
-
               </div>
-
-
-
             ) : (
-
-
-
               <div className="gallery-empty">
+                <span>♡</span>
 
+                <h3>No memories found.</h3>
 
+                <p>Try another category or era.</p>
 
-                <span>
-
-                  ♡
-
-                </span>
-
-
-
-
-
-                <h3>
-
-                  No memories found.
-
-                </h3>
-
-
-
-
-
-                <p>
-
-                  Try another category
-
-                  or era.
-
-                </p>
-
-
-
-
-
-                <button
-
-                  type="button"
-
-                  onClick={
-
-                    clearFilters
-
-                  }
-
-                >
-
+                <button type="button" onClick={clearFilters}>
                   CLEAR FILTERS
-
                 </button>
-
-
-
               </div>
-
-
-
             )}
-
-
-
-
 
             {/* ==================================================
 
@@ -2656,67 +659,21 @@ function Gallery() {
 
             ================================================== */}
 
-
-
             <div className="gallery-credit">
-
-
-
-              <span>
-
-                PHOTO CREDITS
-
-              </span>
-
-
-
-
+              <span>PHOTO CREDITS</span>
 
               <p>
-
-
-
-                This is an unofficial fan-made
-
-                visual archive. Photos and media
-
-                belong to their respective
-
-                photographers, publications,
-
-                agencies, artists, and copyright
-
-                holders. No ownership is claimed.
-
-
-
+                This is an unofficial fan-made visual archive. Photos and media
+                belong to their respective photographers, publications,
+                agencies, artists, and copyright holders. No ownership is
+                claimed.
               </p>
-
-
-
             </div>
-
-
-
           </div>
-
-
-
         </section>
-
-
-
       </main>
 
-
-
-
-
       <Footer />
-
-
-
-
 
       {/* ==================================================
 
@@ -2724,60 +681,15 @@ function Gallery() {
 
       ================================================== */}
 
-
-
-      {lightboxIndex !==
-
-        null && (
-
-
-
+      {lightboxIndex !== null && (
         <GalleryLightbox
-
-          photos={
-
-            visiblePhotos
-
-          }
-
-
-
-          startIndex={
-
-            lightboxIndex
-
-          }
-
-
-
-          onClose={() =>
-
-            setLightboxIndex(
-
-              null
-
-            )
-
-          }
-
+          photos={visiblePhotos}
+          startIndex={lightboxIndex}
+          onClose={() => setLightboxIndex(null)}
         />
-
-
-
       )}
-
-
-
     </>
-
-
-
-  )
-
+  );
 }
 
-
-
-
-
-export default Gallery
+export default Gallery;
