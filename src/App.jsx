@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/react"
 import {
   useEffect,
   useState,
@@ -482,6 +483,8 @@ function App() {
 
 
       <FloatingFanPulse />
+
+      <Analytics />
 
     
 
