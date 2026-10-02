@@ -637,8 +637,8 @@ function JingJing() {
               </div>
 
               <div className="jing-favorite-item">
-                <span>MOTTO</span>
-                <p>—</p>
+                <span>MBTI</span>
+                <p>ENFJ</p>
               </div>
             </div>
 

@@ -516,8 +516,8 @@ function Jan() {
               </div>
 
               <div className="jan-favorite-item">
-                <span>MOTTO</span>
-                <p>—</p>
+                <span>MBTI</span>
+                <p>ENFP</p>
               </div>
             </div>
 
