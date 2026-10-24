@@ -1,121 +1,73 @@
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 
-import {
-  useNavigate,
-} from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
-import {
-  supabase,
-} from "../../lib/supabase"
+import { supabase } from "../../lib/supabase"
 
 import "../../styles/pages/AdminGallery.css"
+
+
+/* ==================================================
+   CONSTANTS
+================================================== */
+
+const MAX_FILES = 5
 
 
 /* ==================================================
    DEFAULT FORM
 ================================================== */
 
-const createEmptyForm =
-  () => ({
-    title: "",
-    altText: "",
-    people: [
-      "jan",
-      "jingjing",
-      "together",
-    ],
-    category: "",
-    era: "",
-    photoDate: "",
-    credit: "",
-    sourceUrl: "",
-    sortOrder: 0,
-    isPublished: true,
-  })
+const createEmptyForm = () => ({
+  title: "",
+  altText: "",
+  people: ["jan", "jingjing", "together"],
+  category: "",
+  era: "",
+  photoDate: "",
+  credit: "",
+  sourceUrl: "",
+  sortOrder: 0,
+  isPublished: true,
+})
 
 
 /* ==================================================
    HELPERS
 ================================================== */
 
-const safeFilename =
-  (filename) => {
+const safeFilename = (filename) => {
+  const parts = filename.split(".")
 
-    const parts =
-      filename.split(".")
+  const extension = parts.length > 1 ? parts.pop() : "jpg"
 
-    const extension =
-      parts.length > 1
-        ? parts.pop()
-        : "jpg"
+  const base =
+    parts
+      .join(".")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 60) || "photo"
 
-    const base =
-      parts
-        .join(".")
+  return {
+    base,
+    extension:
+      String(extension)
         .toLowerCase()
-        .replace(
-          /[^a-z0-9]+/g,
-          "-"
-        )
-        .replace(
-          /^-+|-+$/g,
-          ""
-        )
-        .slice(
-          0,
-          60
-        ) || "photo"
+        .replace(/[^a-z0-9]/g, "") || "jpg",
+  }
+}
 
-    return {
-      base,
 
-      extension:
-        String(
-          extension
-        )
-          .toLowerCase()
-          .replace(
-            /[^a-z0-9]/g,
-            ""
-          ) || "jpg",
-    }
-
+const getPublicPhotoUrl = (path) => {
+  if (!path) {
+    return ""
   }
 
+  const { data } = supabase.storage.from("gallery").getPublicUrl(path)
 
-const getPublicPhotoUrl =
-  (path) => {
-
-    if (
-      !path
-    ) {
-      return ""
-    }
-
-
-    const {
-      data,
-    } =
-      supabase.storage
-        .from(
-          "gallery"
-        )
-        .getPublicUrl(
-          path
-        )
-
-
-    return (
-      data?.publicUrl ||
-      ""
-    )
-
-  }
+  return data?.publicUrl || ""
+}
 
 
 /* ==================================================
@@ -123,1048 +75,520 @@ const getPublicPhotoUrl =
 ================================================== */
 
 function AdminGallery() {
+  const navigate = useNavigate()
 
-  const navigate =
-    useNavigate()
+  const [photos, setPhotos] = useState([])
+  const [form, setForm] = useState(createEmptyForm)
 
+  // Single replacement image (used while editing)
+  const [imageFile, setImageFile] = useState(null)
 
-  const [
-    photos,
-    setPhotos,
-  ] =
-    useState([])
+  // Multiple new images (used while adding)
+  const [imageFiles, setImageFiles] = useState([])
 
-
-  const [
-    form,
-    setForm,
-  ] =
-    useState(
-      createEmptyForm
-    )
-
-
-  const [
-    imageFile,
-    setImageFile,
-  ] =
-    useState(null)
-
-
-  const [
-    editingId,
-    setEditingId,
-  ] =
-    useState(null)
-
-
-  const [
-    existingImagePath,
-    setExistingImagePath,
-  ] =
-    useState("")
-
-
-  const [
-    loading,
-    setLoading,
-  ] =
-    useState(true)
-
-
-  const [
-    saving,
-    setSaving,
-  ] =
-    useState(false)
-
-
-  const [
-    error,
-    setError,
-  ] =
-    useState("")
-
-
-  const [
-    message,
-    setMessage,
-  ] =
-    useState("")
+  const [editingId, setEditingId] = useState(null)
+  const [existingImagePath, setExistingImagePath] = useState("")
+  const [loading, setLoading] = useState(true)
+  const [saving, setSaving] = useState(false)
+  const [error, setError] = useState("")
+  const [message, setMessage] = useState("")
 
 
   /* ==================================================
      PREVIEW
   ================================================== */
 
-  const localPreview =
-    useMemo(
-      () => {
+  const localPreview = useMemo(() => {
+    if (!imageFile) {
+      return ""
+    }
 
-        if (
-          !imageFile
-        ) {
-          return ""
-        }
+    return URL.createObjectURL(imageFile)
+  }, [imageFile])
 
-        return URL.createObjectURL(
-          imageFile
-        )
-
-      },
-      [
-        imageFile,
-      ]
-    )
-
-
-  useEffect(
-    () => {
-
-      return () => {
-
-        if (
-          localPreview
-        ) {
-
-          URL.revokeObjectURL(
-            localPreview
-          )
-
-        }
-
+  useEffect(() => {
+    return () => {
+      if (localPreview) {
+        URL.revokeObjectURL(localPreview)
       }
+    }
+  }, [localPreview])
 
-    },
-    [
-      localPreview,
-    ]
+  const previewUrl = localPreview || getPublicPhotoUrl(existingImagePath)
+
+
+  const localPreviews = useMemo(
+    () => imageFiles.map((file) => URL.createObjectURL(file)),
+    [imageFiles]
   )
 
-
-  const previewUrl =
-    localPreview ||
-    getPublicPhotoUrl(
-      existingImagePath
-    )
+  useEffect(() => {
+    return () => {
+      localPreviews.forEach((url) => URL.revokeObjectURL(url))
+    }
+  }, [localPreviews])
 
 
   /* ==================================================
      LOAD PHOTOS
   ================================================== */
 
-  const loadPhotos =
-    useCallback(
-      async () => {
+  const loadPhotos = useCallback(async () => {
+    setLoading(true)
+    setError("")
 
-        setLoading(
-          true
-        )
+    const { data, error: loadError } = await supabase
+      .from("gallery_photos")
+      .select("*")
+      .order("sort_order", { ascending: true })
+      .order("created_at", { ascending: false })
 
-        setError(
-          ""
-        )
+    if (loadError) {
+      console.error("Gallery load error:", loadError)
 
+      setError("Unable to load gallery photos.")
+      setLoading(false)
 
-        const {
-          data,
-          error: loadError,
-        } =
-          await supabase
-            .from(
-              "gallery_photos"
-            )
-            .select("*")
-            .order(
-              "sort_order",
-              {
-                ascending: true,
-              }
-            )
-            .order(
-              "created_at",
-              {
-                ascending: false,
-              }
-            )
+      return
+    }
 
+    setPhotos(data || [])
+    setLoading(false)
+  }, [])
 
-        if (
-          loadError
-        ) {
-
-          console.error(
-            "Gallery load error:",
-            loadError
-          )
-
-          setError(
-            "Unable to load gallery photos."
-          )
-
-          setLoading(
-            false
-          )
-
-          return
-
-        }
-
-
-        setPhotos(
-          data || []
-        )
-
-        setLoading(
-          false
-        )
-
-      },
-      []
-    )
-
-
-  useEffect(
-    () => {
-
-      loadPhotos()
-
-    },
-    [
-      loadPhotos,
-    ]
-  )
+  useEffect(() => {
+    loadPhotos()
+  }, [loadPhotos])
 
 
   /* ==================================================
      FORM
   ================================================== */
 
-  const handleChange =
-    (
-      event
-    ) => {
+  const handleChange = (event) => {
+    const { name, value, type, checked } = event.target
 
-      const {
-        name,
-        value,
-        type,
-        checked,
-      } =
-        event.target
-
-
-      setForm(
-        (
-          current
-        ) => ({
-          ...current,
-
-          [name]:
-            type ===
-            "checkbox"
-              ? checked
-              : value,
-        })
-      )
-
-    }
+    setForm((current) => ({
+      ...current,
+      [name]: type === "checkbox" ? checked : value,
+    }))
+  }
 
 
   /* ==================================================
      PEOPLE PRESETS
   ================================================== */
 
-  const selectPeople =
-    (
-      type
-    ) => {
-
-      const presets = {
-
-        jan: [
-          "jan",
-        ],
-
-        jingjing: [
-          "jingjing",
-        ],
-
-        together: [
-          "jan",
-          "jingjing",
-          "together",
-        ],
-
-      }
-
-
-      setForm(
-        (
-          current
-        ) => ({
-          ...current,
-
-          people:
-            presets[
-              type
-            ] ||
-            [],
-        })
-      )
-
+  const selectPeople = (type) => {
+    const presets = {
+      jan: ["jan"],
+      jingjing: ["jingjing"],
+      together: ["jan", "jingjing", "together"],
     }
 
+    setForm((current) => ({
+      ...current,
+      people: presets[type] || [],
+    }))
+  }
 
-  const selectedPeoplePreset =
-    useMemo(
-      () => {
+  const selectedPeoplePreset = useMemo(() => {
+    const values = form.people
 
-        const values =
-          form.people
+    if (values.length === 1 && values.includes("jan")) {
+      return "jan"
+    }
 
-        if (
-          values.length ===
-            1 &&
-          values.includes(
-            "jan"
-          )
-        ) {
-          return "jan"
-        }
+    if (values.length === 1 && values.includes("jingjing")) {
+      return "jingjing"
+    }
 
+    if (values.includes("jan") && values.includes("jingjing")) {
+      return "together"
+    }
 
-        if (
-          values.length ===
-            1 &&
-          values.includes(
-            "jingjing"
-          )
-        ) {
-          return "jingjing"
-        }
+    return ""
+  }, [form.people])
 
 
-        if (
-          values.includes(
-            "jan"
-          ) &&
-          values.includes(
-            "jingjing"
-          )
-        ) {
-          return "together"
-        }
+  /* ==================================================
+     FILE PICKER
+  ================================================== */
 
+  const handleFilesChange = (event) => {
+    const files = Array.from(event.target.files || [])
 
-        return ""
+    // Editing = single replacement image
+    if (editingId) {
+      setImageFile(files[0] || null)
+      return
+    }
 
-      },
-      [
-        form.people,
-      ]
-    )
+    if (files.length > MAX_FILES) {
+      setError(
+        `Maximum ${MAX_FILES} photos at once. Using the first ${MAX_FILES}.`
+      )
+    } else {
+      setError("")
+    }
+
+    setImageFiles(files.slice(0, MAX_FILES))
+  }
 
 
   /* ==================================================
      UPLOAD
   ================================================== */
 
-  const uploadImage =
-    async (
-      file
-    ) => {
-
-      if (
-        !file.type.startsWith(
-          "image/"
-        )
-      ) {
-
-        throw new Error(
-          "Please select an image file."
-        )
-
-      }
-
-
-      const maxSize =
-        8 * 1024 * 1024
-
-
-      if (
-        file.size >
-        maxSize
-      ) {
-
-        throw new Error(
-          "Image must be smaller than 8 MB."
-        )
-
-      }
-
-
-      const {
-        base,
-        extension,
-      } =
-        safeFilename(
-          file.name
-        )
-
-
-      const random =
-        typeof crypto !==
-          "undefined" &&
-        typeof crypto.randomUUID ===
-          "function"
-          ? crypto.randomUUID()
-          : Math.random()
-              .toString(36)
-              .slice(2)
-
-
-      const path =
-        `photos/${Date.now()}-${random}-${base}.${extension}`
-
-
-      const {
-        error: uploadError,
-      } =
-        await supabase.storage
-          .from(
-            "gallery"
-          )
-          .upload(
-            path,
-            file,
-            {
-              cacheControl:
-                "3600",
-
-              upsert:
-                false,
-
-              contentType:
-                file.type ||
-                undefined,
-            }
-          )
-
-
-      if (
-        uploadError
-      ) {
-
-        throw uploadError
-
-      }
-
-
-      return path
-
+  const uploadImage = async (file) => {
+    if (!file.type.startsWith("image/")) {
+      throw new Error(`"${file.name}" is not an image file.`)
     }
+
+    const maxSize = 8 * 1024 * 1024
+
+    if (file.size > maxSize) {
+      throw new Error(`"${file.name}" must be smaller than 8 MB.`)
+    }
+
+    const { base, extension } = safeFilename(file.name)
+
+    const random =
+      typeof crypto !== "undefined" && typeof crypto.randomUUID === "function"
+        ? crypto.randomUUID()
+        : Math.random().toString(36).slice(2)
+
+    const path = `photos/${Date.now()}-${random}-${base}.${extension}`
+
+    const { error: uploadError } = await supabase.storage
+      .from("gallery")
+      .upload(path, file, {
+        cacheControl: "3600",
+        upsert: false,
+        contentType: file.type || undefined,
+      })
+
+    if (uploadError) {
+      throw uploadError
+    }
+
+    return path
+  }
+
+
+  /* ==================================================
+     BATCH UPLOAD (NEW PHOTOS)
+  ================================================== */
+
+  const handleBatchUpload = async () => {
+    const uploadedPaths = []
+
+    try {
+      // Upload all files in parallel
+      const results = await Promise.allSettled(
+        imageFiles.map((file) => uploadImage(file))
+      )
+
+      results.forEach((result) => {
+        if (result.status === "fulfilled") {
+          uploadedPaths.push(result.value)
+        }
+      })
+
+      const failed = results.find((result) => result.status === "rejected")
+
+      if (failed) {
+        throw failed.reason
+      }
+
+      const total = uploadedPaths.length
+      const title = form.title.trim()
+      const alt = form.altText.trim()
+
+      const rows = uploadedPaths.map((path, index) => ({
+        title: title || null,
+
+        alt_text: alt || title || "JanJingJing gallery photo",
+
+        image_path: path,
+        people: form.people,
+        category: form.category.trim() || null,
+        era: form.era.trim() || null,
+        photo_date: form.photoDate || null,
+        credit: form.credit.trim() || null,
+        source_url: form.sourceUrl.trim() || null,
+        sort_order: (Number(form.sortOrder) || 0) + index,
+        is_published: form.isPublished,
+      }))
+
+      // One insert for all rows
+      const { error: insertError } = await supabase
+        .from("gallery_photos")
+        .insert(rows)
+
+      if (insertError) {
+        throw insertError
+      }
+
+      setMessage(
+        total === 1
+          ? "Photo added successfully."
+          : `${total} photos added successfully.`
+      )
+
+      setForm(createEmptyForm())
+      setImageFiles([])
+
+      await loadPhotos()
+    } catch (batchError) {
+      console.error("Gallery batch upload error:", batchError)
+
+      // Don't leave orphaned files in Storage
+      if (uploadedPaths.length > 0) {
+        await supabase.storage.from("gallery").remove(uploadedPaths)
+      }
+
+      setError(batchError?.message || "Unable to upload photos.")
+    } finally {
+      setSaving(false)
+    }
+  }
 
 
   /* ==================================================
      RESET
   ================================================== */
 
-  const resetForm =
-    () => {
-
-      setForm(
-        createEmptyForm()
-      )
-
-      setImageFile(
-        null
-      )
-
-      setEditingId(
-        null
-      )
-
-      setExistingImagePath(
-        ""
-      )
-
-      setError(
-        ""
-      )
-
-      setMessage(
-        ""
-      )
-
-    }
+  const resetForm = () => {
+    setForm(createEmptyForm())
+    setImageFile(null)
+    setImageFiles([])
+    setEditingId(null)
+    setExistingImagePath("")
+    setError("")
+    setMessage("")
+  }
 
 
   /* ==================================================
      SAVE
   ================================================== */
 
-  const handleSubmit =
-    async (
-      event
-    ) => {
-
-      event.preventDefault()
-
-
-      if (
-        !editingId &&
-        !imageFile
-      ) {
-
-        setError(
-          "Select a photo first."
-        )
-
-        return
-
-      }
-
-
-      if (
-        form.people.length ===
-        0
-      ) {
-
-        setError(
-          "Choose Jan, JingJing, or Together."
-        )
-
-        return
-
-      }
-
-
-      setSaving(
-        true
-      )
-
-      setError(
-        ""
-      )
-
-      setMessage(
-        ""
-      )
-
-
-      let uploadedPath =
-        ""
-
-
-      try {
-
-        let nextImagePath =
-          existingImagePath
-
-
-        if (
-          imageFile
-        ) {
-
-          uploadedPath =
-            await uploadImage(
-              imageFile
-            )
-
-
-          nextImagePath =
-            uploadedPath
-
-        }
-
-
-        const payload = {
-
-          title:
-            form.title.trim() ||
-            null,
-
-          alt_text:
-            form.altText.trim() ||
-            form.title.trim() ||
-            "JanJingJing gallery photo",
-
-          image_path:
-            nextImagePath,
-
-          people:
-            form.people,
-
-          category:
-            form.category.trim() ||
-            null,
-
-          era:
-            form.era.trim() ||
-            null,
-
-          photo_date:
-            form.photoDate ||
-            null,
-
-          credit:
-            form.credit.trim() ||
-            null,
-
-          source_url:
-            form.sourceUrl.trim() ||
-            null,
-
-          sort_order:
-            Number(
-              form.sortOrder
-            ) || 0,
-
-          is_published:
-            form.isPublished,
-
-        }
-
-
-        let databaseError =
-          null
-
-
-        if (
-          editingId
-        ) {
-
-          const {
-            error:
-              updateError,
-          } =
-            await supabase
-              .from(
-                "gallery_photos"
-              )
-              .update(
-                payload
-              )
-              .eq(
-                "id",
-                editingId
-              )
-
-
-          databaseError =
-            updateError
-
-        }
-
-        else {
-
-          const {
-            error:
-              insertError,
-          } =
-            await supabase
-              .from(
-                "gallery_photos"
-              )
-              .insert(
-                payload
-              )
-
-
-          databaseError =
-            insertError
-
-        }
-
-
-        if (
-          databaseError
-        ) {
-
-          if (
-            uploadedPath
-          ) {
-
-            await supabase.storage
-              .from(
-                "gallery"
-              )
-              .remove([
-                uploadedPath,
-              ])
-
-          }
-
-
-          throw databaseError
-
-        }
-
-
-        /*
-         * If an edited photo received a replacement,
-         * delete the previous Storage file only after
-         * the database update succeeds.
-         */
-
-        if (
-          editingId &&
-          uploadedPath &&
-          existingImagePath &&
-          uploadedPath !==
-            existingImagePath
-        ) {
-
-          const {
-            error:
-              cleanupError,
-          } =
-            await supabase.storage
-              .from(
-                "gallery"
-              )
-              .remove([
-                existingImagePath,
-              ])
-
-
-          if (
-            cleanupError
-          ) {
-
-            console.warn(
-              "Old gallery image cleanup failed:",
-              cleanupError
-            )
-
-          }
-
-        }
-
-
-        setMessage(
-          editingId
-            ? "Photo updated successfully."
-            : "Photo added successfully."
-        )
-
-
-        setForm(
-          createEmptyForm()
-        )
-
-        setImageFile(
-          null
-        )
-
-        setEditingId(
-          null
-        )
-
-        setExistingImagePath(
-          ""
-        )
-
-
-        await loadPhotos()
-
-      }
-
-      catch (
-        saveError
-      ) {
-
-        console.error(
-          "Gallery save error:",
-          saveError
-        )
-
-
-        setError(
-          saveError?.message ||
-          "Unable to save photo."
-        )
-
-      }
-
-      finally {
-
-        setSaving(
-          false
-        )
-
-      }
-
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+
+    if (!editingId && imageFiles.length === 0) {
+      setError("Select at least one photo.")
+      return
     }
+
+    if (form.people.length === 0) {
+      setError("Choose Jan, JingJing, or Together.")
+      return
+    }
+
+    setSaving(true)
+    setError("")
+    setMessage("")
+
+    // Adding new photos goes through the batch path
+    if (!editingId) {
+      await handleBatchUpload()
+      return
+    }
+
+    // ---- Editing a single photo from here on ----
+
+    let uploadedPath = ""
+
+    try {
+      let nextImagePath = existingImagePath
+
+      if (imageFile) {
+        uploadedPath = await uploadImage(imageFile)
+        nextImagePath = uploadedPath
+      }
+
+      const payload = {
+        title: form.title.trim() || null,
+
+        alt_text:
+          form.altText.trim() ||
+          form.title.trim() ||
+          "JanJingJing gallery photo",
+
+        image_path: nextImagePath,
+        people: form.people,
+        category: form.category.trim() || null,
+        era: form.era.trim() || null,
+        photo_date: form.photoDate || null,
+        credit: form.credit.trim() || null,
+        source_url: form.sourceUrl.trim() || null,
+        sort_order: Number(form.sortOrder) || 0,
+        is_published: form.isPublished,
+      }
+
+      const { error: updateError } = await supabase
+        .from("gallery_photos")
+        .update(payload)
+        .eq("id", editingId)
+
+      if (updateError) {
+        if (uploadedPath) {
+          await supabase.storage.from("gallery").remove([uploadedPath])
+        }
+
+        throw updateError
+      }
+
+      /*
+       * If an edited photo received a replacement,
+       * delete the previous Storage file only after
+       * the database update succeeds.
+       */
+
+      if (
+        uploadedPath &&
+        existingImagePath &&
+        uploadedPath !== existingImagePath
+      ) {
+        const { error: cleanupError } = await supabase.storage
+          .from("gallery")
+          .remove([existingImagePath])
+
+        if (cleanupError) {
+          console.warn("Old gallery image cleanup failed:", cleanupError)
+        }
+      }
+
+      setMessage("Photo updated successfully.")
+
+      setForm(createEmptyForm())
+      setImageFile(null)
+      setImageFiles([])
+      setEditingId(null)
+      setExistingImagePath("")
+
+      await loadPhotos()
+    } catch (saveError) {
+      console.error("Gallery save error:", saveError)
+
+      setError(saveError?.message || "Unable to save photo.")
+    } finally {
+      setSaving(false)
+    }
+  }
 
 
   /* ==================================================
      EDIT
   ================================================== */
 
-  const handleEdit =
-    (
-      photo
-    ) => {
+  const handleEdit = (photo) => {
+    setEditingId(photo.id)
+    setExistingImagePath(photo.image_path || "")
+    setImageFile(null)
+    setImageFiles([])
 
-      setEditingId(
-        photo.id
-      )
+    setForm({
+      title: photo.title || "",
+      altText: photo.alt_text || "",
+      people: Array.isArray(photo.people) ? photo.people : [],
+      category: photo.category || "",
+      era: photo.era || "",
+      photoDate: photo.photo_date || "",
+      credit: photo.credit || "",
+      sourceUrl: photo.source_url || "",
+      sortOrder: photo.sort_order ?? 0,
+      isPublished: Boolean(photo.is_published),
+    })
 
-      setExistingImagePath(
-        photo.image_path ||
-        ""
-      )
+    setError("")
+    setMessage("")
 
-      setImageFile(
-        null
-      )
-
-
-      setForm({
-
-        title:
-          photo.title ||
-          "",
-
-        altText:
-          photo.alt_text ||
-          "",
-
-        people:
-          Array.isArray(
-            photo.people
-          )
-            ? photo.people
-            : [],
-
-        category:
-          photo.category ||
-          "",
-
-        era:
-          photo.era ||
-          "",
-
-        photoDate:
-          photo.photo_date ||
-          "",
-
-        credit:
-          photo.credit ||
-          "",
-
-        sourceUrl:
-          photo.source_url ||
-          "",
-
-        sortOrder:
-          photo.sort_order ??
-          0,
-
-        isPublished:
-          Boolean(
-            photo.is_published
-          ),
-
-      })
-
-
-      setError(
-        ""
-      )
-
-      setMessage(
-        ""
-      )
-
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      })
-
-    }
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    })
+  }
 
 
   /* ==================================================
      PUBLISH
   ================================================== */
 
-  const togglePublished =
-    async (
-      photo
-    ) => {
+  const togglePublished = async (photo) => {
+    setError("")
 
-      setError(
-        ""
-      )
+    const { error: updateError } = await supabase
+      .from("gallery_photos")
+      .update({ is_published: !photo.is_published })
+      .eq("id", photo.id)
 
-
-      const {
-        error:
-          updateError,
-      } =
-        await supabase
-          .from(
-            "gallery_photos"
-          )
-          .update({
-            is_published:
-              !photo.is_published,
-          })
-          .eq(
-            "id",
-            photo.id
-          )
-
-
-      if (
-        updateError
-      ) {
-
-        setError(
-          "Unable to change publication status."
-        )
-
-        return
-
-      }
-
-
-      await loadPhotos()
-
+    if (updateError) {
+      setError("Unable to change publication status.")
+      return
     }
+
+    await loadPhotos()
+  }
 
 
   /* ==================================================
      DELETE
   ================================================== */
 
-  const handleDelete =
-    async (
-      photo
-    ) => {
+  const handleDelete = async (photo) => {
+    const confirmed = window.confirm(
+      `Delete "${photo.title || "this photo"}"? This cannot be undone.`
+    )
 
-      const confirmed =
-        window.confirm(
-          `Delete "${photo.title || "this photo"}"? This cannot be undone.`
-        )
-
-
-      if (
-        !confirmed
-      ) {
-        return
-      }
-
-
-      setError(
-        ""
-      )
-
-      setMessage(
-        ""
-      )
-
-
-      const {
-        error:
-          deleteError,
-      } =
-        await supabase
-          .from(
-            "gallery_photos"
-          )
-          .delete()
-          .eq(
-            "id",
-            photo.id
-          )
-
-
-      if (
-        deleteError
-      ) {
-
-        setError(
-          "Unable to delete this photo."
-        )
-
-        return
-
-      }
-
-
-      if (
-        photo.image_path
-      ) {
-
-        const {
-          error:
-            storageError,
-        } =
-          await supabase.storage
-            .from(
-              "gallery"
-            )
-            .remove([
-              photo.image_path,
-            ])
-
-
-        if (
-          storageError
-        ) {
-
-          console.warn(
-            "Photo deleted, but Storage cleanup failed:",
-            storageError
-          )
-
-        }
-
-      }
-
-
-      if (
-        editingId ===
-        photo.id
-      ) {
-
-        resetForm()
-
-      }
-
-
-      setMessage(
-        "Photo deleted."
-      )
-
-
-      await loadPhotos()
-
+    if (!confirmed) {
+      return
     }
+
+    setError("")
+    setMessage("")
+
+    const { error: deleteError } = await supabase
+      .from("gallery_photos")
+      .delete()
+      .eq("id", photo.id)
+
+    if (deleteError) {
+      setError("Unable to delete this photo.")
+      return
+    }
+
+    if (photo.image_path) {
+      const { error: storageError } = await supabase.storage
+        .from("gallery")
+        .remove([photo.image_path])
+
+      if (storageError) {
+        console.warn("Photo deleted, but Storage cleanup failed:", storageError)
+      }
+    }
+
+    if (editingId === photo.id) {
+      resetForm()
+    }
+
+    setMessage("Photo deleted.")
+
+    await loadPhotos()
+  }
 
 
   /* ==================================================
      LOGOUT
   ================================================== */
 
-  const handleLogout =
-    async () => {
+  const handleLogout = async () => {
+    await supabase.auth.signOut()
 
-      await supabase.auth.signOut()
-
-      navigate(
-        "/admin/login",
-        {
-          replace: true,
-        }
-      )
-
-    }
+    navigate("/admin/login", { replace: true })
+  }
 
 
   /* ==================================================
@@ -1172,7 +596,6 @@ function AdminGallery() {
   ================================================== */
 
   return (
-
     <main className="admin-gallery">
 
       <aside className="admin-gallery-sidebar">
@@ -1182,71 +605,31 @@ function AdminGallery() {
           <button
             type="button"
             className="admin-gallery-brand"
-            onClick={() =>
-              navigate(
-                "/admin"
-              )
-            }
+            onClick={() => navigate("/admin")}
           >
-
-            <span>
-              ♡
-            </span>
+            <span>♡</span>
 
             <div>
-
-              <strong>
-                JANJINGJING
-              </strong>
-
-              <small>
-                ARCHIVE ADMIN
-              </small>
-
+              <strong>JANJINGJING</strong>
+              <small>ARCHIVE ADMIN</small>
             </div>
-
           </button>
 
 
           <nav className="admin-gallery-nav">
 
-            <button
-              type="button"
-              onClick={() =>
-                navigate(
-                  "/admin"
-                )
-              }
-            >
-              <span>
-                00
-              </span>
+            <button type="button" onClick={() => navigate("/admin")}>
+              <span>00</span>
               Dashboard
             </button>
 
-
-            <button
-              type="button"
-              onClick={() =>
-                navigate(
-                  "/admin/schedule"
-                )
-              }
-            >
-              <span>
-                01
-              </span>
+            <button type="button" onClick={() => navigate("/admin/schedule")}>
+              <span>01</span>
               Schedule
             </button>
 
-
-            <button
-              type="button"
-              className="is-active"
-            >
-              <span>
-                02
-              </span>
+            <button type="button" className="is-active">
+              <span>02</span>
               Gallery
             </button>
 
@@ -1255,19 +638,10 @@ function AdminGallery() {
             <button
               type="button"
               className="admin-sidebar__link"
-              onClick={() =>
-                navigate(
-                  "/admin/fan-pulse"
-                )
-              }
+              onClick={() => navigate("/admin/fan-pulse")}
             >
-
-              <span>
-                03
-              </span>
-
+              <span>03</span>
               Fan Pulse
-
             </button>
 
           </nav>
@@ -1277,23 +651,11 @@ function AdminGallery() {
 
         <div className="admin-gallery-sidebar__bottom">
 
-          <button
-            type="button"
-            onClick={() =>
-              navigate(
-                "/gallery"
-              )
-            }
-          >
+          <button type="button" onClick={() => navigate("/gallery")}>
             VIEW PUBLIC GALLERY ↗
           </button>
 
-          <button
-            type="button"
-            onClick={
-              handleLogout
-            }
-          >
+          <button type="button" onClick={handleLogout}>
             SIGN OUT
           </button>
 
@@ -1307,44 +669,28 @@ function AdminGallery() {
         <header className="admin-gallery-header">
 
           <div>
-
-            <p>
-              02 / GALLERY MANAGER
-            </p>
+            <p>02 / GALLERY MANAGER</p>
 
             <h1>
               Photos &
-              <span>
-                memories.
-              </span>
+              <span>memories.</span>
             </h1>
-
           </div>
 
           <p>
-            Upload and organize Jan, JingJing,
-            and couple photos without editing
-            the gallery source code.
+            Upload and organize Jan, JingJing, and couple photos without
+            editing the gallery source code.
           </p>
 
         </header>
 
 
         {message && (
-
-          <p className="admin-gallery-message is-success">
-            {message}
-          </p>
-
+          <p className="admin-gallery-message is-success">{message}</p>
         )}
 
-
         {error && (
-
-          <p className="admin-gallery-message is-error">
-            {error}
-          </p>
-
+          <p className="admin-gallery-message is-error">{error}</p>
         )}
 
 
@@ -1357,81 +703,57 @@ function AdminGallery() {
           <div className="admin-gallery-section-title">
 
             <div>
-
-              <p>
-                {
-                  editingId
-                    ? "EDIT PHOTO"
-                    : "NEW PHOTO"
-                }
-              </p>
+              <p>{editingId ? "EDIT PHOTO" : "NEW PHOTO"}</p>
 
               <h2>
-                {
-                  editingId
-                    ? "Update gallery entry"
-                    : "Add to the archive"
-                }
+                {editingId ? "Update gallery entry" : "Add to the archive"}
               </h2>
-
             </div>
 
-
             {editingId && (
-
-              <button
-                type="button"
-                onClick={
-                  resetForm
-                }
-              >
+              <button type="button" onClick={resetForm}>
                 CANCEL EDIT
               </button>
-
             )}
 
           </div>
 
 
-          <form
-            className="admin-gallery-form"
-            onSubmit={
-              handleSubmit
-            }
-          >
+          <form className="admin-gallery-form" onSubmit={handleSubmit}>
 
             {/* IMAGE */}
 
             <div className="admin-gallery-upload admin-gallery-wide">
 
               <span className="admin-gallery-label">
-                PHOTO *
+                {editingId ? "PHOTO *" : `PHOTOS * (UP TO ${MAX_FILES})`}
               </span>
-
 
               <div className="admin-gallery-upload__box">
 
                 <div className="admin-gallery-upload__preview">
 
-                  {previewUrl ? (
+                  {!editingId && localPreviews.length > 0 ? (
 
-                    <img
-                      src={
-                        previewUrl
-                      }
-                      alt="Gallery preview"
-                    />
+                    <div className="admin-gallery-upload__multi">
+                      {localPreviews.map((url, index) => (
+                        <img
+                          key={url}
+                          src={url}
+                          alt={`Preview ${index + 1}`}
+                        />
+                      ))}
+                    </div>
+
+                  ) : previewUrl ? (
+
+                    <img src={previewUrl} alt="Gallery preview" />
 
                   ) : (
 
                     <div>
-                      <span>
-                        ♡
-                      </span>
-
-                      <p>
-                        IMAGE PREVIEW
-                      </p>
+                      <span>♡</span>
+                      <p>IMAGE PREVIEW</p>
                     </div>
 
                   )}
@@ -1442,51 +764,35 @@ function AdminGallery() {
                 <div className="admin-gallery-upload__controls">
 
                   <label>
-
-                    SELECT IMAGE
+                    {editingId
+                      ? "REPLACE IMAGE"
+                      : `SELECT IMAGES (UP TO ${MAX_FILES})`}
 
                     <input
+                      key={
+                        imageFiles.length === 0 && !imageFile
+                          ? "empty"
+                          : "filled"
+                      }
                       type="file"
                       accept="image/*"
-                      onChange={
-                        (
-                          event
-                        ) =>
-                          setImageFile(
-                            event
-                              .target
-                              .files?.[0] ||
-                            null
-                          )
-                      }
+                      multiple={!editingId}
+                      onChange={handleFilesChange}
                     />
-
                   </label>
 
 
-                  {imageFile && (
-
-                    <p>
-                      {imageFile.name}
-                    </p>
-
+                  {!editingId && imageFiles.length > 0 && (
+                    <p>{imageFiles.length} photo(s) selected</p>
                   )}
 
+                  {editingId && imageFile && <p>{imageFile.name}</p>}
 
-                  {editingId &&
-                    existingImagePath &&
-                    !imageFile && (
-
-                    <p>
-                      Existing image will be kept.
-                    </p>
-
+                  {editingId && existingImagePath && !imageFile && (
+                    <p>Existing image will be kept.</p>
                   )}
 
-
-                  <small>
-                    JPG, PNG or WebP · max 8 MB
-                  </small>
+                  <small>JPG, PNG or WebP · max 8 MB each</small>
 
                 </div>
 
@@ -1499,60 +805,32 @@ function AdminGallery() {
 
             <fieldset className="admin-gallery-people admin-gallery-wide">
 
-              <legend>
-                WHO IS IN THE PHOTO?
-              </legend>
-
+              <legend>WHO IS IN THE PHOTO?</legend>
 
               <button
                 type="button"
-                className={
-                  selectedPeoplePreset ===
-                  "jan"
-                    ? "is-selected"
-                    : ""
-                }
-                onClick={() =>
-                  selectPeople(
-                    "jan"
-                  )
-                }
+                className={selectedPeoplePreset === "jan" ? "is-selected" : ""}
+                onClick={() => selectPeople("jan")}
               >
                 💜 JAN
               </button>
 
-
               <button
                 type="button"
                 className={
-                  selectedPeoplePreset ===
-                  "jingjing"
-                    ? "is-selected"
-                    : ""
+                  selectedPeoplePreset === "jingjing" ? "is-selected" : ""
                 }
-                onClick={() =>
-                  selectPeople(
-                    "jingjing"
-                  )
-                }
+                onClick={() => selectPeople("jingjing")}
               >
                 🎀 JINGJING
               </button>
 
-
               <button
                 type="button"
                 className={
-                  selectedPeoplePreset ===
-                  "together"
-                    ? "is-selected"
-                    : ""
+                  selectedPeoplePreset === "together" ? "is-selected" : ""
                 }
-                onClick={() =>
-                  selectPeople(
-                    "together"
-                  )
-                }
+                onClick={() => selectPeople("together")}
               >
                 ♡ TOGETHER
               </button>
@@ -1563,178 +841,114 @@ function AdminGallery() {
             {/* TITLE */}
 
             <label className="admin-gallery-field">
-
-              <span>
-                TITLE
-              </span>
+              <span>TITLE</span>
 
               <input
                 name="title"
-                value={
-                  form.title
-                }
-                onChange={
-                  handleChange
-                }
+                value={form.title}
+                onChange={handleChange}
                 placeholder="FANDAY in Vietnam"
               />
-
             </label>
 
 
             {/* DATE */}
 
             <label className="admin-gallery-field">
-
-              <span>
-                PHOTO DATE
-              </span>
+              <span>PHOTO DATE</span>
 
               <input
                 type="date"
                 name="photoDate"
-                value={
-                  form.photoDate
-                }
-                onChange={
-                  handleChange
-                }
+                value={form.photoDate}
+                onChange={handleChange}
               />
-
             </label>
 
 
             {/* CATEGORY */}
 
             <label className="admin-gallery-field">
-
-              <span>
-                CATEGORY
-              </span>
+              <span>CATEGORY</span>
 
               <input
                 name="category"
-                value={
-                  form.category
-                }
-                onChange={
-                  handleChange
-                }
+                value={form.category}
+                onChange={handleChange}
                 placeholder="Fan Meeting"
               />
-
             </label>
 
 
             {/* ERA */}
 
             <label className="admin-gallery-field">
-
-              <span>
-                ERA
-              </span>
+              <span>ERA</span>
 
               <input
                 name="era"
-                value={
-                  form.era
-                }
-                onChange={
-                  handleChange
-                }
+                value={form.era}
+                onChange={handleChange}
                 placeholder="Enemies With Benefits"
               />
-
             </label>
 
 
             {/* ALT TEXT */}
 
             <label className="admin-gallery-field admin-gallery-wide">
-
-              <span>
-                ALT TEXT
-              </span>
+              <span>ALT TEXT</span>
 
               <input
                 name="altText"
-                value={
-                  form.altText
-                }
-                onChange={
-                  handleChange
-                }
+                value={form.altText}
+                onChange={handleChange}
                 placeholder="Describe what appears in the photo"
               />
-
             </label>
 
 
             {/* CREDIT */}
 
             <label className="admin-gallery-field">
-
-              <span>
-                CREDIT
-              </span>
+              <span>CREDIT</span>
 
               <input
                 name="credit"
-                value={
-                  form.credit
-                }
-                onChange={
-                  handleChange
-                }
+                value={form.credit}
+                onChange={handleChange}
                 placeholder="GMMTV"
               />
-
             </label>
 
 
             {/* SORT */}
 
             <label className="admin-gallery-field">
-
-              <span>
-                SORT ORDER
-              </span>
+              <span>SORT ORDER</span>
 
               <input
                 type="number"
                 name="sortOrder"
-                value={
-                  form.sortOrder
-                }
-                onChange={
-                  handleChange
-                }
+                value={form.sortOrder}
+                onChange={handleChange}
                 min="0"
               />
-
             </label>
 
 
             {/* SOURCE */}
 
             <label className="admin-gallery-field admin-gallery-wide">
-
-              <span>
-                SOURCE URL
-              </span>
+              <span>SOURCE URL</span>
 
               <input
                 type="url"
                 name="sourceUrl"
-                value={
-                  form.sourceUrl
-                }
-                onChange={
-                  handleChange
-                }
+                value={form.sourceUrl}
+                onChange={handleChange}
                 placeholder="https://..."
               />
-
             </label>
 
 
@@ -1745,26 +959,18 @@ function AdminGallery() {
               <input
                 type="checkbox"
                 name="isPublished"
-                checked={
-                  form.isPublished
-                }
-                onChange={
-                  handleChange
-                }
+                checked={form.isPublished}
+                onChange={handleChange}
               />
 
               <span className="admin-gallery-publish__switch" />
 
               <div>
-
-                <strong>
-                  PUBLISH PHOTO
-                </strong>
+                <strong>PUBLISH PHOTO</strong>
 
                 <small>
                   Published photos can appear on the public gallery.
                 </small>
-
               </div>
 
             </label>
@@ -1774,39 +980,25 @@ function AdminGallery() {
 
             <div className="admin-gallery-actions admin-gallery-wide">
 
-              <button
-                type="submit"
-                disabled={
-                  saving
-                }
-              >
+              <button type="submit" disabled={saving}>
 
-                {
-                  saving
-                    ? "SAVING..."
-                    : editingId
-                      ? "SAVE CHANGES"
-                      : "ADD PHOTO"
-                }
+                {saving
+                  ? "SAVING..."
+                  : editingId
+                    ? "SAVE CHANGES"
+                    : imageFiles.length > 1
+                      ? `ADD ${imageFiles.length} PHOTOS`
+                      : "ADD PHOTO"}
 
-                {!saving && (
-                  <span>
-                    →
-                  </span>
-                )}
+                {!saving && <span>→</span>}
 
               </button>
-
 
               <button
                 type="button"
                 className="is-secondary"
-                onClick={
-                  resetForm
-                }
-                disabled={
-                  saving
-                }
+                onClick={resetForm}
+                disabled={saving}
               >
                 CLEAR
               </button>
@@ -1827,211 +1019,95 @@ function AdminGallery() {
           <div className="admin-gallery-section-title">
 
             <div>
-
-              <p>
-                PHOTO DATABASE
-              </p>
-
-              <h2>
-                Gallery library
-              </h2>
-
+              <p>PHOTO DATABASE</p>
+              <h2>Gallery library</h2>
             </div>
 
-            <span>
-              {photos.length} TOTAL
-            </span>
+            <span>{photos.length} TOTAL</span>
 
           </div>
 
 
           {loading ? (
 
-            <div className="admin-gallery-empty">
-              Loading gallery...
-            </div>
+            <div className="admin-gallery-empty">Loading gallery...</div>
 
           ) : photos.length === 0 ? (
 
             <div className="admin-gallery-empty">
-
-              <strong>
-                No Supabase photos yet.
-              </strong>
-
-              <span>
-                Upload your first photo above.
-              </span>
-
+              <strong>No Supabase photos yet.</strong>
+              <span>Upload your first photo above.</span>
             </div>
 
           ) : (
 
-            <div className="admin-gallery-grid">
+            <div className="admin-gallery-list">
 
-              {photos.map(
-                (
-                  photo
-                ) => (
+              {photos.map((photo) => (
 
-                  <article
-                    key={
-                      photo.id
-                    }
-                    className="admin-gallery-card"
+                <article key={photo.id} className="admin-gallery-row">
+
+                  <img
+                    className="admin-gallery-row__thumb"
+                    src={getPublicPhotoUrl(photo.image_path)}
+                    alt={photo.alt_text || photo.title || ""}
+                    loading="lazy"
+                  />
+
+                  <div className="admin-gallery-row__info">
+
+                    <h3>{photo.title || "Untitled Photo"}</h3>
+
+                    {(photo.category || photo.era || photo.credit) && (
+                      <p>
+                        {[photo.category, photo.era, photo.credit]
+                          .filter(Boolean)
+                          .join(" · ")}
+                      </p>
+                    )}
+
+                    <div className="admin-gallery-row__people">
+                      {(photo.people || []).map((person) => (
+                        <span key={person}>{person}</span>
+                      ))}
+                    </div>
+
+                  </div>
+
+                  <span
+                    className={`admin-gallery-row__status ${
+                      photo.is_published ? "is-published" : "is-draft"
+                    }`}
                   >
+                    {photo.is_published ? "PUBLISHED" : "DRAFT"}
+                  </span>
 
-                    <div className="admin-gallery-card__image">
+                  <div className="admin-gallery-row__actions">
 
-                      <img
-                        src={
-                          getPublicPhotoUrl(
-                            photo.image_path
-                          )
-                        }
-                        alt={
-                          photo.alt_text ||
-                          photo.title ||
-                          ""
-                        }
-                        loading="lazy"
-                      />
+                    <button type="button" onClick={() => handleEdit(photo)}>
+                      EDIT
+                    </button>
 
-                      <span
-                        className={
-                          photo.is_published
-                            ? "is-published"
-                            : "is-draft"
-                        }
-                      >
-                        {
-                          photo.is_published
-                            ? "PUBLISHED"
-                            : "DRAFT"
-                        }
-                      </span>
+                    <button
+                      type="button"
+                      onClick={() => togglePublished(photo)}
+                    >
+                      {photo.is_published ? "UNPUBLISH" : "PUBLISH"}
+                    </button>
 
-                    </div>
+                    <button
+                      type="button"
+                      className="is-danger"
+                      onClick={() => handleDelete(photo)}
+                    >
+                      DELETE
+                    </button>
 
+                  </div>
 
-                    <div className="admin-gallery-card__content">
+                </article>
 
-                      <div className="admin-gallery-card__people">
-
-                        {(
-                          photo.people ||
-                          []
-                        ).map(
-                          (
-                            person
-                          ) => (
-
-                            <span
-                              key={
-                                person
-                              }
-                            >
-                              {
-                                person
-                              }
-                            </span>
-
-                          )
-                        )}
-
-                      </div>
-
-
-                      <h3>
-                        {
-                          photo.title ||
-                          "Untitled Photo"
-                        }
-                      </h3>
-
-
-                      {(photo.category ||
-                        photo.era) && (
-
-                        <p>
-
-                          {[
-                            photo.category,
-                            photo.era,
-                          ]
-                            .filter(
-                              Boolean
-                            )
-                            .join(
-                              " · "
-                            )}
-
-                        </p>
-
-                      )}
-
-
-                      {photo.credit && (
-
-                        <small>
-                          CREDIT · {photo.credit}
-                        </small>
-
-                      )}
-
-
-                      <div className="admin-gallery-card__actions">
-
-                        <button
-                          type="button"
-                          onClick={() =>
-                            handleEdit(
-                              photo
-                            )
-                          }
-                        >
-                          EDIT
-                        </button>
-
-
-                        <button
-                          type="button"
-                          onClick={() =>
-                            togglePublished(
-                              photo
-                            )
-                          }
-                        >
-
-                          {
-                            photo.is_published
-                              ? "UNPUBLISH"
-                              : "PUBLISH"
-                          }
-
-                        </button>
-
-
-                        <button
-                          type="button"
-                          className="is-danger"
-                          onClick={() =>
-                            handleDelete(
-                              photo
-                            )
-                          }
-                        >
-                          DELETE
-                        </button>
-
-                      </div>
-
-                    </div>
-
-                  </article>
-
-                )
-              )}
+              ))}
 
             </div>
 
@@ -2041,23 +1117,14 @@ function AdminGallery() {
 
 
         <footer className="admin-gallery-footer">
-
-          <span>
-            JANJINGJING
-          </span>
-
-          <span>
-            GALLERY MANAGER ♡
-          </span>
-
+          <span>JANJINGJING</span>
+          <span>GALLERY MANAGER ♡</span>
         </footer>
 
       </section>
 
     </main>
-
   )
-
 }
 
 
