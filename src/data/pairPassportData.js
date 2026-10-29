@@ -378,12 +378,13 @@ export const pairPassportEvents = [
       "Jan and JingJing travel beyond Asia to meet fans in Paris for GMMTV FANDAY 37.",
 
     image:
-      "/images/together/passport/events/paris.jpg",
+      "/images/couple/passport/paris5.jpg",
 
     gallery: [
-      "/images/together/passport/events/paris-01.jpg",
-      "/images/together/passport/events/paris-02.jpg",
-      "/images/together/passport/events/paris-03.jpg",
+      "/images/couple/passport/paris1.jpg",
+      "/images/couple/passport/paris2.jpg",
+      "/images/couple/passport/paris3.jpg",
+
     ],
 
     /*
@@ -425,7 +426,7 @@ export const pairPassportEvents = [
       "asia",
 
     status:
-      "upcoming",
+      "visited",
 
     title:
       "Enemies With Benefits 1st Fan Meeting in Seoul.",
@@ -450,9 +451,9 @@ export const pairPassportEvents = [
       "/images/couple/SL.jpg",
 
     gallery: [
-      "/images/together/passport/events/seoul-01.jpg",
-      "/images/together/passport/events/seoul-02.jpg",
-      "/images/together/passport/events/seoul-03.jpg",
+      "/images/couple/passport/ewbs1.jpg",
+      "/images/couple/passport/ewbs3.jpg",
+      "/images/couple/passport/ewbs4.jpg",
     ],
 
     sourceUrl:
